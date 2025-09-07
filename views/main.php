@@ -17,11 +17,15 @@
 <html>
     <head>
         <title><?php echo $page_title; ?></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="/static/css/main.css">
         <?php if($item) {
             ?><link rel="stylesheet" href="/static/css/<?php echo $item['url']; ?>.css"><?php 
         } ?>
-        
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     </head>
     <body>
         <div id="app" data-version="<?php echo $v; ?>">
