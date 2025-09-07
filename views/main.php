@@ -20,6 +20,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="manifest" href="manifest.json" />
         <link rel="stylesheet" href="/static/css/main.css">
         <?php if($item) {
             ?><link rel="stylesheet" href="/static/css/<?php echo $item['url']; ?>.css"><?php 
