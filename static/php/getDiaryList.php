@@ -41,7 +41,7 @@ function getDiaryList($db, $parent_id=0){
     // $$previousDatetime = null;
     while($row = $result->fetch_assoc()) {
         
-        $item = [...$row];
+        $item = $row;
         $item['media'] = $row['media'] ? json_decode($row['media'], true) : [];
         $datetime = processDiaryDate($item['begin']);
         
