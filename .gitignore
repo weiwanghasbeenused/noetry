@@ -1,0 +1,6 @@
+.DS_Store
+media/*.*
+!media/.gitkeep
+.htaccess
+*.sql
+node_modules/
