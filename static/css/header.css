@@ -1,0 +1,32 @@
+.header,
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#main-header {
+    height: 70px;
+    height: var(--main-header-height);
+    background-color: var(--light-grey);
+    z-index: 1000;
+    padding: 0 var(--padding);
+}
+/* .header-right {} */
+.header-section {
+    gap: 10px;
+}
+.header-left,
+.header-right {
+    flex: 1;
+}
+.header-left {
+    justify-content: start;
+}
+.header-right {
+    justify-content: end;
+}
+
+.header-section > .icon {
+    --w: 30px;
+    --h: 30px;
+}

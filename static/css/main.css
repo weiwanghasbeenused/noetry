@@ -1,11 +1,22 @@
+@import './icon.css';
+@import './header.css';
+@import './nav.css';
 :root {
-    /* --dark-blue: #144396; */
     --yellow: #f2dc14;
     --light-grey: #efefef;
+    --dark-grey: #808080;
+    
+    --text-color: #000;
+    --background: var(--light-grey);
+
     --padding: 10px;
     --padding-2: 10px;
     --page-padding-top: calc(var(--menu-height) + 25px );
     --page-padding-bottom: calc(var(--padding) * 2);
+
+    --main-header-height: 60px;
+    --nav-height: 60px;
+
 }
 html {
     font-size: 14px;
@@ -19,16 +30,15 @@ html {
 
 body {
 	margin: 0;
-	width: 100%;
-	height: 100%;
 	font-family: sans-serif;
     font-size: 1rem;
 	line-height: 1;
 	-webkit-font-smoothing: subpixel-antialiased;
     font-weight: normal;
     transition: background-color .5s;
-    color: #000;
-    background-color: #000;
+    color: var(--text-color);
+    background-color: var(--background);
+    
 }
 h1, h2, h3 {
     font-weight: normal;
@@ -49,17 +59,29 @@ ul {
 ul:first-child {
 	padding-left: 0px;
 }
-
+.full-vw {
+    width: 100vw;
+    max-width: 100%;
+}
+.full-vh {
+    height: 100dvh;
+}
+.float-container:after {
+    content:'';
+    display: block;
+    clear: both;
+    height: 0;
+}
 figure img,
 figure video{
     display: block;
     width: 100%;
 }
-.page {
+/* .page {
     padding-top: var(--page-padding-top);
     padding-bottom: var(--page-padding-bottom);
     background-color: #fff;
-}
+} */
 .padded {
     padding-left: var(--padding);
     padding-right: var(--padding);
@@ -80,9 +102,11 @@ figure video{
     font-size: 3.3rem;
 }
 .page {
-    background-color: var(--light-grey);
+    background-color: var(--background);
     padding: var(--padding);
-    
+    /* padding-top: calc(var(--padding) + var(--main-header-height)); */
+    margin-top: var(--main-header-height);
+    padding-bottom: calc(var(--padding) * 2 + var(--nav-height));
 }
 .body {
     line-height: 1.5;
@@ -92,16 +116,62 @@ figure video{
     text-decoration-thickness: 2px;
     text-underline-offset: 2px;
 }
+.bold {
+    font-weight: 700;
+}
+.fixed {
+    --top: 0;
+    --left: 0;
+    top: var(--top);
+    left: var(--left);
+    position: fixed;
+}
+.fixed[data-fixed-align="bottom"] {
+    --top: auto;
+    --bottom: 0;
+    bottom: var(--bottom);
+}
+#app {
+    color: var(--body-color);
+    background-color: var(--background);
+    scrollbar-width: none; /* Firefox */
+    position: relative;
+}
+#app::-webkit-scrollbar {
+    display: none;
+}
 @media screen and (min-width: 500px) {
+    body {
+        color: #fff;
+        background-color: #000;
+    }
     #app {
-        width: 375px;
-        height: 814px;
+        --vw: 375px;
+        --vh: 814px;
+        width: var(--vw);
+        height: var(--vh);
         margin: 20px auto;
-        border: 1px solid #ccc;
+        /* border: 1px solid #0d0; */
         overflow: scroll;
+        color: var(--text-color);
+        box-sizing: content-box;
+    }
+    .fixed {
+        --top: 20px;
+        --left: calc((100vw - var(--vw)) / 2);
+    }
+    .fixed[data-fixed-align="bottom"] {
+        --top: calc(20px + var(--vh) - var(--nav-height));
+        --bottom: auto;
     }
     .page {
         min-height: 100%;
+    }
+    .full-vw {
+        width: var(--vw);
+    }
+    .full-vh {
+        height: var(--vh);
     }
 }
 

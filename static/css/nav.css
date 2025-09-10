@@ -1,0 +1,18 @@
+#main-nav {
+    /* --top: auto;
+    bottom: 0; */
+    background-color: var(--background);
+    height: var(--nav-height);
+    z-index: 1000;
+    display: flex;
+    box-shadow: 0 18px 15px 15px rgba(0, 0, 0, .5);
+}
+.nav-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-section-name {
+    margin-top: 5px;
+}

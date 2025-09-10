@@ -4,3 +4,4 @@ media/*.*
 .htaccess
 *.sql
 node_modules/
+static/logs/*log

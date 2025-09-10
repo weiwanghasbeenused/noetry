@@ -11,7 +11,11 @@
     $item = getItemByBranch($db, $branch);
     $site_title="Noetry Demo";
     $page_title=$item ? $item['name1'] . ' | ' . $site_title : $site_title;
-    $v = $_GET['v'] ?? 0; 
+    $attrs = array();
+    foreach($_GET as $key => $value) {
+        $attrs['data-'.$key] = $value;
+    }
+    $attrs_str = arrayToAttr($attrs);
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,10 +33,12 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     </head>
     <body>
-        <div id="app" data-version="<?php echo $v; ?>">
+        <div id="app" <?php echo $attrs_str; ?>>
         <?php 
+            require_once(__DIR__ . '/header.php');
             if(!$uri[1]) require_once(__DIR__ . '/home.php');
-            else if($uri[1] === 'diary-list') require_once(__DIR__ . '/diary-list.php');
+            else if($uri[1] === 'diary') require_once(__DIR__ . '/diary.php');
+            require_once(__DIR__ . '/nav.php');
         ?>
         </div>
     </body>

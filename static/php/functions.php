@@ -31,3 +31,14 @@ function getItemByBranch($db, $in){
 
     return $output;
 }
+function arrayToAttr($arr){
+    $output = array();
+    foreach($arr as $key => $value){
+        if($value === true) {
+            $output[] = $key;
+        } else {
+            $output[] = $key . '="' . $value . '"';
+        }
+    }
+    return implode(' ', $output);
+}

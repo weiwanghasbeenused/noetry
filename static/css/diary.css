@@ -1,0 +1,159 @@
+.diary-entry {
+    background-color: #fff;
+    border-radius: 24px;
+    padding: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+.diary-entry.add-new {
+    position: relative;
+    color: var(--dark-grey);
+    padding-left: 80px;
+}
+.diary-entry.add-new:before {
+    content: '';
+    background-image: url(/media/svg/plus.svg);
+    opacity: 0.5;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.diary-time {
+    margin-bottom: .5em;
+}
+.diary-section {
+    padding-bottom: 2em;
+}
+.diary-section-title {
+    top: var(--main-header-height);
+    z-index: 100;
+    position: sticky;
+}
+.diary-entry + .diary-entry {
+    margin-top: 8px;
+}
+.diary-month-section-title {
+    margin-left: 3.5em;
+}
+.diary-day-section-title {
+    text-align: right;
+    margin-bottom: 8px;
+}
+.diary-year-section-title + .diary-month-section,
+.diary-year-section:first-child .diary-year-section-title + .diary-month-section .diary-month-section-title + .diary-day-section {
+    margin-top: -3.3rem;
+}
+
+.diary-date-note {
+    font-weight: 700;
+    padding: 0 .4em;
+    position: relative;
+    text-align: center;
+}
+.diary-date-note:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1.4em;
+    border: 2px solid #000;
+    border-top: none;
+    border-bottom: none;
+    border-radius: 1em;
+    top: -0.2em;
+    left: 0;
+    box-sizing: border-box;
+}
+.diary-content {
+    flex: 1;
+    padding-top: 3px;
+}
+.diary-text {
+    /* max-height: 50px; */
+    overflow: hidden;
+    display: -webkit-box; /* Required for -webkit-line-clamp */
+    -webkit-box-orient: vertical; /* Required for -webkit-line-clamp */
+    -webkit-line-clamp: 2; /* Number of lines to display before truncating */
+    text-overflow: ellipsis; /* Fallback for browsers that don't fully support -webkit-line-clamp */
+}
+.thumbnail-wrapper {
+    /* width: 70px; */
+    flex: 0 0 60px;
+    margin-right: 10px;
+}
+.thumbnail {
+    width: 100%;
+}
+
+#app[data-date-style="2"] .diary-year-section-title.x-large
+, #app[data-date-style="3"] .diary-year-section-title.x-large
+{
+    font-size: 1rem;
+    font-weight: 700;
+}
+#app[data-date-style="2"] .diary-year-section-title + .diary-month-section
+, #app[data-date-style="3"] .diary-year-section-title + .diary-month-section
+{
+    margin-top: 0;
+}
+#app[data-date-style="2"] .diary-month-section-title
+, #app[data-date-style="3"] .diary-month-section-title
+{
+    margin-left: 0;
+}
+#app[data-date-style="2"] .diary-day-section-title
+{
+    text-align: left;
+    margin-left: 2em;
+}
+#app[data-date-style="2"] .diary-month-section-title, 
+#app[data-date-style="2"] .diary-day-section-title,
+/* #app[data-date-style="3"] .diary-month-section-title,  */
+#app[data-date-style="3"] .diary-day-section-title
+{
+    top: calc(var(--main-header-height) + 1rem);
+}
+#app[data-date-style="3"] .diary-entry {
+    margin-left: 60px;
+}
+#app[data-date-style="3"] .diary-month-section-title.x-large {
+    font-size: 1rem;
+    font-weight: 700;
+    width: 60px;
+    text-align: right;
+}
+#app[data-date-style="3"] .diary-month-section-title .diary-date-note {
+    display: none;
+}
+#app[data-date-style="3"] .diary-year-section:first-child .diary-year-section-title + .diary-month-section .diary-month-section-title {
+    margin-top: -1em;
+
+}
+#app[data-date-style="3"] .diary-day-section-title
+{
+    text-align: left;
+    margin-left: 0;
+    margin-bottom: -1em;
+}
+#app[data-date-style="3"] .diary-year-section:first-child .diary-year-section-title + .diary-month-section .diary-month-section-title + .diary-day-section {
+    margin-top: 0;
+}
+#app[data-date-style="3"] {
+
+}
+
+#app[data-item-style="2"] .diary-entry {
+    border-radius: 0;
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#app[data-item-style="2"] .diary-entry.add-new {
+    background-color: #fff;
+}
+#diary {
+    padding-top: 0;
+}

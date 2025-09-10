@@ -10,6 +10,41 @@ function processDiaryDate($begin){
         'm' => $datetime->format('A')
     );
 }
+function generateAddNew(){
+    return array(
+        'body' => '寫下一些生活的吉光片羽....',
+        'begin' => date('Y-m-d h:i:s', time()),
+        'media' => null
+    );
+}
+function addItemToList($item, $list){
+    $output = $list;
+    $item['media'] = $item['media'] ? json_decode($item['media'], true) : [];
+    $thumbnail = null;
+    foreach($item['media'] as $key => $m) {
+        if(strpos($m['caption'], '[tangled]') !== false) {
+            $thumbnail = $m;
+            unset($item['media'][$key]);
+            break;
+        }
+    }
+    $item['thumbnail'] = $thumbnail;
+    $datetime = processDiaryDate($item['begin']);
+
+    if(!isset($output[$datetime['year']])) {
+        $output[$datetime['year']] = array();
+    }
+    if(!isset($output[$datetime['year']][$datetime['month']])) {
+        $output[$datetime['year']][$datetime['month']] = array();
+    }
+    if(!isset($output[$datetime['year']][$datetime['month']][$datetime['day']])) {
+        $output[$datetime['year']][$datetime['month']][$datetime['day']] = array();
+    }
+    $item['time'] = $datetime['hour'] . ':' . $datetime['minute'];
+    $item['m'] = $datetime['m'];
+    $output[$datetime['year']][$datetime['month']][$datetime['day']][] = $item;
+    return $output;
+}
 function getDiaryList($db, $parent_id=0){
     $sql = "SET SESSION group_concat_max_len = 1000000";
     $db->query($sql);
@@ -38,25 +73,37 @@ function getDiaryList($db, $parent_id=0){
         ORDER BY o.begin DESC";
     $result = $db->query($sql);
     $output = array();
+    $add_new = generateAddNew();
+    $output = addItemToList($add_new, $output);
     // $$previousDatetime = null;
     while($row = $result->fetch_assoc()) {
         
         $item = $row;
-        $item['media'] = $row['media'] ? json_decode($row['media'], true) : [];
-        $datetime = processDiaryDate($item['begin']);
+        $output = addItemToList($item, $output);
+        // $item['media'] = $row['media'] ? json_decode($row['media'], true) : [];
+        // $thumbnail = null;
+        // foreach($item['media'] as $key => $m) {
+        //     if(strpos($m['caption'], '[tangled]') !== false) {
+        //         $thumbnail = $m;
+        //         unset($item['media'][$key]);
+        //         break;
+        //     }
+        // }
+        // $item['thumbnail'] = $thumbnail;
+        // $datetime = processDiaryDate($item['begin']);
         
-        if(!isset($output[$datetime['year']])) {
-            $output[$datetime['year']] = array();
-        }
-        if(!isset($output[$datetime['year']][$datetime['month']])) {
-            $output[$datetime['year']][$datetime['month']] = array();
-        }
-        if(!isset($output[$datetime['year']][$datetime['month']][$datetime['day']])) {
-            $output[$datetime['year']][$datetime['month']][$datetime['day']] = array();
-        }
-        $item['time'] = $datetime['hour'] . ':' . $datetime['minute'];
-        $item['m'] = $datetime['m'];
-        $output[$datetime['year']][$datetime['month']][$datetime['day']][] = $item;
+        // if(!isset($output[$datetime['year']])) {
+        //     $output[$datetime['year']] = array();
+        // }
+        // if(!isset($output[$datetime['year']][$datetime['month']])) {
+        //     $output[$datetime['year']][$datetime['month']] = array();
+        // }
+        // if(!isset($output[$datetime['year']][$datetime['month']][$datetime['day']])) {
+        //     $output[$datetime['year']][$datetime['month']][$datetime['day']] = array();
+        // }
+        // $item['time'] = $datetime['hour'] . ':' . $datetime['minute'];
+        // $item['m'] = $datetime['m'];
+        // $output[$datetime['year']][$datetime['month']][$datetime['day']][] = $item;
     }
     return $output;
 }

@@ -1,0 +1,22 @@
+.icon {
+    --w: 24px;
+    --h: 24px;
+    width: var(--w);
+    height: var(--h);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.menu-icon {
+    background-image: url(/media/svg/menu.svg);
+}
+.plus-icon {
+    background-image: url(/media/svg/plus.svg);
+}
+.wand-icon {
+    background-image: url(/media/svg/wand.svg);
+}
+.placeholder-icon {
+    background-color: #000;
+    border-radius: 50%;
+}
