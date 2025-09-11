@@ -7,7 +7,8 @@ function processDiaryDate($begin){
         'day' => $datetime->format('d'),
         'hour' => $datetime->format('H'),
         'minute' => $datetime->format('i'),
-        'm' => $datetime->format('A')
+        'm' => $datetime->format('A'),
+        'day-of-week'  => $datetime->format('D')
     );
 }
 function generateAddNew(){
@@ -37,12 +38,13 @@ function addItemToList($item, $list){
     if(!isset($output[$datetime['year']][$datetime['month']])) {
         $output[$datetime['year']][$datetime['month']] = array();
     }
-    if(!isset($output[$datetime['year']][$datetime['month']][$datetime['day']])) {
-        $output[$datetime['year']][$datetime['month']][$datetime['day']] = array();
+    $day = $datetime['day'] . '-' . $datetime['day-of-week'];
+    if(!isset($output[$datetime['year']][$datetime['month']][$day])) {
+        $output[$datetime['year']][$datetime['month']][$day] = array();
     }
     $item['time'] = $datetime['hour'] . ':' . $datetime['minute'];
     $item['m'] = $datetime['m'];
-    $output[$datetime['year']][$datetime['month']][$datetime['day']][] = $item;
+    $output[$datetime['year']][$datetime['month']][$day][] = $item;
     return $output;
 }
 function getDiaryList($db, $parent_id=0){

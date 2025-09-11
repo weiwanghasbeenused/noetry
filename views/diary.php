@@ -1,11 +1,11 @@
 <?php 
 require_once __DIR__ . '/../static/php/getDiaryList.php';
-
+$item_style = $attrs['data-item-style'] ?? 0;
 
 function renderDiaryEntry($diary, $idx=-1){
-    global $attrs;
+    global $item_style;
     $style = '';
-    if(isset($attrs['data-item-style']) && isset($attrs['data-item-style']) == 2 && $idx !== 0) {
+    if($item_style == 2 && $idx !== 0) {
         $diary_item_bg_v2_filename = 'diary-item-bg-v2';
         $diary_item_bg_v2_count = 6;
         $background_idx = $idx % $diary_item_bg_v2_count;
@@ -15,7 +15,7 @@ function renderDiaryEntry($diary, $idx=-1){
     if($idx === 0)
         $cls[] = 'add-new';
     $thumbnail = $diary['thumbnail'] ? '<div class="thumbnail-wrapper"><img class="thumbnail" src="'.m_url($diary['thumbnail']).'" /></div>': '';
-    $output = '<div class="' . implode(' ', $cls) . '" style="'.$style.'">' .$thumbnail . '<div class="diary-content "><div class="diary-time">'.$diary['time'].'</div><div class="diary-text body">' . $diary['body']. '</div></div></div>';
+    $output = '<div class="' . implode(' ', $cls) . '" style="'.$style.'">' .$thumbnail . '<div class="diary-content "><div class="diary-time small bold">'.$diary['time'].'</div><div class="diary-text body">' . $diary['body']. '</div></div></div>';
     return $output;
 }
 $diary_list = getDiaryList($db, $item['id']);
@@ -29,9 +29,12 @@ $diary_list = getDiaryList($db, $item['id']);
             echo '<div class="diary-section diary-year-section"><h2 class="diary-section-title diary-year-section-title x-large">' . $year . '</h2>';
             foreach($months as $month => $days) {
                 echo '<div class="diary-section diary-month-section"><h2 class="diary-section-title diary-month-section-title x-large">' . $month . '<span class="month-note diary-date-note small">月</span></h2>';
-                // echo $month . '<br>';
                 foreach($days as $day => $diaries) {
-                    echo '<div class="diary-section diary-day-section"><h2 class="diary-section-title diary-day-section-title x-large">' . $day . '<span class="day-note diary-date-note small">日</span></h2>';
+                    [$day_of_month, $day_of_week] = explode('-', $day);
+                    echo '<div class="diary-section diary-day-section">
+                        <div class="diary-section-title diary-day-section-title">
+                            <h2 class="diary-day x-large">' . $day_of_month . '<span class="day-note diary-date-note small">日</span></h2>
+                            <div class="diary-day-of-week bold small">'.$day_of_week.'.</div></div>';
                     foreach($diaries as $diary) {
                         echo renderDiaryEntry($diary, $diary_count);
                         $diary_count ++;
