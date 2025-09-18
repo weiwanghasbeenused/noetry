@@ -4,12 +4,15 @@
     align-items: center;
     justify-content: center;
 }
+.header {
+    padding: 0 var(--padding);
+}
 #main-header {
     height: 70px;
     height: var(--main-header-height);
     background-color: var(--light-grey);
     z-index: 1000;
-    padding: 0 var(--padding);
+    
 }
 /* .header-right {} */
 .header-section {

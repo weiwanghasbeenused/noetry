@@ -1,11 +1,17 @@
 @import './icon.css';
+@import './buttons.css';
 @import './header.css';
 @import './nav.css';
+@import './tag.css';
+@import './loading.css';
+@import './warning.css';
+
 :root {
     --yellow: #f2dc14;
     --light-grey: #efefef;
     --dark-grey: #808080;
-    
+    --green: #0a774b;
+    --red: #c42c3e;
     --text-color: #000;
     --background: var(--light-grey);
 
@@ -101,6 +107,18 @@ figure video{
 .x-large {
     font-size: 3.3rem;
 }
+.green {
+    --color: var(--green);
+    color: var(--color);
+}
+.red {
+    --color: var(--red);
+    color: var(--color);
+}
+.dark-grey {
+    --color: var(--dark-grey);
+    color: var(--color);
+}
 .page {
     background-color: var(--background);
     padding: var(--padding);
@@ -109,7 +127,7 @@ figure video{
     padding-bottom: calc(var(--padding) * 2 + var(--nav-height));
 }
 .body {
-    line-height: 1.5;
+    line-height: 1.4;
 }
 .body a {
     text-decoration: underline;
@@ -139,6 +157,29 @@ figure video{
 }
 #app::-webkit-scrollbar {
     display: none;
+}
+.text-button {
+    height: 30px;
+    padding: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text-button[data-status="0"] {
+    color: var(--dark-grey);
+}
+button {
+    border: none;
+    outline: 0;
+    border-radius: 0;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    font: inherit;
+}
+.button {
+    cursor: pointer
 }
 @media screen and (min-width: 500px) {
     body {

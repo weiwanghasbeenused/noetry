@@ -1,0 +1,29 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    background-color:rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    transition: opacity 0.3s ease-in-out;
+}
+.loading-container[data-hidden="0"] {
+    opacity: 1;
+    pointer-events: auto;
+}
+.loading-message {
+    color: #fff;
+    margin-top: 20px;
+}
+.loading-buttons {
+    position: absolute;
+    bottom: 0;
+    padding: var(--padding);
+    width: 100%;
+}
+.loading-button[data-action="cancel"] {
+    background-color: #fff;
+    border-color: #fff;
+}

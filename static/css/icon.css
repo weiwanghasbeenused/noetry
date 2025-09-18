@@ -1,11 +1,15 @@
 .icon {
-    --w: 24px;
-    --h: 24px;
+    --w: 30px;
+    --h: 30px;
     width: var(--w);
     height: var(--h);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
+}
+.icon.small {
+    --w: 24px;
+    --h: 24px;
 }
 .menu-icon {
     background-image: url(/media/svg/menu.svg);
@@ -16,7 +20,52 @@
 .wand-icon {
     background-image: url(/media/svg/wand.svg);
 }
+.pin-icon {
+    background-image: url(/media/svg/pin.svg);
+}
+.photo-icon {
+    background-image: url(/media/svg/photo.svg);
+}
+.arrow-head-right-icon {
+    background-image: url(/media/svg/arrow-head-right-dg.svg);
+}
+.x-in-cicle-icon {
+    background-image: url(/media/svg/x-in-circle.svg);
+}
+.weather-icon {
+    background-image: url(/media/svg/partly_cloudy.svg);
+}
+
+.loading-icon {
+    background-image: url(/media/svg/partial-loading_w.svg);
+    animation: partial-loading 1s infinite ease-out;
+}
+.partial-loading-icon {
+    background-image: url(/media/svg/partial-loading.svg);
+    animation: partial-loading 1s infinite ease-out;
+}
+.esc-icon {
+    background-image: url(/media/svg/esc.svg);
+}
+.search-icon {
+    background-image: url(/media/svg/search.svg);
+}
+.locator-icon {
+    background-image: url(/media/svg/locator.svg);
+}
 .placeholder-icon {
     background-color: #000;
     border-radius: 50%;
+}
+
+@keyframes partial-loading{
+    0% {
+        transform: rotate(0deg);
+    }
+    80% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
 }

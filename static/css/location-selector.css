@@ -1,0 +1,33 @@
+
+.location-selection {
+    background-color: #fff;
+    border-top-right-radius: 18px;
+    border-top-left-radius: 18px;
+    height: calc(100dvh -  20px);
+    z-index: 1200;
+}
+.location-selection[data-hidden="1"] {
+    transform: translate(0, 100dvh);
+}
+.location-selection {
+    transition: transform .25s linear;
+}
+.location-selection-body {
+    padding: var(--padding);
+}
+.location-option {
+    padding: 16px 10px;
+}
+.location-option + .location-option {
+    border-top: 1px solid var(--light-grey);
+}
+.location-option-distance {
+    margin-top: 8px;
+}
+.location-selection .header {
+    height: 70px;
+}
+.location-search {
+    background-color: var(--light-grey);
+    margin: 10px 0;
+}

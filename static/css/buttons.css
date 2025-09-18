@@ -1,0 +1,23 @@
+.bar-button {
+    border: 2px solid;
+    border-radius: 15px;
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+}
+.bar-button.solid{
+    background-color: var(--color);
+    color: var(--background);
+    border-color: var(--color);
+}
+.bar-button.fit-parent {
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+}
+.bottom-buttons-container {
+    position: absolute;
+    bottom: 0;
+}

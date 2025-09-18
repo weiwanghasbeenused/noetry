@@ -1,11 +1,25 @@
 <?php
 // require_once(__DIR__ . '/getList.php');
 require_once(__DIR__ . '/utils-list.php');
+require_once(__DIR__ . '/sortPoints.php');
 
-function handleDiary($raw){
+function handlePoem($raw){
     $output = $raw;
+    $diaries = json_decode($output['diaries'], true);
+    $points = [];
+    foreach($diaries as $d) {
+        $temp = explode(' ', $d['points']);
+        $p = [];
+        foreach($temp as $key => $t) {
+            $p[] = $t;
+            if($key % 2 === 1) {
+                $points[] = $p;
+                $p = [];
+            }
+        }
+        
+    }
     $output['thumbnail'] = null;
-    $output['tangled'] = null;
     if(isset($output['media'])) {
         $output['media'] = json_decode($output['media'], true);
         foreach($output['media'] as $m) {
@@ -15,30 +29,15 @@ function handleDiary($raw){
                     'type' => $m['type'],
                     'src' => m_url($m)
                 );
-            } else if(strpos($m['caption'], '[tangled]') !== false) {
-                $output['tangled'] = array(
-                    'id' => $m['id'],
-                    'type' => $m['type'],
-                    'src' => m_url($m)
-                );
             }
                 
         }
     }
-    
-
+    $output['points'] = sortPoints($points);
     return $output;
 }
 
-function generateAddNew(){
-    return array(
-        'body' => '寫下一些生活的吉光片羽....',
-        'begin' => date('Y-m-d h:i:s', time()),
-        'media' => null
-    );
-}
-
-function getDiaryList($db, $parent_id=0){
+function getPoemList($db, $parent_id=0){
     $sql = "SET SESSION group_concat_max_len = 1000000";
     $db->query($sql);
     $sql = "SELECT 
@@ -56,6 +55,22 @@ function getDiaryList($db, $parent_id=0){
             FROM media m
             WHERE m.object = o.id AND m.active = 1
         ) AS media
+        , (
+            SELECT CONCAT(
+                '[',
+                COALESCE(GROUP_CONCAT(
+                    JSON_OBJECT(
+                        'points', o_diaries.address1
+                    )
+                    ORDER BY FIND_IN_SET(o_diaries.id, REPLACE(o.state, ' ', ''))
+                ), ''),
+                ']'
+            )
+            FROM objects o_diaries
+            WHERE o_diaries.active = 1
+              AND o.state IS NOT NULL
+              AND FIND_IN_SET(o_diaries.id, REPLACE(o.state, ' ', '')) > 0
+        ) AS diaries
         FROM 
             objects o 
         JOIN wires w 
@@ -66,12 +81,16 @@ function getDiaryList($db, $parent_id=0){
         ORDER BY o.begin DESC";
     $result = $db->query($sql);
     $output = array();
-    $add_new = handleDiary(generateAddNew());
-    $output = addItemToList($add_new, $output);
-    
+    $sql_thumbnail = "INSERT INTO media (`object`, `caption`) VALUES ";
+    $sql_thumbnail_arr = array();
     while($row = $result->fetch_assoc()) {
-        $item = handleDiary($row);
+        $item = handlePoem($row);
+        if(!isset($item['thumbnail'])) {
+            $sql_thumbnail_arr[] = "($item[id], '[thumbnail]')";
+        }
         $output = addItemToList($item, $output);
     }
+    $sql_thumbnail = $sql_thumbnail . implode(',', $sql_thumbnail_arr);
+    // $db->query($sql_thumbnail);
     return $output;
 }

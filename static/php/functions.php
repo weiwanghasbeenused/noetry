@@ -42,3 +42,8 @@ function arrayToAttr($arr){
     }
     return implode(' ', $output);
 }
+
+function convertArrayStr($str){
+    $output = preg_split('/,\s*?/s', $str);
+    return $output;
+}

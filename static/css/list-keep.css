@@ -1,0 +1,173 @@
+#diary {
+    --day-gap: 8px;
+}
+
+.list-time {
+    margin-bottom: .5em;
+    color: var(--dark-grey);
+}
+.list-day-section {
+    /* padding-bottom: 2em; */
+    padding-bottom: 1.5em;
+}
+.list-section-title {
+    top: var(--main-header-height);
+    z-index: 100;
+    position: sticky;
+}
+.list-month-section-title {
+    z-index: 300;
+}
+.list-year-section-title {
+    z-index: 200;
+}
+.list-entry + .list-entry {
+    margin-top: var(--day-gap);
+}
+.list-month-section-title {
+    margin-left: 3.5em;
+    margin-bottom: -10px;
+}
+.list-day-section-title {
+    text-align: right;
+    margin-bottom: 8px;
+}
+.list-year-section:first-child .list-year-section-title + .list-month-section,
+.list-year-section:first-child .list-year-section-title + .list-month-section .list-month-section-title + .list-day-section {
+    margin-top: -3.3rem;
+}
+.list-day-of-week {
+    display: none;
+}
+.list-date-note {
+    font-weight: 700;
+    padding: 0 .4em;
+    position: relative;
+    text-align: center;
+}
+.list-date-note:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1.4em;
+    border: 2px solid #000;
+    border-top: none;
+    border-bottom: none;
+    border-radius: 1em;
+    top: -0.2em;
+    left: 0;
+    box-sizing: border-box;
+}
+.list-content {
+    flex: 1;
+    padding-top: 3px;
+}
+.list-text {
+    /* max-height: 50px; */
+    overflow: hidden;
+    display: -webkit-box; /* Required for -webkit-line-clamp */
+    -webkit-box-orient: vertical; /* Required for -webkit-line-clamp */
+    -webkit-line-clamp: 2; /* Number of lines to display before truncating */
+    text-overflow: ellipsis; /* Fallback for browsers that don't fully support -webkit-line-clamp */
+}
+.thumbnail-wrapper {
+    flex: 0 0 50px;
+    margin-right: 10px;
+}
+.thumbnail {
+    width: 100%;
+}
+
+#app[data-date-style="2"] .list-year-section-title.x-large
+, #app[data-date-style="3"] .list-year-section-title.x-large
+{
+    font-size: 1rem;
+    font-weight: 700;
+}
+#app[data-date-style="2"] .list-year-section-title + .list-month-section
+, #app[data-date-style="3"] .list-year-section-title + .list-month-section
+{
+    margin-top: 0;
+}
+#app[data-date-style="2"] .list-month-section-title
+, #app[data-date-style="3"] .list-month-section-title
+{
+    margin-left: 0;
+}
+#app[data-date-style="2"] .list-day-section-title
+{
+    text-align: left;
+    margin-left: 2em;
+}
+#app[data-date-style="2"] .list-month-section-title, 
+#app[data-date-style="2"] .list-day-section-title,
+#app[data-date-style="3"] .list-day-section-title
+{
+    top: calc(var(--main-header-height) + 1rem);
+}
+
+#app[data-date-style="3"] .list-month-section-title.x-large {
+    font-size: 1rem;
+    font-weight: 700;
+    width: 55px;
+    text-align: right;
+}
+#app[data-date-style="3"] .list-date-note {
+    display: none;
+}
+#app[data-date-style="3"] .list-year-section:first-child .list-year-section-title + .list-month-section .list-month-section-title {
+    margin-top: -1em;
+
+}
+#app[data-date-style="3"] .list-day-section {
+    padding-bottom: var(--day-gap);
+}
+#app[data-date-style="3"] .list-day-section:last-child {
+    margin-bottom: calc(2 * var(--day-gap));
+}
+#app[data-date-style="3"] .list-day-section-title
+{
+    text-align: center;
+    margin-left: 0;
+    float: left;
+    width: 60px;
+}
+#app[data-date-style="3"] .list-year-section:first-child .list-year-section-title + .list-month-section .list-month-section-title + .list-day-section {
+    margin-top: 0;
+}
+#app[data-date-style="3"] .list-month-section-title{
+    margin-bottom: 20px;
+}
+#app[data-date-style="3"] .list-day-of-week {
+    display: block;
+    text-align: center;
+}
+#app[data-item-style="2"] .list-entry {
+    border-radius: 0;
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#app[data-item-style="2"] .list-entry.add-new {
+    background-color: #fff;
+}
+
+.list-year-section-title:after,
+.list-year-section-title:before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    background: linear-gradient(to bottom, var(--light-grey) 30%, rgba(239, 239, 239, 0) 100%);
+}
+.list-year-section-title:before {
+    width: var(--day-width);
+    height: 30px;
+    left: 0;
+}
+.list-year-section-title:after {
+    width: calc( 100% - var(--day-width) );
+    left: calc( 10px + var(--day-width) );
+    height: 10px;
+}

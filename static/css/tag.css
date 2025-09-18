@@ -1,0 +1,12 @@
+.tag {
+    padding: 8px 16px;
+    border-radius: 17px;
+    border: 2px solid var(--text-color);
+}
+.tag.reverse{
+    background-color: var(--text-color);
+    color: var(--background);
+}
+.tag.border-less {
+    border-color: var(--background);
+}
