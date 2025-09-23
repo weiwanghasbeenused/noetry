@@ -1,26 +1,12 @@
 <?php
     require_once __DIR__ . '/../open-records-generator/config/config.php';
     require_once __DIR__ . '/../static/php/functions.php';
-    require_once __DIR__ . '/../static/php/config-pages.php';
+    require_once __DIR__ . '/../config/config-pages.php';
+    require_once __DIR__ . '/../static/php/getView.php';
     $db = db_connect('guest');
-    $config_page = array();
-    function getPageConfig($uri){
-        global $config_pages;
-        $output = '';
-        if(!$uri[1]) {
-            $config_temp = $config_pages['home'] ?? array(); 
-        } else {
-            $config_temp = $config_pages;
-            foreach($uri as $b) {
-                if(!$b) continue;
-                if(!isset($config_temp[$b])) break;
-                $config_temp = $config_temp[$b];
-            }
-            
-        }
-        $output = $config_temp['page-data'] ?? array();
-        return $output;
-    }
+    $view = getView($uri);
+    $page_config = $config_pages[$view] ?? array();
+    
     if(!$uri[1]) {
         $branch = array('home');        
     } else {
@@ -28,9 +14,8 @@
         array_shift($branch);
     }
     
-    $page_config = getPageConfig($uri);
-    $stylesheets = $page_config ? $page_config['stylesheets'] : array();
-    $scripts = $page_config ? $page_config['scripts'] : array();
+    $stylesheets = $page_config && isset($page_config['stylesheets'])? $page_config['stylesheets'] : array();
+    $scripts = $page_config && isset($page_config['scripts'])? $page_config['scripts'] : array();
     $item = getItemByBranch($db, $branch);
     $site_title="Noetry Demo";
     $page_title=$item ? $item['name1'] . ' | ' . $site_title : $site_title;
@@ -38,6 +23,7 @@
     foreach($_GET as $key => $value) {
         $attrs['data-'.$key] = $value;
     }
+    $attrs['data-view'] = $view;
     $attrs_str = arrayToAttr($attrs);
 ?>
 <!DOCTYPE html>
@@ -66,12 +52,14 @@
     <body>
         <div id="app" <?php echo $attrs_str; ?> data-stage="0">
         <?php 
-            require_once(__DIR__ . '/main-header.php');
+            
             if(!$uri[1]) require_once(__DIR__ . '/home.php');
-            else if(file_exists(__DIR__ . '/'.$uri[1].'.php')){
-                require_once(__DIR__ . '/'.$uri[1].'.php');
-            } else echo '<br><br><br><br><br><br><div style="text-align:center">no view assigned</div>';
-            require_once(__DIR__ . '/nav.php');
+            else {
+                require_once(__DIR__ . '/main-header.php');
+                if($view) require_once(__DIR__ . '/'.$view.'.php');
+                else echo '<br><br><br><br><br><br><div style="text-align:center">no view assigned</div>';
+                require_once(__DIR__ . '/nav.php');
+            }
         ?>
         </div>
     </body>

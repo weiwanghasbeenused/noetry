@@ -56,7 +56,7 @@
     echo renderMask();
 ?>
 <script src="/static/js/tangled-line/index.js"></script>
-<script src="/static/js/warning.js"></script>
+<script src="/static/js/Popup.js"></script>
 <script>
     const add_image_section = document.getElementById('add-body-image');
     const file_input = document.getElementById("add-photo-input");
@@ -105,8 +105,8 @@
             }, 3000);
         });
     }
-    const quitWarning = new Warning({
-        id: 'quit-add-warning',
+    const quitPopup = new Popup({
+        id: 'quit-add-popup',
         text: '如果放棄新增碎片, 目前進度將會流失<br>確定要放棄新增碎片嗎?',
         mount: app,
         buttons: [
@@ -124,8 +124,8 @@
         ]
     });
 
-    const editWarning = new Warning({
-        id: 'edit-add-warning',
+    const editPopup = new Popup({
+        id: 'edit-add-popup',
         text: '如果重新編輯碎片, 目前的AI回饋將會消失<br>確定要重新編輯碎片嗎?',
         mount: app,
         buttons: [
@@ -147,14 +147,14 @@
     const esc_button = document.querySelector('#main-header .esc-icon');
     if (esc_button) {
         esc_button.addEventListener('click', () => {
-            quitWarning.show();
+            quitPopup.show();
         });
     }
 
     const edit_button = document.querySelector('#main-header .edit-button');
     if (edit_button) {
         edit_button.addEventListener('click', () => {
-            editWarning.show();
+            editPopup.show();
         });
     }
 

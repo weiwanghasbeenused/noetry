@@ -1,6 +1,6 @@
-class Warning {
+class Popup {
     constructor({ id, text = '', buttons = [], mount = document.body, hidden = true } = {}) {
-        this.id = id || `warning-${Date.now()}`;
+        this.id = id || `popup-${Date.now()}`;
         this.text = text;
         this.buttons = Array.isArray(buttons) ? buttons : [];
         this.callbacks = {};
@@ -18,22 +18,22 @@ class Warning {
 
     render() {
         this.wrapper = document.createElement('div');
-        this.wrapper.className = 'warning-wrapper full-vw full-vh fixed';
+        this.wrapper.className = 'popup-wrapper full-vw full-vh fixed';
         this.wrapper.dataset.hidden = this.hidden ? '1' : '0';
-        this.wrapper.setAttribute('data-warning-wrapper', this.id);
+        this.wrapper.setAttribute('data-popup-wrapper', this.id);
 
         this.container = document.createElement('div');
-        this.container.className = 'warning-container';
+        this.container.className = 'popup-container';
         this.container.id = this.id;
 
         const message = document.createElement('div');
-        message.className = 'warning-message body small';
+        message.className = 'popup-message body small';
         message.innerHTML = this.text;
         this.container.appendChild(message);
 
         if (this.buttons.length) {
             this.buttonContainer = document.createElement('div');
-            this.buttonContainer.className = 'warning-buttons';
+            this.buttonContainer.className = 'popup-buttons';
             this.buttons.forEach((spec) => this.addButton(spec));
             this.container.appendChild(this.buttonContainer);
         }
@@ -51,7 +51,7 @@ class Warning {
         }
         const label = display || slug;
         const button = document.createElement('div');
-        button.className = `warning-button bar-button fit-parent button warning-button--${slug}`;
+        button.className = `popup-button bar-button fit-parent button popup-button-${slug}`;
         button.dataset.action = slug;
         button.textContent = label;
 
@@ -72,7 +72,7 @@ class Warning {
 
         if (!this.buttonContainer) {
             this.buttonContainer = document.createElement('div');
-            this.buttonContainer.className = 'warning-buttons';
+            this.buttonContainer.className = 'popup-buttons';
             this.container.appendChild(this.buttonContainer);
         }
         this.buttonContainer.appendChild(button);
@@ -113,4 +113,4 @@ class Warning {
     }
 }
 
-window.Warning = Warning;
+window.Popup = Popup;

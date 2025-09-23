@@ -4,7 +4,8 @@
 // $list_items = getHomeListItems($db);
 ?>
 <div id="home" class="page">
-    <div id="home-body" class="body medium">
+    <h1 class="regular bold">心雜音 demo</h1>
+    <div id="home-body" class="medium">
     <?php 
         echo $item['body'];
     ?>

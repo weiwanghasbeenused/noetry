@@ -47,11 +47,17 @@
 .esc-icon {
     background-image: url(/media/svg/esc.svg);
 }
+[data-color-theme="dark"] .esc-icon {
+    background-image: url(/media/svg/esc-w.svg);
+}
 .search-icon {
     background-image: url(/media/svg/search.svg);
 }
 .locator-icon {
     background-image: url(/media/svg/locator.svg);
+}
+.more-icon {
+    background-image: url(/media/svg/more.svg);
 }
 .placeholder-icon {
     background-color: #000;

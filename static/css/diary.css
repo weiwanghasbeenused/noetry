@@ -29,15 +29,12 @@
     flex: 1;
 }
 #app[data-date-style="3"] #diary .list {
-    /* --day-gap: 8px; */
     --day-width: 60px;
 }
 #app[data-date-style="3"] .diary-entry {
     margin-left: 70px;
 }
 #app[data-item-style="2"] .diary-entry:not(.add-new) {
-    /* background-size: 100%;
-    background-repeat: no-repeat; */
     position: relative;
     background-color: transparent;
     border-radius: 0;

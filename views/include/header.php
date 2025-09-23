@@ -27,6 +27,8 @@ function renderHeader($config, $id, $cls=array()){
                 $parts[$key] .= '<div class="esc-icon icon button" data-href=""></div>';
             } else if($element === 'locator') {
                 $parts[$key] .= '<div class="locator-icon icon button"></div>';
+            } else if($element === 'more') {
+                $parts[$key] .= '<div class="more-icon icon button"></div>';
             }
         }
     }

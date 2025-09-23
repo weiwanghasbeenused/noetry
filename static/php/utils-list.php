@@ -14,8 +14,6 @@ function addItemToList($item, $list){
     if(!isset($output[$datetime['year']][$datetime['month']][$day])) {
         $output[$datetime['year']][$datetime['month']][$day] = array();
     }
-    $item['time'] = $datetime['hour'] . ':' . $datetime['minute'];
-    $item['m'] = $datetime['m'];
     $output[$datetime['year']][$datetime['month']][$day][] = $item;
     return $output;
 }

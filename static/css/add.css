@@ -10,7 +10,7 @@
     animation: slide-up 0.3s linear forwards;
 }
 #app[data-display-mode="presentation"][data-stage='0'] {
-    height: 100dvh;
+    /* height: 100dvh; */
     overflow: scroll;
 }
 #add {
@@ -154,11 +154,19 @@
 .bottom-buttons-container,
 .feedback-container {
     display: none;
-    /* width: 100%; */
     padding: var(--padding);
 }
 .feedback-container {
     box-shadow: 0px 0px 12px var(--dark-grey);
+    color: var(--theme-color);
+    background-color: #fff;
+    border: 2px solid;
+    border-radius: var(--rounded);
+    padding: calc( 2.5* var(--padding));
+    margin: var(--padding);
+    margin-bottom: var(--padding);
+    display: none;
+    scroll-margin-top: calc( var(--main-header-height) + var(--padding) );
 }
 #submit-button {
     display: none;
@@ -176,16 +184,6 @@
 }
 #app:not([data-stage="2"]) #main-header .header-right .edit-button {
     display: none;
-}
-.feedback-container {
-    background-color: #fff;
-    border-radius: 18px;
-    padding: calc( 2.5* var(--padding));
-    margin: var(--padding);
-    margin-bottom: var(--padding);
-    /* line-height: 1.6; */
-    display: none;
-    scroll-margin-top: calc( var(--main-header-height) + var(--padding) );
 }
 
 @keyframes slide-up {

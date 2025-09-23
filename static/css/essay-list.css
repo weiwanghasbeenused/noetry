@@ -1,0 +1,213 @@
+#essay-list {
+    --day-gap: 8px;
+    --shadow-size: 8px;
+    
+    --background: #fff;
+    --gradient-end: rgba(255, 255,255, 0);
+    --thumbnail-size: 100%;
+    
+    background-color: var(--background);
+    padding-top: 0;
+}
+
+.essay-entry {
+    --background: #fff;
+    position: relative;
+    background-color: var(--background);
+    box-shadow: -2px 8px 8px var(--dark-grey);
+}
+.essay-entry:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: var(--background);
+    height: 100%;
+    width: 100%;
+    /* transform: translate(-20px, 0); */
+    transform: translate(0, var(--day-gap));
+}
+.essay-inner {
+    padding: 10px 18px;
+    position: relative;
+    z-index: 10;
+    /* display: flex; */
+    flex-wrap: wrap;
+}
+.essay-time {
+    flex: 0 0 100%;
+}
+.essay-title {
+    margin-bottom: 8px;
+}
+.list-text.essay-text {
+    -webkit-line-clamp: 3;
+}
+.essay-entry .thumbnail-wrapper {
+    flex: 0 0 var(--thumbnail-size);
+    margin-top: 20px;
+    padding-bottom: 50%;
+    position: relative;
+}
+.essay-entry .thumbnail-wrapper img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#essay-list .list-year-section-title:after,
+#essay-list .list-year-section-title:before {
+    background: linear-gradient(to bottom, var(--light-grey) 30%, var(--gradient-end) 100%);
+}
+
+/* data-item-style="2" */
+#app[data-item-style="2"] #essay-list {
+    --thumbnail-size: 75px;
+    --background: var(--light-grey);
+    --shadow-size: 15px;
+}
+#app[data-item-style="2"] .essay-inner {
+    display: flex;
+    padding-bottom: 20px;
+    padding-top: 12px;
+}
+#app[data-item-style="2"] .essay-entry,
+#app[data-item-style="2"][data-color] .essay-entry{
+    box-shadow: none;
+}
+#app[data-item-style="2"] .essay-entry:after {
+    content: none;
+}
+#app[data-item-style="2"] .essay-entry:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    width: 100%;
+    height: calc(100% + var(--shadow-size) * 2);
+    background: linear-gradient( to bottom, var(--gradient-end) 0%, #fff var(--shadow-size), #fff calc(100% - var(--shadow-size)), var(--gradient-end) 100% );
+    z-index: 3;
+}
+#app[data-item-style="2"] .list-entry + .list-entry {
+    margin-top: calc(var(--shadow-size));
+}
+#app[data-item-style="2"] .essay-inner {
+    padding-bottom: 20px;
+    padding-top: 12px;
+}
+#app[data-item-style="2"] .essay-day-section.list-day-section {
+    --day-gap: 20px;
+}
+#app[data-item-style="2"] .essay-entry .thumbnail-wrapper {
+    margin-top: 0px;
+    padding-bottom: var(--thumbnail-size);
+}
+/* #app[data-item-style="2"] .essay-entry .thumbnail-wrapper img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+#app[data-color="2"] #essay-list {
+    --background: var(--theme-color);
+    --gradient-end: rgba(10, 119, 75, 0);
+}
+#app[data-color="2"][data-item-style="2"] #essay-list {
+    --shadow-size: 20px;
+}
+#app[data-color="2"][data-item-style="2"] .essay-entry {
+    box-shadow: -2px 8px 8px #000;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    color: var(--green);
+}
+#app[data-color="2"][data-item-style="2"] .essay-entry:after {
+    content: none;
+}
+#app[data-color="2"][data-item-style="2"] .essay-entry:before {
+    bottom: 0;
+    transform: translate(-50%, 0);
+    margin-bottom: calc(-1 * var(--shadow-size));
+    height: 60%;
+}
+#app[data-color="2"][data-item-style="2"] .essay-inner {
+    padding-bottom: 5px;
+    background-color: transparent;
+}
+#app[data-color="2"][data-item-style="2"] .essay-day-section.list-day-section {
+    --day-gap: 20px;
+}
+
+/* data-item-style="3" */
+#app[data-item-style="3"] #essay-list {
+    --background: var(--light-grey);
+}
+#app[data-item-style="3"] .essay-inner {
+    display: flex;
+}
+#app[data-item-style="3"][data-color="2"] #essay-list {
+    --background: var(--theme-color);
+}
+#app[data-item-style="3"] .essay-entry:after {
+    content: none;
+}
+#app[data-item-style="3"] .essay-entry{
+    --shadow-size: 20px;
+    --background: #fff;
+    --thumbnail-size: 75px;
+    box-shadow: 0 0 5px 5px var(--background);
+    border-radius: 24px;
+}
+#app[data-item-style="3"] .essay-inner {
+    padding-top: 8px;
+}
+#app[data-item-style="3"] .list-day-section {
+    --day-gap: 20px;
+}
+#app[data-item-style="3"] .essay-entry .thumbnail-wrapper {
+    margin-top: 0px;
+    padding-bottom: var(--thumbnail-size);
+}
+#app[data-item-style="4"] #essay-list,
+#app[data-item-style="4"] .essay-entry {
+    --background: var(--light-grey);
+}
+#app:not([data-item-style="4"]) .svg-background {
+    display: none;
+}
+.svg-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+#app[data-item-style="4"] .essay-inner {
+    display: flex;
+}
+#app[data-item-style="4"] .svg-background > svg {
+    width: 100%;
+    height: 100%;
+}
+#app[data-item-style="4"] .essay-entry:after {
+    content: none;
+}
+#app[data-item-style="4"] .essay-entry {
+    box-shadow: none;
+    background-color: transparent;
+}
+#app[data-item-style="4"] .svg-background canvas {
+    width: 100%;
+    height: 100%;
+}
+.essay-body {
+    /* margin-top: 10px; */
+    flex: 1;
+}
+
+#app[data-color="3"] #essay-list {
+    --background: #000;
+    --gradient-end: rgba(0, 0, 0, 0);
+}
