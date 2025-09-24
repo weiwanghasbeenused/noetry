@@ -21,7 +21,7 @@ $config_pages = array(
         )
     ),
     'essay-list' => array(
-        'stylesheets' => array( 'essay-list', 'list' ),
+        'stylesheets' => array( 'essay-list', 'list', 'calendar' ),
         'header' => array(
             'left' => array(
                 'menu'

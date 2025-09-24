@@ -6,11 +6,17 @@
 }
 #app[data-display-mode="presentation"] #add,
 #app[data-display-mode="presentation"] #main-header{
-    /* transform: translate(0, 100dvh); */
-    animation: slide-up 0.3s linear forwards;
+    /* animation: slide-up 0.3s linear forwards; */
+    transition: transform .3s;
+    transform: translate(0, 0);
+}
+#app[data-display-mode="presentation"][data-stage="-1"] #add,
+#app[data-display-mode="presentation"][data-stage="-1"] #main-header{
+    /* animation: none; */
+    
+    transform: translate(0, 100dvh);
 }
 #app[data-display-mode="presentation"][data-stage='0'] {
-    /* height: 100dvh; */
     overflow: scroll;
 }
 #add {

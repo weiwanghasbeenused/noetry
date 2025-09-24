@@ -1,0 +1,116 @@
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.month {
+    text-align: center;
+    padding: var(--padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.day {
+    position: relative;
+    text-align: right;
+    padding: 0;
+}
+.day.active .calendar-entry-mark {
+    transition: box-shadow .35s;
+    box-shadow: 0px 0px 8px rgba(10, 119, 75, .8);
+}
+.days_of_the_week {
+    padding-left: 0;
+    text-align: right;
+}
+.block {
+    height: 44px;
+    /* padding-right: 18px; */
+    /* justify-content: end; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+    z-index: 10;
+    position: relative;
+}
+.days_of_the_week .block {
+    padding-right: 0;
+    justify-content: center;
+}
+/* class */
+.calendar-picker
+{
+    padding-top: 20px;
+    position: relative;
+    left: calc(-1 * var(--padding));
+}
+.today {
+    position: relative;
+}
+.today:after,
+.today:before {
+    /* content: ''; */
+    position: absolute;
+    top: 50%;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    transform: translate(0, -50%);
+}
+.today:after {
+    right: 0;
+    border-right: 2px solid #000;
+}
+.today:before {
+    left: 0;
+    
+    border-left: 2px solid #000;
+}
+.today-underline {
+    color: transparent;
+    position: absolute;
+    /* width: 100%; */
+    
+    background-color: #000;
+    border-radius: 2px;
+    width: 24px;
+    height: 4px;
+    top: calc( 50% + .9em);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.calendar {
+    table-layout: fixed;
+    width: 100%;
+    /* top: 0px; */
+    /* font-size: 44px; */
+    transform-origin: left center;
+    /* float: right; */
+}
+
+/* id  */
+
+.calendar tr + tr {
+    position: relative;
+    border-top: 1px solid #fff;
+}
+
+.calendar-entry-mark {
+    --size: 24px;
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    z-index: 1;
+    border-radius: 50%;
+    /* box-shadow: 0px 0px 4px #000; */
+}
+.calendar-entry-mark[data-count="2"] {
+    --size: 36px;
+}
+.month-arrow {
+    display: block;
+}

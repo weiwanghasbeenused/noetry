@@ -25,6 +25,7 @@
     }
     $attrs['data-view'] = $view;
     $attrs_str = arrayToAttr($attrs);
+    $display_mode = $attrs['data-display-mode'] ?? 'dev';
 ?>
 <!DOCTYPE html>
 <html>
@@ -50,7 +51,7 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     </head>
     <body>
-        <div id="app" <?php echo $attrs_str; ?> data-stage="0">
+        <div id="app" <?php echo $attrs_str; ?> data-stage="<?php echo $display_mode === 'presentation' ? -1 : 0; ?>">
         <?php 
             
             if(!$uri[1]) require_once(__DIR__ . '/home.php');

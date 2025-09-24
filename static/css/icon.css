@@ -27,7 +27,13 @@
     background-image: url(/media/svg/photo.svg);
 }
 .arrow-head-right-icon {
+    background-image: url(/media/svg/arrow-head-right.svg);
+}
+.arrow-head-right-icon[data-color="dark-grey"] {
     background-image: url(/media/svg/arrow-head-right-dg.svg);
+}
+.arrow-head-left-icon {
+    background-image: url(/media/svg/arrow-head-left.svg);
 }
 .x-in-cicle-icon {
     background-image: url(/media/svg/x-in-circle.svg);
@@ -58,6 +64,27 @@
 }
 .more-icon {
     background-image: url(/media/svg/more.svg);
+}
+.view-rows-icon {
+    transition: background .3s;
+    background-image: url(/media/svg/view-rows.svg);
+}
+.view-rows-icon.active {
+    background-image: url(/media/svg/view-rows-g.svg);
+}
+.view-grid-icon {
+    transition: background .3s;
+    background-image: url(/media/svg/view-grid.svg);
+}
+.view-grid-icon.active {
+    background-image: url(/media/svg/view-grid-g.svg);
+}
+.view-calendar-icon {
+    transition: background .3s;
+    background-image: url(/media/svg/view-calendar.svg);
+}
+.view-calendar-icon.active {
+    background-image: url(/media/svg/view-calendar-g.svg);
 }
 .placeholder-icon {
     background-color: #000;

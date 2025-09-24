@@ -11,8 +11,10 @@
     </div>';
     $location = '<div id="header-location" class="header-item">
         <div class="header-item-icon-wrapper"><div id="header-location-icon" class="header-item-icon icon pin-icon"></div></div><div class="selected-location">臺北市大安區</div>
-        <div class="icon arrow-head-right-icon"></div>
+        <div class="icon arrow-head-right-icon" data-color="dark-grey"></div>
     </div>';
+
+    // $display_mode = $_GET['display-mode'] ?? 'dev';
 ?>
 <script src="/static/js/tangled-line/utils/lib.js"></script>
 <script src="/static/js/tangled-line/TangledLine.js"></script>
@@ -115,6 +117,11 @@
                 slug: 'quit',
                 callback: (instance) => {
                     instance.hide();
+                    switchStage(-1);
+                    // app.setAttribute('data-stage', -1);
+                    setTimeout(()=>{
+                        history.back();
+                    }, 300);
                 }
             },
             {
@@ -199,4 +206,7 @@
             mask.setAttribute('data-hidden', '1');
         });
     }
+
+    const stage = app.getAttribute('data-stage');
+    if(stage == -1) app.setAttribute('data-stage', 0);
 </script>

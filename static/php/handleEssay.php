@@ -32,6 +32,7 @@ function handlePoem($raw){
     $output['points'] = sortPoints($points);
 
     $datetime = processDate($raw['begin']);
+    $output['date'] = $datetime['year'] . '/' . $datetime['month']. '/' . $datetime['day'];
     $output['time'] = $datetime['hour'] . ':' . $datetime['minute'];
     $output['m'] = $datetime['m'];
 

@@ -1,11 +1,16 @@
+
+#app[data-view="essay-list"] {
+    height: auto;
+}
 #essay-list {
     --day-gap: 8px;
     --shadow-size: 8px;
-    
+    --shadow-color: var(--dark-grey);
+    --view-options-height: 40px;
     --background: #fff;
     --gradient-end: rgba(255, 255,255, 0);
     --thumbnail-size: 100%;
-    
+    margin-top: calc(var(--main-header-height) + var(--view-options-height));
     background-color: var(--background);
     padding-top: 0;
 }
@@ -14,7 +19,7 @@
     --background: #fff;
     position: relative;
     background-color: var(--background);
-    box-shadow: -2px 8px 8px var(--dark-grey);
+    box-shadow: -2px 8px 8px var(--shadow-color);
 }
 .essay-entry:after {
     content: '';
@@ -43,6 +48,23 @@
 .list-text.essay-text {
     -webkit-line-clamp: 3;
 }
+.date-separator {
+    /* display: inline-block;
+    width: 1em;
+    height: 1em;
+    position: relative; */
+}
+.date-separator:after {
+    /* content: ''; */
+    position: absolute;
+    left: 50%;
+    top: calc( 50% + 2px);
+    height: 1.2em;
+    width: 1px;
+    background-color: var(--dark-grey);
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(30deg);
+}
 .essay-entry .thumbnail-wrapper {
     flex: 0 0 var(--thumbnail-size);
     margin-top: 20px;
@@ -59,26 +81,70 @@
 #essay-list .list-year-section-title:before {
     background: linear-gradient(to bottom, var(--light-grey) 30%, var(--gradient-end) 100%);
 }
-
+#essay-list .list-year-section-title:after {
+    content: none;
+}
+.view-option.active {
+    position: relative;
+}
+.view-option:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 4px;
+    border-radius: 2px;
+    /* border-radius: 50%; */
+    background-color: var(--theme-color);
+    bottom: 0;
+    left: 50%;
+    transform:translate(-50%, 100%);
+}
+.view-option.active:after {
+    width: 20px;
+    transition: width .3s;
+}
 /* data-item-style="2" */
 #app[data-item-style="2"] #essay-list {
+    --thumbnail-size: 75px;
+    --gradient-end: rgba(255, 255, 255, 0);
+}
+#app[data-item-style="2"] .essay-inner {
+    display: flex;
+    /* padding-bottom: 20px; */
+    padding-top: 12px;
+}
+#app[data-item-style="2"] .essay-entry .thumbnail-wrapper {
+    margin-top: 0px;
+    padding-bottom: var(--thumbnail-size);
+}
+#app[data-item-style="2"] .essay-entry .thumbnail-wrapper {
+    margin-top: 0px;
+    padding-bottom: var(--thumbnail-size);
+}
+#app[data-item-style="2"] #essay-list .list-year-section-title:after,
+#app[data-item-style="2"] #essay-list .list-year-section-title:before {
+    background: linear-gradient(to bottom, #fff 30%, var(--gradient-end) 100%);
+}
+
+/* data-item-style="3" */
+#app[data-item-style="3"] #essay-list {
     --thumbnail-size: 75px;
     --background: var(--light-grey);
     --shadow-size: 15px;
 }
-#app[data-item-style="2"] .essay-inner {
+#app[data-item-style="3"] .essay-inner {
     display: flex;
     padding-bottom: 20px;
     padding-top: 12px;
 }
-#app[data-item-style="2"] .essay-entry,
-#app[data-item-style="2"][data-color] .essay-entry{
+#app[data-item-style="3"] .essay-entry,
+#app[data-item-style="3"][data-color] .essay-entry{
     box-shadow: none;
 }
-#app[data-item-style="2"] .essay-entry:after {
+#app[data-item-style="3"] .essay-entry:after {
     content: none;
 }
-#app[data-item-style="2"] .essay-entry:before {
+#app[data-item-style="3"] .essay-entry:before {
     content: '';
     position: absolute;
     left: 50%;
@@ -89,93 +155,95 @@
     background: linear-gradient( to bottom, var(--gradient-end) 0%, #fff var(--shadow-size), #fff calc(100% - var(--shadow-size)), var(--gradient-end) 100% );
     z-index: 3;
 }
-#app[data-item-style="2"] .list-entry + .list-entry {
-    margin-top: calc(var(--shadow-size));
+#app[data-item-style="3"] .list-entry + .list-entry {
+    margin-top: calc(var(--shadow-size) + 10px);
 }
-#app[data-item-style="2"] .essay-inner {
-    padding-bottom: 20px;
-    padding-top: 12px;
-}
-#app[data-item-style="2"] .essay-day-section.list-day-section {
-    --day-gap: 20px;
-}
-#app[data-item-style="2"] .essay-entry .thumbnail-wrapper {
-    margin-top: 0px;
-    padding-bottom: var(--thumbnail-size);
-}
-/* #app[data-item-style="2"] .essay-entry .thumbnail-wrapper img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-} */
-#app[data-color="2"] #essay-list {
-    --background: var(--theme-color);
-    --gradient-end: rgba(10, 119, 75, 0);
-}
-#app[data-color="2"][data-item-style="2"] #essay-list {
-    --shadow-size: 20px;
-}
-#app[data-color="2"][data-item-style="2"] .essay-entry {
-    box-shadow: -2px 8px 8px #000;
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
-    color: var(--green);
-}
-#app[data-color="2"][data-item-style="2"] .essay-entry:after {
-    content: none;
-}
-#app[data-color="2"][data-item-style="2"] .essay-entry:before {
-    bottom: 0;
-    transform: translate(-50%, 0);
-    margin-bottom: calc(-1 * var(--shadow-size));
-    height: 60%;
-}
-#app[data-color="2"][data-item-style="2"] .essay-inner {
-    padding-bottom: 5px;
-    background-color: transparent;
-}
-#app[data-color="2"][data-item-style="2"] .essay-day-section.list-day-section {
-    --day-gap: 20px;
-}
-
-/* data-item-style="3" */
-#app[data-item-style="3"] #essay-list {
-    --background: var(--light-grey);
-}
-#app[data-item-style="3"] .essay-inner {
-    display: flex;
-}
-#app[data-item-style="3"][data-color="2"] #essay-list {
-    --background: var(--theme-color);
-}
-#app[data-item-style="3"] .essay-entry:after {
-    content: none;
-}
-#app[data-item-style="3"] .essay-entry{
-    --shadow-size: 20px;
-    --background: #fff;
-    --thumbnail-size: 75px;
-    box-shadow: 0 0 5px 5px var(--background);
-    border-radius: 24px;
-}
-#app[data-item-style="3"] .essay-inner {
-    padding-top: 8px;
-}
-#app[data-item-style="3"] .list-day-section {
+#app[data-item-style="3"] .essay-day-section.list-day-section {
     --day-gap: 20px;
 }
 #app[data-item-style="3"] .essay-entry .thumbnail-wrapper {
     margin-top: 0px;
     padding-bottom: var(--thumbnail-size);
 }
-#app[data-item-style="4"] #essay-list,
-#app[data-item-style="4"] .essay-entry {
+#app[data-item-style="3"] .list[data-list-type="calendar"]:before {
+    background-color: var(--light-grey);
+}
+#app[data-color="2"] #essay-list {
+    --shadow-color: var(--theme-color);
+    --gradient-end: rgba(10, 119, 75, 0);
+}
+#app[data-color="2"] .essay-body {
+    color: var(--theme-color);
+}
+#app[data-color="2"][data-item-style="3"] #essay-list {
+    --shadow-size: 20px;
+}
+#app[data-color="2"][data-item-style="3"] .essay-entry {
+    box-shadow: -2px 8px 8px #000;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    color: var(--green);
+}
+#app[data-color="2"][data-item-style="3"] .essay-entry:after {
+    content: none;
+}
+#app[data-color="2"][data-item-style="3"] .essay-entry:before {
+    bottom: 0;
+    transform: translate(-50%, 0);
+    margin-bottom: calc(-1 * var(--shadow-size));
+    height: 60%;
+}
+#app[data-color="2"][data-item-style="3"] .essay-inner {
+    padding-bottom: 5px;
+    background-color: transparent;
+}
+#app[data-color="2"][data-item-style="3"] .essay-day-section.list-day-section {
+    --day-gap: 20px;
+}
+
+/* data-item-style="4" */
+#app[data-item-style="4"] #essay-list {
     --background: var(--light-grey);
 }
-#app:not([data-item-style="4"]) .svg-background {
-    display: none;
+#app[data-item-style="4"] #essay-list .list {
+    --entry-gap: 18px;
 }
+#app[data-item-style="4"] .essay-inner {
+    display: flex;
+}
+#app[data-item-style="4"][data-color="2"] #essay-list {
+    --background: var(--theme-color);
+}
+#app[data-item-style="4"] .essay-entry:after {
+    content: none;
+}
+#app[data-item-style="4"] .essay-entry{
+    --shadow-size: 20px;
+    --background: #fff;
+    --thumbnail-size: 75px;
+    box-shadow: 0 0 5px 5px var(--background);
+    border-radius: var(--rounded)
+}
+#app[data-item-style="4"] .essay-inner {
+    padding-top: 8px;
+}
+#app[data-item-style="4"] .list-day-section {
+    --day-gap: 20px;
+}
+#app[data-item-style="4"] .essay-entry .thumbnail-wrapper {
+    margin-top: 0px;
+    padding-bottom: var(--thumbnail-size);
+}
+#app[data-item-style="4"] .list[data-list-type="grid"] .essay-entry.list-entry {
+    margin-bottom: calc( var(--entry-gap) * 2);
+}
+/* #app[data-item-style="keep"] #essay-list,
+#app[data-item-style="keep"] .essay-entry {
+    --background: var(--light-grey);
+} */
+/* #app:not([data-item-style="keep"]) .svg-background {
+    display: none;
+} */
 .svg-background {
     position: absolute;
     width: 100%;
@@ -184,24 +252,24 @@
     left: 0;
     z-index: 5;
 }
-#app[data-item-style="4"] .essay-inner {
+/* #app[data-item-style="keep"] .essay-inner {
     display: flex;
 }
-#app[data-item-style="4"] .svg-background > svg {
+#app[data-item-style="keep"] .svg-background > svg {
     width: 100%;
     height: 100%;
 }
-#app[data-item-style="4"] .essay-entry:after {
+#app[data-item-style="keep"] .essay-entry:after {
     content: none;
 }
-#app[data-item-style="4"] .essay-entry {
+#app[data-item-style="keep"] .essay-entry {
     box-shadow: none;
     background-color: transparent;
 }
-#app[data-item-style="4"] .svg-background canvas {
+#app[data-item-style="keep"] .svg-background canvas {
     width: 100%;
     height: 100%;
-}
+} */
 .essay-body {
     /* margin-top: 10px; */
     flex: 1;
@@ -210,4 +278,88 @@
 #app[data-color="3"] #essay-list {
     --background: #000;
     --gradient-end: rgba(0, 0, 0, 0);
+}
+#view-options {
+    position: fixed;
+    width: 100%;
+    top: var(--main-header-height);
+    height: var(--view-options-height);
+    padding: var(--padding);
+    padding-top: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: end;;
+    background-color: var(--light-grey);
+    box-shadow: 0 -18px 15px 15px rgba(0, 0, 0, .5)
+}
+.view-option + .view-option {
+    margin-left: 15px;
+}
+#essay-list .list[data-list-type],
+#essay-calendar {
+    position: fixed;
+    left: -10000px;
+    opacity: 0;
+    pointer-events: none;
+}
+#essay-list[data-list-view="rows"] .list[data-list-type="rows"],
+#essay-list[data-list-view="grid"] .list[data-list-type="grid"],
+#essay-list[data-list-view="calendar"] .list[data-list-type="calendar"],
+#essay-list[data-list-view="calendar"] #essay-calendar {
+    /* display: block; */
+    position: relative;
+    left: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity .5s;
+}
+
+#essay-calendar {
+    /* display: none; */
+    width: 100vw;
+    /* padding-top: calc(var(--view-options-height) + 20px); */
+    /* padding-bottom: var(--padding); */
+    /* border-bottom: 2px solid var(--dark-grey); */
+}
+#essay-list[data-list-view="calendar"] {
+    --background: var(--light-grey);
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--nav-height) - var(--main-header-height));
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+.list[data-list-type="calendar"] {
+    flex: 1;
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: calc(var(--main-header-height) + var(--padding) + var(--entry-gap) + 30px);
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+}
+.list[data-list-type="calendar"]:before {
+    content: '';
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    top: 0;
+    /* left: calc(-1 * var(--padding)); */
+    left: 0;
+    background-color: var(--background);
+}
+.list[data-list-type="calendar"] .essay-entry {
+    opacity: 0;
+    position: fixed;
+    left: -10000px;
+    pointer-events: none;
+    margin-left: 0;
+}
+.list[data-list-type="calendar"] .essay-entry.visible {
+    transition: opacity .25s;
+    position: relative;
+    left: 0;
+    pointer-events: auto;
+    opacity: 1;
 }
