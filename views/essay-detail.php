@@ -162,4 +162,8 @@ if(count($diaries))
             conversationPopup.show();
         });
     }
+    const header_esc_button = document.querySelector('#main-header .esc-icon');
+    header_esc_button.addEventListener('click', () => {
+        history.back();
+    })
 </script>

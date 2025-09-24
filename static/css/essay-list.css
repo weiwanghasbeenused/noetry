@@ -363,3 +363,7 @@
     pointer-events: auto;
     opacity: 1;
 }
+.list[data-list-type="calendar"] .essay-entry {
+    margin-top: 0 !important;
+    margin-bottom: calc(var(--shadow-size) + 10px);
+}
