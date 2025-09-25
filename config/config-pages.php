@@ -28,7 +28,7 @@ $config_pages = array(
             ),
             'title' => '心雜音',
             'right' => array(
-                'search',
+                // 'search',
             )
         )
     ),

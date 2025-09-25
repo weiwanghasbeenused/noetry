@@ -27,7 +27,3 @@
 .location-selection .header {
     height: 70px;
 }
-.location-search {
-    background-color: var(--light-grey);
-    margin: 10px 0;
-}

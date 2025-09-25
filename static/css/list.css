@@ -17,14 +17,6 @@
     z-index: 100;
     position: sticky;
 }
-#essay-list .list-section-title {
-    padding-top: var(--padding);
-    top: calc( var(--main-header-height) + var(--view-options-height));
-}
-#essay-list .list-day-section-title {
-    padding-top: 0;
-    top: calc( var(--main-header-height) + var(--view-options-height) + var(--padding) + 20px);
-}
 .list-month-section-title {
     z-index: 300;
 }
@@ -170,4 +162,32 @@
 }
 .list[data-list-type="grid"] .entry-time {
     margin-bottom: 15px;
+}
+.list.no-result .list-entry {
+    display: none;
+}
+.list.no-result .list-content:before {
+    content: "找不到符合的搜尋結果";
+    color: var(--dark-grey);
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.list .partial-loading-icon{
+    margin: 10px auto;
+}
+
+.list[data-loading="0"] .partial-loading-icon{
+    display: none;
+    
+}
+.list[data-loading="0"] .list-content {
+    transition: opacity .3s;
+}
+.list[data-loading="1"] .list-content{
+    position: fixed;
+    left: -10000px;
+    opacity: 0;
+    pointer-events: none;
 }

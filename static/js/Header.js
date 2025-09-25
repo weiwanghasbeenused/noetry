@@ -1,18 +1,18 @@
 (function(){
     const elementFactories = {
-        menu: () => createDiv(['menu-toggle', 'menu-icon', 'icon', 'button']),
-        search: () => createDiv(['search-icon', 'icon', 'button'], { 'data-href': '/search' }),
-        generate: () => createDiv(['wand-icon', 'icon', 'button'], { 'data-href': '/review' }),
-        add: () => createDiv(['plus-icon', 'icon', 'button'], { 'data-href': '/add-diary' }),
-        'next-step-text': () => createDiv(['next-step-button', 'text-button', 'button', 'small'], { 'data-href': '', 'data-status': '0' }, '下一步'),
-        'edit-text': () => createDiv(['edit-button', 'text-button', 'button', 'small'], { 'data-href': '', 'data-status': '1' }, '編輯'),
-        'cancel-text': () => createDiv(['cancel-button', 'text-button', 'button', 'small'], { 'data-href': '', 'data-status': '1' }, '取消'),
-        esc: () => createDiv(['esc-icon', 'icon', 'button'], { 'data-href': '' }),
-        locator: () => createDiv(['locator-icon', 'icon', 'button']),
-        more: () => createDiv(['more-icon', 'icon', 'button'])
+        menu: () => createDiv('menu', ['menu-toggle', 'menu-icon', 'icon', 'button']),
+        search: () => createDiv('search', ['search-icon', 'icon', 'button'], { 'data-href': '/search' }),
+        generate: () => createDiv('wand', ['wand-icon', 'icon', 'button'], { 'data-href': '/review' }),
+        add: () => createDiv('plus', ['plus-icon', 'icon', 'button'], { 'data-href': '/add-diary' }),
+        'next-step-text': () => createDiv('next-step-text', ['next-step-button', 'text-button', 'button', 'small'], { 'data-href': '', 'data-status': '0' }, '下一步'),
+        'edit-text': () => createDiv('edit-text', ['edit-button', 'text-button', 'button', 'small'], { 'data-href': '', 'data-status': '1' }, '編輯'),
+        'cancel-text': () => createDiv('cancel-text', ['cancel-button', 'text-button', 'button', 'small'], { 'data-href': '', 'data-status': '1' }, '取消'),
+        esc: () => createDiv('esc', ['esc-icon', 'icon', 'button'], { 'data-href': '' }),
+        locator: () => createDiv('locator', ['locator-icon', 'icon', 'button']),
+        more: () => createDiv('more', ['more-icon', 'icon', 'button'])
     };
 
-    function createDiv(classList, attributes = {}, text = '') {
+    function createDiv(slug, classList, attributes = {}, text = '') {
         const el = document.createElement('div');
         el.className = classList.join(' ');
         Object.keys(attributes).forEach((key) => {
@@ -20,6 +20,11 @@
         });
         if (text) {
             el.textContent = text;
+        }
+        if(slug === 'search') {
+            const div = document.createElement('div');
+            div.className = 'current-keyword';
+            el.appendChild(div);
         }
         return el;
     }

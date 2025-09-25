@@ -1,4 +1,4 @@
-
+@import './search.css'; 
 .large-popup {
     background-color: #fff;
     border-top-right-radius: 18px;
@@ -19,6 +19,12 @@
     padding-bottom: 30px;
     overflow: scroll;
     flex: 1;
+}
+.large-popup-section + .large-popup-section{
+    margin-top: 20px;
+}
+.large-popup-section-title {
+    margin-bottom: 10px;
 }
 .location-option {
     padding: 16px 10px;

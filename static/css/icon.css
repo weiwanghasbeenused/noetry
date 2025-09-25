@@ -46,6 +46,10 @@
     background-image: url(/media/svg/partial-loading_w.svg);
     animation: partial-loading 1s infinite ease-out;
 }
+.loading-icon[data-color="black"] {
+    background-image: url(/media/svg/partial-loading.svg);
+    animation: partial-loading 1s infinite ease-out;
+}
 .partial-loading-icon {
     background-image: url(/media/svg/partial-loading.svg);
     animation: partial-loading 1s infinite ease-out;
@@ -55,6 +59,13 @@
 }
 [data-color-theme="dark"] .esc-icon {
     background-image: url(/media/svg/esc-w.svg);
+}
+.esc-small-icon {
+    background-image: url(/media/svg/esc-small.svg);
+}
+[data-color-theme="dark"] .esc-small-icon,
+.esc-small-icon[data-color="white"] {
+    background-image: url(/media/svg/esc-small_w.svg);
 }
 .search-icon {
     background-image: url(/media/svg/search.svg);

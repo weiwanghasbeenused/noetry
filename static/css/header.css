@@ -4,7 +4,8 @@
     align-items: center;
     justify-content: center;
 }
-.header {
+.header,
+.sub-header {
     padding: 0 var(--padding);
 }
 #main-header {
@@ -32,4 +33,15 @@
 .header-section > .icon {
     --w: 30px;
     --h: 30px;
+}
+.sub-header {
+    height: var(--sub-header-height);
+    background-color: var(--light-grey);
+    display: flex;
+    align-items: start;
+    justify-content: center;
+} 
+.sub-header.fixed {
+    --top: var(--main-header-height);
+    z-index: 1000;
 }

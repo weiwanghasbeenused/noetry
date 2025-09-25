@@ -26,6 +26,7 @@
     --page-padding-bottom: calc(var(--padding) * 2);
 
     --main-header-height: 60px;
+    --sub-header-height: 40px;
     --nav-height: 60px;
 
 }
@@ -88,11 +89,6 @@ figure video{
     display: block;
     width: 100%;
 }
-/* .page {
-    padding-top: var(--page-padding-top);
-    padding-bottom: var(--page-padding-bottom);
-    background-color: #fff;
-} */
 .padded {
     padding-left: var(--padding);
     padding-right: var(--padding);
@@ -127,8 +123,7 @@ figure video{
 .page {
     background-color: var(--background);
     padding: var(--padding);
-    /* padding-top: calc(var(--padding) + var(--main-header-height)); */
-    margin-top: var(--main-header-height);
+    padding-top: calc( var(--padding) + var(--main-header-height) );
     padding-bottom: calc(var(--padding) * 2 + var(--nav-height));
 }
 .body {

@@ -47,8 +47,12 @@ $view_options = array(
 $list_view = $_GET['view'] ?? $view_options[0]; 
 $essay_items = array();
 ?>
-<div id="<?php echo $view; ?>" class="page" data-list-view="<?php echo $list_view; ?>">
-    <div id="view-options" class="fixed full-vw">
+<div class="sub-header fixed full-vw">
+    <div class="header-section header-left">
+        <div class="search-icon icon button" data-href="/search"></div>
+        <div class="current-keyword"></div>
+    </div>
+    <div id="view-options" class="header-section header-right">
         <?php 
             foreach($view_options as $option) {
                 // $active = $list_view  === $option;
@@ -59,52 +63,75 @@ $essay_items = array();
             }
         ?>
     </div>
-    <ul class="list" data-list-type="rows">
-    <?php 
-        $essay_count = 0;
-        foreach($essay_list as $year => $months) {
-            echo '<li class="list-section list-year-section essay-section essay-year-section"><h2 class="list-section-title list-year-section-title essay-section-title essay-year-section-title">' . $year . '</h2>';
-            foreach($months as $month => $days) {
-                echo '<div class="list-section list-month-section essay-section essay-month-section"><h2 class="list-section-title list-month-section-title essay-section-title essay-month-section-title">' . $month . '<span class="month-note list-date-note essay-date-note small">月</span></h2>';
-                foreach($days as $day => $essays) {
-                    [$day_of_month, $day_of_week] = explode('-', $day);
-                    echo '<div class="list-section list-day-section essay-section essay-day-section">
-                        <div class="list-section-title list-day-section-title essay-section-title essay-day-section-title">
-                            <h2 class="list-day essay-day x-large">' . $day_of_month . '<span class="day-note list-date-note essay-date-note small">日</span></h2>
-                            <div class="list-day-of-week essay-day-of-week bold small">'.$day_of_week.'.</div></div>';
-                    foreach($essays as $essay) {
-                        echo renderPoemEntry($essay, 'rows', $essay_count);
-                        $essay_items[] = $essay; 
-                        $points[] = array(
-                            'id' => 'essay-entry-' . $essay_count,
-                            'points' => $essay['points']
-                        );
-                        $essay_count ++;
+</div>
+<div id="<?php echo $view; ?>" class="page" data-list-view="<?php echo $list_view; ?>">
+    <ul class="list" data-list-type="rows" data-loading="0">
+        <div class="list-content">
+        <?php 
+            $essay_count = 0;
+            foreach($essay_list as $year => $months) {
+                echo '<li class="list-section list-year-section essay-section essay-year-section"><h2 class="list-section-title list-year-section-title essay-section-title essay-year-section-title">' . $year . '</h2>';
+                foreach($months as $month => $days) {
+                    echo '<div class="list-section list-month-section essay-section essay-month-section"><h2 class="list-section-title list-month-section-title essay-section-title essay-month-section-title">' . $month . '<span class="month-note list-date-note essay-date-note small">月</span></h2>';
+                    foreach($days as $day => $essays) {
+                        [$day_of_month, $day_of_week] = explode('-', $day);
+                        echo '<div class="list-section list-day-section essay-section essay-day-section">
+                            <div class="list-section-title list-day-section-title essay-section-title essay-day-section-title">
+                                <h2 class="list-day essay-day x-large">' . $day_of_month . '<span class="day-note list-date-note essay-date-note small">日</span></h2>
+                                <div class="list-day-of-week essay-day-of-week bold small">'.$day_of_week.'.</div></div>';
+                        foreach($essays as $essay) {
+                            echo renderPoemEntry($essay, 'rows', $essay_count);
+                            $essay_items[] = $essay; 
+                            $points[] = array(
+                                'id' => 'essay-entry-' . $essay_count,
+                                'points' => $essay['points']
+                            );
+                            $essay_count ++;
+                        }
+                        echo '</div>';
                     }
                     echo '</div>';
                 }
-                echo '</div>';
+                echo '</li>';
             }
-            echo '</li>';
-        }
-    ?>
+        ?>
+        </div>
+        <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
     </ul>
-    <div class="list" data-list-type="grid">
+    <div class="list" data-list-type="grid" data-loading="0">
+        <div class="list-content">
         <?php 
             foreach($essay_items as $essay){
                 echo renderPoemEntry($essay, 'grid');
             }
         ?>
+        </div>
+        <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
     </div>
     <?php echo renderCalendar(date('Y-m-d',strtotime('now')), $essay_list, 'essay-calendar'); ?>
-    <ul class="list" data-list-type="calendar">
+    <ul class="list" data-list-type="calendar" data-loading="0">
+        <div class="list-content">
         <?php 
             foreach($essay_items as $essay){
                 echo renderPoemEntry($essay, 'calendar');
             }
         ?>
+        </div>
+        <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
+    </ul>
+    <ul id="search-result-list" class="list" data-list-type="default" data-loading="0">
+        <div class="list-content">
+        <?php 
+            foreach($essay_items as $essay){
+                echo renderPoemEntry($essay, 'calendar');
+            }
+        ?>
+        </div>
+        <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
     </ul>
 </div>
+<script src="/static/js/Header.js"></script>
+<script src="/static/js/LargePopup.js"></script>
 <script>
     const page = document.querySelector('.page');
     const points = <?php echo json_encode($points); ?>;
@@ -182,5 +209,96 @@ $essay_items = array();
             }
         });
     }
+    const searchContent = `<div class="search-bar-wrapper large-popup-section">
+        <div class="search-input-wrapper"><input type="search" class="search-input tag border-less" placeholder="輸入關鍵字" /><div class="remove-input-content-button icon esc-small-icon" data-color="black"></div></div><div class="search-button bold">搜尋</div></div>
+        <div class="large-popup-section">
+            <div class="large-popup-section-title small bold">推薦關鍵字</div>
+            <div class="tag-list" data-loading="0">
+                <div class="tag reverse">春天</div>
+                <div class="tag reverse">颱風</div>
+                <div class="tag reverse">冰淇淋</div>
+                <div class="tag reverse">螞蟻</div>
+                <div class="tag reverse">滷肉飯</div>
+                <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
+            </div>
+        </div>`;
+    const searchPopup = new LargePopup({
+        id: 'search-popup',
+        content: searchContent,
+        mount: app,
+        header: {
+            'left': ['esc'],
+            'title': '搜尋篇章',
+            'right': []
+        }
+    });
+    const searchButton = document.querySelector('.search-icon');
+    searchButton.addEventListener('click', ()=>{
+        searchPopup.show();
+    });
+    const search_input = document.querySelector('#search-popup .search-input');
+    let search_input_timer = null;
+    const search_recommendation_list = document.querySelector('#search-popup .tag-list');
+    console.log(search_input);
+    search_input.addEventListener('input', ()=>{
+        search_recommendation_list.setAttribute('data-loading', 1);
+        if(search_input_timer) clearTimeout(search_input_timer);
+        search_input_timer = setTimeout(()=>{
+            search_input_timer = null;
+            search_recommendation_list.setAttribute('data-loading', 0);
+        }, 300);
+    });
+    const tags = search_recommendation_list.querySelectorAll('.tag');
+    for(const tag of tags) {
+        tag.addEventListener('click', ()=>{
+            applySearchKeyword(tag.innerText);
+        });
+    }
+    const search_button = document.querySelector('.search-button');
+    search_button.addEventListener('click', ()=>{
+        if(!search_input.value) return;
+        applySearchKeyword(search_input.value);
+    });
+
+    const current_keyword = document.querySelector('.sub-header .current-keyword');
+    console.log(current_keyword);
+    function applySearchKeyword(keyword){
+        searchPopup.hide();
+        page.setAttribute('data-list-view', 'search');
+        current_keyword.innerHTML = '<div class="tag removable-tag reverse">' + keyword + '</div>';
+        const current_keyword_tag = current_keyword.querySelector('.tag');
+        const current_list = document.querySelector('#search-result-list');
+        if(keyword.toLowerCase() === 'not found')
+            current_list.classList.add('no-result');
+        else
+            current_list.classList.remove('no-result');
+        current_keyword_tag.addEventListener('click', removeSearchKeyword);
+        const active_view_option = document.querySelector('.view-option.active');
+        if(active_view_option) active_view_option.classList.remove('active');
+        current_list.setAttribute('data-loading', 1);
+        setTimeout(()=>{
+            current_list.setAttribute('data-loading', 0);
+        }, 2000);
+        
+    }
+    function removeSearchKeyword(){
+        current_keyword.innerHTML = '';
+        page.setAttribute('data-list-view', list_view);
+        const current_list = document.querySelector('.list[data-list-type="'+list_view+'"]');
+        const original_view_option = document.querySelector('.view-option[data-value="'+list_view+'"]');
+        console.log(original_view_option);
+        if(original_view_option) original_view_option.classList.add('active');
+        current_list.setAttribute('data-loading', 1);
+        setTimeout(()=>{
+            current_list.setAttribute('data-loading', 0);
+            // page.setAttribute('data-list-view', list_view);
+            
+        }, 1000);
+    }
+    const remove_input_content_button = document.querySelector('.search-input-wrapper .remove-input-content-button');
+    remove_input_content_button.addEventListener('click', ()=>{
+        search_input.value = '';
+    });
+
 </script>
 <?php
