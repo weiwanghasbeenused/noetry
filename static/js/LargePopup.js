@@ -33,6 +33,7 @@
             this.headerElement = null;
             this.bodyElement = null;
             this.loadingElement = null;
+            this.mask = null;
 
             this.render();
             this.addListeners();
@@ -41,6 +42,9 @@
         render() {
             if (this.root && this.root.parentNode) {
                 this.root.parentNode.removeChild(this.root);
+            }
+            if (this.mask && this.mask.parentNode) {
+                this.mask.parentNode.removeChild(this.mask);
             }
 
             this.root = document.createElement('div');
@@ -59,7 +63,7 @@
 
             this.headerElement = headerRenderer(this.headerConfig, this.headerColorTheme, this.headerId, this.headerClasses);
             // console.log(this.headerElement)
-            this.escButton = this.headerElement.querySelectorAll('.esc-icon');
+            this.closeButton = this.headerElement.querySelectorAll('.esc-icon, .cancel-button');
             this.root.appendChild(this.headerElement);
 
             this.bodyElement = document.createElement('div');
@@ -76,6 +80,10 @@
                 this.loadingElement = this.createLoading(this.loadingConfig);
                 this.mountNode.appendChild(this.loadingElement);
             }
+
+            this.mask = this.createMask();
+            this.mountNode.appendChild(this.mask);
+            this.setMaskHidden(this.hidden);
         }
 
         setContent(html = '') {
@@ -101,16 +109,19 @@
             if (this.root) {
                 this.root.setAttribute('data-hidden', '0');
             }
-            const mask = document.getElementById('mask');
-            if(mask) mask.setAttribute('data-hidden', '0');
+            // if (this.mask) {
+            //     this.mask.setAttribute('data-rel', this.id || '');
+            // }
+            this.setMaskHidden(false);
+            this.hidden = false;
         }
 
         hide() {
             if (this.root) {
                 this.root.setAttribute('data-hidden', '1');
             }
-            const mask = document.getElementById('mask');
-            if(mask) mask.setAttribute('data-hidden', '1');
+            this.setMaskHidden(true);
+            this.hidden = true;
         }
 
         showLoading() {
@@ -132,10 +143,36 @@
             if (this.loadingElement && this.loadingElement.parentNode) {
                 this.loadingElement.parentNode.removeChild(this.loadingElement);
             }
+            if (this.mask && this.mask.parentNode) {
+                this.mask.parentNode.removeChild(this.mask);
+            }
             this.root = null;
             this.headerElement = null;
             this.bodyElement = null;
             this.loadingElement = null;
+            this.mask = null;
+        }
+
+        createMask() {
+            const mask = document.createElement('div');
+            mask.className = 'full-vw full-vh fixed';
+            mask.setAttribute('data-hidden', '1');
+            mask.setAttribute('data-rel', this.id || '');
+            mask.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            mask.style.top = '0';
+            mask.style.left = '0';
+            mask.style.zIndex = '1050';
+            mask.style.transition = 'opacity 0.3s ease-in-out';
+            return mask;
+        }
+
+        setMaskHidden(isHidden) {
+            if (!this.mask) {
+                return;
+            }
+            this.mask.setAttribute('data-hidden', isHidden ? '1' : '0');
+            this.mask.style.opacity = isHidden ? '0' : '1';
+            this.mask.style.pointerEvents = isHidden ? 'none' : 'auto';
         }
 
         createLoading({ id = '', buttons = [], text = '載入中...' }) {
@@ -192,8 +229,8 @@
             return null;
         }
         addListeners(){
-            if(this.escButton.length)
-                for(const button of this.escButton)
+            if(this.closeButton.length)
+                for(const button of this.closeButton)
                     button.addEventListener('click', this.hide.bind(this));
         }
     }

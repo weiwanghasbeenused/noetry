@@ -166,7 +166,7 @@
     box-shadow: 0px 0px 12px var(--dark-grey);
     color: var(--theme-color);
     background-color: #fff;
-    border: 2px solid;
+    /* border: 2px solid; */
     border-radius: var(--rounded);
     padding: calc( 2.5* var(--padding));
     margin: var(--padding);

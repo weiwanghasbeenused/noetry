@@ -212,6 +212,9 @@
     --entry-gap: 18px;
     padding-top: calc(var(--shadow-size) + 10px);
 }
+#app[data-item-style="4"] #essay-list .list[data-list-type="rows"] {
+    padding-top: 0;
+}
 #app[data-item-style="4"] .essay-inner {
     display: flex;
 }
@@ -222,10 +225,10 @@
     content: none;
 }
 #app[data-item-style="4"] .essay-entry{
-    --shadow-size: 20px;
+    --shadow-size: 5px;
     --background: #fff;
     --thumbnail-size: 75px;
-    box-shadow: 0 0 5px 5px var(--background);
+    box-shadow: 0 0 var( --shadow-size) var( --shadow-size) var(--background);
     border-radius: var(--rounded)
 }
 #app[data-item-style="4"] .essay-inner {
@@ -309,7 +312,7 @@
     pointer-events: none;
 }
 #essay-list .list-section-title {
-    padding-top: var(--padding);
+    /* padding-top: var(--padding); */
     top: calc( var(--main-header-height) + var(--sub-header-height));
 }
 #essay-list .list-day-section-title {
@@ -382,4 +385,8 @@
 } */
 .current-keyword .tag {
     --text-color: var(--theme-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
 }

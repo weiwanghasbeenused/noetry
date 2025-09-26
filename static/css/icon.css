@@ -54,6 +54,10 @@
     background-image: url(/media/svg/partial-loading.svg);
     animation: partial-loading 1s infinite ease-out;
 }
+[data-loading="0"] > .partial-loading-icon,
+[data-loading="0"] > .loading-icon {
+    display: none;
+}
 .esc-icon {
     background-image: url(/media/svg/esc.svg);
 }

@@ -132,6 +132,7 @@ $essay_items = array();
 </div>
 <script src="/static/js/Header.js"></script>
 <script src="/static/js/LargePopup.js"></script>
+<script src="/static/js/Search.js"></script>
 <script>
     const page = document.querySelector('.page');
     const points = <?php echo json_encode($points); ?>;
@@ -209,8 +210,7 @@ $essay_items = array();
             }
         });
     }
-    const searchContent = `<div class="search-bar-wrapper large-popup-section">
-        <div class="search-input-wrapper"><input type="search" class="search-input tag border-less" placeholder="輸入關鍵字" /><div class="remove-input-content-button icon esc-small-icon" data-color="black"></div></div><div class="search-button bold">搜尋</div></div>
+    const searchContent = `<div class="search-bar-wrapper large-popup-section" data-empty="1"></div>
         <div class="large-popup-section">
             <div class="large-popup-section-title small bold">推薦關鍵字</div>
             <div class="tag-list" data-loading="0">
@@ -227,37 +227,19 @@ $essay_items = array();
         content: searchContent,
         mount: app,
         header: {
-            'left': ['esc'],
+            'left': [''],
             'title': '搜尋篇章',
-            'right': []
+            'right': ['cancel-text']
         }
     });
     const searchButton = document.querySelector('.search-icon');
     searchButton.addEventListener('click', ()=>{
         searchPopup.show();
     });
-    const search_input = document.querySelector('#search-popup .search-input');
-    let search_input_timer = null;
-    const search_recommendation_list = document.querySelector('#search-popup .tag-list');
-    console.log(search_input);
-    search_input.addEventListener('input', ()=>{
-        search_recommendation_list.setAttribute('data-loading', 1);
-        if(search_input_timer) clearTimeout(search_input_timer);
-        search_input_timer = setTimeout(()=>{
-            search_input_timer = null;
-            search_recommendation_list.setAttribute('data-loading', 0);
-        }, 300);
-    });
-    const tags = search_recommendation_list.querySelectorAll('.tag');
-    for(const tag of tags) {
-        tag.addEventListener('click', ()=>{
-            applySearchKeyword(tag.innerText);
-        });
-    }
-    const search_button = document.querySelector('.search-button');
-    search_button.addEventListener('click', ()=>{
-        if(!search_input.value) return;
-        applySearchKeyword(search_input.value);
+    const searchBar = new Search({
+        root: '#search-popup .search-bar-wrapper',
+        responsiveSection: '#search-popup .tag-list',
+        onKeywordSelect: applySearchKeyword
     });
 
     const current_keyword = document.querySelector('.sub-header .current-keyword');
@@ -295,10 +277,5 @@ $essay_items = array();
             
         }, 1000);
     }
-    const remove_input_content_button = document.querySelector('.search-input-wrapper .remove-input-content-button');
-    remove_input_content_button.addEventListener('click', ()=>{
-        search_input.value = '';
-    });
-
 </script>
 <?php

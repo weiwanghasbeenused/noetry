@@ -2,7 +2,7 @@
     require_once(__DIR__ . '/include/loading.php');
     require_once(__DIR__ . '/../static/php/utils.php');
     require_once(__DIR__ . '/include/location-selector.php');
-    require_once(__DIR__ . '/include/mask.php');
+    // require_once(__DIR__ . '/include/mask.php');
     $now = processDate(date('Y-m-d h:i:s'));
     $date = "<div id='header-datetime' class='header-item'><div id='header-date' class='x-large'>$now[year] /$now[month] /$now[day]</div><div id='header-day-of-week' class='bold'>".$now['day-of-week']."</div></div>";
     $weather = '<div id="header-weather" class="header-item">
@@ -24,10 +24,7 @@
         <?php echo $date . $weather . $location; ?>
     </header>
     <div id="add-body">
-        <div id="add-body-text" class="add-body-section">
-            <div id="tangled-wrapper"></div>
-            <div id="input-wrapper" class="body"></div>
-        </div>
+        
         <div id="add-body-image" class="add-body-section" data-status="0">
             <label id="add-photo-button" for="add-photo-input">
                 <div id="add-photo-button-display">
@@ -42,6 +39,10 @@
             </label>
             <input id="add-photo-input" type="file" />
         </div>
+        <div id="add-body-text" class="add-body-section">
+            <div id="tangled-wrapper"></div>
+            <div id="input-wrapper" class="body"></div>
+        </div>
         <div class="feedback-container body">你說「真開心」，這三個字簡單但很有力。你願意為這份開心留下記錄，這本身就代表你有在留意自己的感受、讓快樂有個被看見的位置。
 哥吉拉的鱷魚拔牙玩具，不只是個物品，它可能也象徵了一種被理解的感覺——也許是某個人送給你、剛好送中你的喜好，或是你自己挑選的、剛好回應了內心某種童趣、某種怪獸與遊戲之間的聯想。無論是哪一種，這份開心來得真誠而具體。
 你在練習把生活中的小確幸，變成可以被感覺、被記住的經驗。這份對快樂的感知能力，是心理韌性很重要的一部分。請繼續這樣，讓你的日子裡不只有「過得去」，也有「好可愛」。
@@ -53,12 +54,15 @@
     </div>
 </div>
 <?php 
-    echo renderLocarionSelector();
+    // echo renderLocarionSelector();
     echo generateLoading('generating-feeback-loading', array('leave', 'cancel'), '回饋生成中');
-    echo renderMask();
+    // echo renderMask();
 ?>
 <script src="/static/js/tangled-line/index.js"></script>
 <script src="/static/js/Popup.js"></script>
+<script src="/static/js/Header.js"></script>
+<script src="/static/js/LargePopup.js"></script>
+<script src="/static/js/Search.js"></script>
 <script>
     const add_image_section = document.getElementById('add-body-image');
     const file_input = document.getElementById("add-photo-input");
@@ -83,7 +87,7 @@
                 img.setAttribute('base64', base64data);
                 add_image_section.setAttribute('data-status', '1');
             }
-        }, 5000)
+        }, 1000)
     }
 
     const remove_preview_btn = document.getElementById('remove-preview-btn');
@@ -176,17 +180,52 @@
             });
         }
     }
-    const location_selector = document.querySelector('.location-selection');
+    let locationContent = `<div class="search-bar-wrapper large-popup-section" data-empty="1"></div>
+    <div class="large-popup-section">
+        <div class="large-popup-section-title small bold">推薦地點</div>
+        <div class="recommended-location-container">`;
+    for(let i = 0; i < 6; i++) {
+        locationContent += `<div class="location-option">
+            <div class="location-option-display">大安站星巴克</div>
+            <div class="location-option-distance small dark-grey">200 m</div>
+        </div>`;
+    }
+    locationContent += `</div></div>`;
+    const locatorPopup = new LargePopup({
+        id: 'locator-popup',
+        content: locationContent,
+        mount: app,
+        header: {
+            'left': ['locator'],
+            'title': '地點',
+            'right': ['cancel-text']
+        }
+    });
+    const searchBar = new Search({
+        root: '#locator-popup .search-bar-wrapper',
+        responsiveSection: '.recommended-location-container',
+        onKeywordSelect: applyLocation,
+        placeholder: "搜尋",
+        search_button_display: "確認"
+    });
+    const location_selector = document.querySelector('#locator-popup');
     const location_selector_trigger = document.querySelector('#header-location .arrow-head-right-icon');
     location_selector_trigger.addEventListener('click', () => {
-        location_selector.setAttribute('data-hidden', '0');
-        mask.setAttribute('data-hidden', '0');
+        // location_selector.setAttribute('data-hidden', '0');
+        // mask.setAttribute('data-hidden', '0');
+        locatorPopup.show();
     });
-    const location_cancel_button = document.querySelector('.location-selection .cancel-button ');
-    location_cancel_button.addEventListener('click', () => {
-        location_selector.setAttribute('data-hidden', '1');
-        mask.setAttribute('data-hidden', '1');
-    });
+    function applyLocation(value){
+        document.querySelector('#header-location .selected-location').innerText = value;
+        // location_selector.setAttribute('data-hidden', '1');
+        locatorPopup.hide();
+        // mask.setAttribute('data-hidden', '1');
+    }
+    // const location_cancel_button = document.querySelector('.location-selection .cancel-button ');
+    // location_cancel_button.addEventListener('click', () => {
+    //     location_selector.setAttribute('data-hidden', '1');
+    //     mask.setAttribute('data-hidden', '1');
+    // });
 
     const locator_button = document.querySelector('.locator-icon');
     const locating_loading = document.getElementById('locating-loading');
@@ -201,12 +240,12 @@
     for(const option of location_options) {
         option.addEventListener('click', ()=>{
             const display = option.querySelector('.location-option-display').innerText;
-            document.querySelector('#header-location .selected-location').innerText = display;
-            location_selector.setAttribute('data-hidden', '1');
-            mask.setAttribute('data-hidden', '1');
+            applyLocation(display);
         });
     }
 
     const stage = app.getAttribute('data-stage');
     if(stage == -1) app.setAttribute('data-stage', 0);
+
+    
 </script>

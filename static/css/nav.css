@@ -5,7 +5,7 @@
     height: var(--nav-height);
     z-index: 1000;
     display: flex;
-    box-shadow: 0 18px 15px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 24px 15px 15px rgba(0, 0, 0, .7);
 }
 .nav-section {
     flex: 1;

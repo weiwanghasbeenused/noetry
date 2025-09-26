@@ -42,7 +42,7 @@
     top: calc(var(--main-header-height) + 1rem);
 }
 .list-year-section:first-child .list-year-section-title + .list-month-section .list-month-section-title {
-    margin-top: -2em;
+    margin-top: -1em;
 }
 .list-year-section:first-child .list-year-section-title + .list-month-section .list-month-section-title + .list-day-section {
     margin-top: 0;

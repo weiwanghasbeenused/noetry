@@ -43,7 +43,7 @@ html {
 body {
 	margin: 0;
 	font-family: sans-serif;
-    font-size: 1rem;
+    /* font-size: 1rem; */
 	line-height: 1;
 	-webkit-font-smoothing: subpixel-antialiased;
     font-weight: normal;
@@ -94,19 +94,19 @@ figure video{
     padding-right: var(--padding);
 }
 .small {
-    font-size: .786rem;
+    font-size: 11px;
 }
 .regular {
-    font-size: 1rem;
+    font-size: 14px;
 }
 .medium {
-    font-size: 1.286rem;
+    font-size: 18px;
 }
 .large {
-    font-size: 1.714rem;
+    font-size: 24px;
 }
 .x-large {
-    font-size: 3.3rem;
+    font-size: 44px;
 }
 .green {
     --color: var(--green);
