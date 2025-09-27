@@ -16,7 +16,7 @@
     --text-color: #000;
     --background: var(--light-grey);
     --theme-color: var(--green);
-    --rounded-less: 12px;
+    --rounded-less: 8px;
     --rounded: 18px;
     --rounded-more: 24px;
 
@@ -25,6 +25,8 @@
     --page-padding-top: calc(var(--menu-height) + 25px );
     --page-padding-bottom: calc(var(--padding) * 2);
 
+    --transition-duration: .3s;
+    
     --main-header-height: 60px;
     --sub-header-height: 40px;
     --nav-height: 60px;

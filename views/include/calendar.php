@@ -50,9 +50,9 @@ function build_calendar($today, $month, $year, $entries_filtered) {
 
     $calendar = '';
     $calendar .= "<div class='month bold'>";
-    $calendar .= "<a  class='month-arrow prev-month-arrow icon arrow-head-left-icon' ></a>";
+    $calendar .= "<div class='month-arrow prev-month-arrow icon arrow-head-left-icon' ></div>";
     $calendar .= $monthName . " ".$year;
-    $calendar .= "<a class='month-arrow next-month-arrow icon arrow-head-right-icon' ></a>";
+    $calendar .= "<div class='month-arrow next-month-arrow icon arrow-head-right-icon' ></div>";
     $calendar .= "</div>";
     $calendar .= "<table class='calendar'>";
     $calendar .= "<tr>";
@@ -82,7 +82,7 @@ function build_calendar($today, $month, $year, $entries_filtered) {
             $marks .= '<div class="calendar-entry-mark" data-count="'.$mark_count.'"></div>';
         }
         if ($current_day == $today)
-            $calendar .= "<td class='day today' rel='$date'><div class='block'>$current_day<div class='today-underline'>$current_day</div>$marks</div></td>";
+            $calendar .= "<td class='day today' rel='$date'><div class='block'>$current_day<div class='today-underline'>$current_day</div></div>$marks</td>";
         else
             $calendar .= "<td class='day' rel='$date'><div class='block'>$current_day</div>$marks</td>";
         $current_day++;

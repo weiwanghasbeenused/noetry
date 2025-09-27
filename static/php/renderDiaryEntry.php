@@ -17,6 +17,11 @@ function renderDiaryEntry($diary, $idx=-1){
     if($diary['thumbnail']) {
         $thumbnail = '<div class="thumbnail-wrapper diary-thumbnail-wrapper"><img class="thumbnail" src="'.$diary['thumbnail']['src'].'"></div>';
     }
-    $output = '<div class="' . implode(' ', $cls) . '" style="'.$style.'">' .$background.$tangled . '<div class="diary-content "><div class="entry-content-header entry-time diary-time small bold">'.$diary['time'].'</div><div class="list-text diary-text body">' . $diary['body']. '</div></div>'.$thumbnail.'</div>';
+    $output = '<div class="' . implode(' ', $cls) . '" style="'.$style.'">' .$background.$tangled . '<div class="diary-content "><div class="entry-content-header entry-time diary-time small bold">'.$diary['time'].'</div>
+        <div class="diary-body">
+            <div class="list-text diary-text body">' . $diary['body']. '</div>
+            '.$thumbnail.'
+        </div>
+        </div></div>';
     return $output;
 }

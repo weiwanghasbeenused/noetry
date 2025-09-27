@@ -65,70 +65,104 @@ $essay_items = array();
     </div>
 </div>
 <div id="<?php echo $view; ?>" class="page" data-list-view="<?php echo $list_view; ?>">
-    <ul class="list" data-list-type="rows" data-loading="0">
-        <div class="list-content">
-        <?php 
-            $essay_count = 0;
-            foreach($essay_list as $year => $months) {
-                echo '<li class="list-section list-year-section essay-section essay-year-section"><h2 class="list-section-title list-year-section-title essay-section-title essay-year-section-title">' . $year . '</h2>';
-                foreach($months as $month => $days) {
-                    echo '<div class="list-section list-month-section essay-section essay-month-section"><h2 class="list-section-title list-month-section-title essay-section-title essay-month-section-title">' . $month . '<span class="month-note list-date-note essay-date-note small">月</span></h2>';
-                    foreach($days as $day => $essays) {
-                        [$day_of_month, $day_of_week] = explode('-', $day);
-                        echo '<div class="list-section list-day-section essay-section essay-day-section">
-                            <div class="list-section-title list-day-section-title essay-section-title essay-day-section-title">
-                                <h2 class="list-day essay-day x-large">' . $day_of_month . '<span class="day-note list-date-note essay-date-note small">日</span></h2>
-                                <div class="list-day-of-week essay-day-of-week bold small">'.$day_of_week.'.</div></div>';
-                        foreach($essays as $essay) {
-                            echo renderPoemEntry($essay, 'rows', $essay_count);
-                            $essay_items[] = $essay; 
-                            $points[] = array(
-                                'id' => 'essay-entry-' . $essay_count,
-                                'points' => $essay['points']
-                            );
-                            $essay_count ++;
+    <div class="essay-list-section" data-loading="0" data-slug="rows">
+        <ul class="list" data-list-type="rows">
+            <div class="list-content">
+            <?php 
+                $essay_count = 0;
+                foreach($essay_list as $year => $months) {
+                    echo '<li class="list-section list-year-section essay-section essay-year-section"><h2 class="list-section-title list-year-section-title essay-section-title essay-year-section-title regular">' . $year . '</h2>';
+                    foreach($months as $month => $days) {
+                        echo '<div class="list-section list-month-section essay-section essay-month-section"><h2 class="list-section-title list-month-section-title essay-section-title essay-month-section-title regular">' . $month . '<span class="month-note list-date-note essay-date-note small">月</span></h2>';
+                        foreach($days as $day => $essays) {
+                            [$day_of_month, $day_of_week] = explode('-', $day);
+                            $day_count = count($essays);
+                            echo '<div class="list-section list-day-section essay-section essay-day-section" data-day-count="'.$day_count.'">
+                                <div class="list-section-title list-day-section-title essay-section-title essay-day-section-title">
+                                    <h2 class="list-day essay-day x-large">' . $day_of_month . '<span class="day-note list-date-note essay-date-note small">日</span></h2>
+                                    <div class="list-day-of-week essay-day-of-week bold small">'.$day_of_week.'.</div></div>';
+                            foreach($essays as $essay) {
+                                echo renderPoemEntry($essay, 'rows', $essay_count);
+                                $essay_items[] = $essay; 
+                                $points[] = array(
+                                    'id' => 'essay-entry-' . $essay_count,
+                                    'points' => $essay['points']
+                                );
+                                $essay_count ++;
+                            }
+                            echo '</div>';
                         }
                         echo '</div>';
                     }
-                    echo '</div>';
+                    echo '</li>';
                 }
-                echo '</li>';
-            }
-        ?>
-        </div>
+            ?>
+            </div>
+            
+        </ul>
         <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
-    </ul>
-    <div class="list" data-list-type="grid" data-loading="0">
-        <div class="list-content">
-        <?php 
-            foreach($essay_items as $essay){
-                echo renderPoemEntry($essay, 'grid');
-            }
-        ?>
+    </div>
+    <div class="essay-list-section" data-loading="0" data-slug="grid">
+        <div class="list" data-list-type="grid">
+            <div class="list-content">
+            <?php 
+                foreach($essay_items as $essay){
+                    echo renderPoemEntry($essay, 'grid');
+                }
+            ?>
+            </div>
+            
         </div>
         <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
     </div>
-    <?php echo renderCalendar(date('Y-m-d',strtotime('now')), $essay_list, 'essay-calendar'); ?>
-    <ul class="list" data-list-type="calendar" data-loading="0">
-        <div class="list-content">
-        <?php 
-            foreach($essay_items as $essay){
-                echo renderPoemEntry($essay, 'calendar');
-            }
+    <?php
+        $essay_items_by_month = array();
+        foreach($essay_items as $essay){
+            [$year, $month] = explode('/', $essay['date']);
+            if(!isset($essay_items_by_month['m' . $month])) $essay_items_by_month['m' . $month] = array();
+            $essay_items_by_month['m' . $month][] = $essay;
+        }
+        $month_count = 12;
+    ?>
+    <div class="essay-list-section" data-slug="calendar" data-loading="0" style="--month-count: <?php echo $month_count; ?>; --current-month-index: <?php echo $month_count - 1; ?>;">
+        <div class="calendar-section-spring">
+        <?php for($i = 0; $i < $month_count; $i++): 
+            $idx = $i;
+            $date =  date('Y-m-d',strtotime('now -'.($month_count - $i - 1).' month'));
+            [$year, $month] = explode('-', $date);
         ?>
+        <div class="month-container" data-now="<?php echo $i === $month_count - 1 ? '1' : '0'; ?>" data-index="<?php echo $idx; ?>" style="--month-index: <?php echo $idx; ?>;">
+            <?php echo renderCalendar($date, $essay_list, 'essay-calendar'); 
+                if(isset($essay_items_by_month['m' . $month])):
+            ?>
+            <ul class="list" data-list-type="calendar">
+                <div class="list-content">
+                <?php 
+                    foreach($essay_items_by_month['m' . $month] as $essay){
+                        echo renderPoemEntry($essay, 'calendar');
+                    }
+                ?>
+                </div>
+                
+            </ul>
+            <?php endif; ?>
+        </div>
+        <?php endfor; ?>
         </div>
         <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
-    </ul>
-    <ul id="search-result-list" class="list" data-list-type="default" data-loading="0">
-        <div class="list-content">
-        <?php 
-            foreach($essay_items as $essay){
-                echo renderPoemEntry($essay, 'calendar');
-            }
-        ?>
-        </div>
+    </div>
+    <div class="essay-list-section" data-loading="0" data-slug="search">
+        <ul id="search-result-list" class="list" data-list-type="default">
+            <div class="list-content">
+            <?php 
+                foreach($essay_items as $essay){
+                    echo renderPoemEntry($essay, 'calendar');
+                }
+            ?>
+            </div>
+        </ul>
         <div class="partial-loading-icon full-center-icon icon" data-color="black"></div>
-    </ul>
+    </div>
 </div>
 <script src="/static/js/Header.js"></script>
 <script src="/static/js/LargePopup.js"></script>
@@ -176,6 +210,8 @@ $essay_items = array();
         option.addEventListener('click', ()=>{
             const view = option.getAttribute('data-value');
             if(view === list_view) return;
+            // if(list_view === 'search')
+            removeSearchKeyword(false);
             const activeView = document.querySelector('.view-option.active');
             if(activeView) activeView.classList.remove('active');
             list_view = view;
@@ -243,39 +279,58 @@ $essay_items = array();
     });
 
     const current_keyword = document.querySelector('.sub-header .current-keyword');
-    console.log(current_keyword);
     function applySearchKeyword(keyword){
+        console.log(keyword);
         searchPopup.hide();
         page.setAttribute('data-list-view', 'search');
         current_keyword.innerHTML = '<div class="tag removable-tag reverse">' + keyword + '</div>';
         const current_keyword_tag = current_keyword.querySelector('.tag');
-        const current_list = document.querySelector('#search-result-list');
+        const current_section = document.querySelector('.essay-list-section[data-slug="search"]');
         if(keyword.toLowerCase() === 'not found')
-            current_list.classList.add('no-result');
+            current_section.classList.add('no-result');
         else
-            current_list.classList.remove('no-result');
-        current_keyword_tag.addEventListener('click', removeSearchKeyword);
+            current_section.classList.remove('no-result');
+        current_keyword_tag.addEventListener('click', ()=>removeSearchKeyword());
         const active_view_option = document.querySelector('.view-option.active');
         if(active_view_option) active_view_option.classList.remove('active');
-        current_list.setAttribute('data-loading', 1);
+        current_section.setAttribute('data-loading', 1);
         setTimeout(()=>{
-            current_list.setAttribute('data-loading', 0);
+            current_section.setAttribute('data-loading', 0);
         }, 2000);
         
     }
-    function removeSearchKeyword(){
+    function removeSearchKeyword(recoverView=true){
         current_keyword.innerHTML = '';
+        if(!recoverView) return;
         page.setAttribute('data-list-view', list_view);
-        const current_list = document.querySelector('.list[data-list-type="'+list_view+'"]');
+        const current_section = document.querySelector('essay-list-section[data-slug="'+list_view+'"]');
         const original_view_option = document.querySelector('.view-option[data-value="'+list_view+'"]');
         console.log(original_view_option);
         if(original_view_option) original_view_option.classList.add('active');
-        current_list.setAttribute('data-loading', 1);
+        current_section.setAttribute('data-loading', 1);
         setTimeout(()=>{
-            current_list.setAttribute('data-loading', 0);
+            current_section.setAttribute('data-loading', 0);
             // page.setAttribute('data-list-view', list_view);
             
         }, 1000);
+    }
+    const calendar_section = document.querySelector('[data-slug="calendar"]');
+    const month_arrows = document.getElementsByClassName('month-arrow');
+    let current_month_index = <?php echo $month_count - 1; ?>;
+    const month_count = <?php echo $month_count; ?>;
+    for(const month_arrow of month_arrows) {
+        month_arrow.addEventListener('click', ()=>{
+            if(month_arrow.classList.contains('prev-month-arrow')) {
+                if(current_month_index === 0) return;
+                current_month_index -= 1;
+                
+            } else if(month_arrow.classList.contains('next-month-arrow')){
+                if(current_month_index === month_count - 1) return;
+                current_month_index += 1;
+                // calendar_section.style.setPropertyValue('--current-month-index', current_month_index);
+            }
+            calendar_section.style.setProperty('--current-month-index', current_month_index);
+        });
     }
 </script>
 <?php
