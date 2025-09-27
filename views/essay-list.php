@@ -29,13 +29,16 @@ function renderPoemEntry($entry, $list_type, $idx=-1){
         $body = "<div class='entry-body essay-body'><div class='essay-body body'><div class='list-text essay-text body'>$entry[body]</div></div></div>";
     }
     $time = '';
+    $header = '<div class="entry-header">';
+    $location = '<div class="entry-location essay-location small bold">大安站星巴克</div>';
     if($list_type === 'rows' || $list_type === 'calendar')
-        $time = '<div class="entry-header entry-time essay-time small bold">'.$entry['time'].'</div>';
+        $time = '<div class="entry-time essay-time small bold">'.$entry['time'].'</div>';
     else if($list_type === 'grid') {
         $date = str_replace('/', '<span class="date-separator"> / </span>', $entry['date']);
-        $time = '<div class="entry-header entry-time essay-time small bold">'.$date.'</div>';
+        $time = '<div class="entry-time essay-time small bold">'.$date.'</div>';
     }
-    $body = $time . $body;
+    $header .= $time . $location . '</div>';
+    $body = $header  . $body;
     $output = '<div id="'.$id.'" class="' . implode(' ', $cls) . '" style="'.$style.'" data-slug="'.$entry['url'].'" data-date="'.str_replace('/', '-', $entry['date']).'">'.$background.'<div class="entry-inner essay-inner">'.$body.$thumbnail.'</div></div>';
     return $output;
 }
@@ -223,6 +226,7 @@ $essay_items = array();
                 const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
                 window.history.pushState({path:newurl},'',newurl);
             }
+            window.scrollTo(0, 0);
         });
     }
     const calendar_days = document.querySelectorAll('.day[rel]');
