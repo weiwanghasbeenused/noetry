@@ -10,9 +10,10 @@
     --background: #fff;
     --gradient-end: rgba(255, 255,255, 0);
     --thumbnail-size: 100%;
+    --header-overlap: 10px;
     /* margin-top: calc(var(--main-header-height) + var(--sub-header-height)); */
     background-color: var(--background);
-    padding-top: calc(var(--main-header-height) + var(--sub-header-height));
+    padding-top: calc(var(--main-header-height) + var(--sub-header-height)  - var(--header-overlap));
 }
 
 .essay-entry {
@@ -299,19 +300,10 @@
     --gradient-end: rgba(0, 0, 0, 0);
 }
 #view-options {
-    /* position: fixed; */
-    /* width: 100%; */
-    top: var(--main-header-height);
-    /* height: var(--sub-header-height); */
-    /* padding: var(--padding); */
-    /* padding-top: 0; */
-    /* z-index: 900; */
+    /* top: var(--main-header-height); */
     display: flex;
     align-items: flex-start;
-    /* align-items: top; */
-    /* justify-content: end;; */
     background-color: var(--light-grey);
-    /* box-shadow: 0 -18px 15px 15px rgba(0, 0, 0, .5) */
 }
 .view-option + .view-option {
     /* margin-left: 15px; */
@@ -323,11 +315,11 @@
     pointer-events: none;
 }
 #essay-list .list-section-title {
-    top: calc( var(--main-header-height) + var(--sub-header-height));
+    top: calc( var(--main-header-height) + var(--sub-header-height) - var(--header-overlap));
 }
 #essay-list .list-day-section-title {
     padding-top: 0;
-    top: calc( var(--main-header-height) + var(--sub-header-height) + var(--padding) + 20px);
+    top: calc( var(--main-header-height) + var(--sub-header-height) + 18px - var(--header-overlap));
 }
 #essay-list[data-list-view="rows"] .essay-list-section[data-slug="rows"],
 #essay-list[data-list-view="grid"] .essay-list-section[data-slug="grid"],

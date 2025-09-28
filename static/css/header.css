@@ -42,6 +42,7 @@
     justify-content: center;
 } 
 .sub-header.fixed {
-    --top: var(--main-header-height);
-    z-index: 1000;
+    --header-overlap: 10px;
+    --top: calc( var(--main-header-height) - var(--header-overlap) );
+    z-index: 1020;
 }

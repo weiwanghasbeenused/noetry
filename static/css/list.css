@@ -61,6 +61,9 @@
 .list-year-section .list-year-section-title + .list-month-section .list-month-section-title {
     margin-top: calc( -1em - var(--sticky-padding-bottom));
 }
+.list-year-section:first-child .list-year-section-title + .list-month-section .list-month-section-title {
+    margin-bottom: 12px;
+}
 .list-year-section .list-year-section-title + .list-month-section .list-month-section-title + .list-day-section {
     margin-top: 0;
 }
