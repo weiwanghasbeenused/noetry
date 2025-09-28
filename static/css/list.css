@@ -185,16 +185,6 @@
 .list[data-list-type="grid"] .entry-header {
     margin-bottom: calc(2 * var(--entry-part-gap));
 }
-.list.no-result .list-entry {
-    display: none;
-}
-.list.no-result .list-content:before {
-    content: "找不到符合的搜尋結果";
-    color: var(--dark-grey);
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-}
 
 .list .partial-loading-icon{
     margin: 10px auto;

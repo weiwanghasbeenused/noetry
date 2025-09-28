@@ -58,7 +58,6 @@ $essay_items = array();
     <div id="view-options" class="header-section header-right">
         <?php 
             foreach($view_options as $option) {
-                // $active = $list_view  === $option;
                 $cls = array('view-option', 'icon');
                 $cls[] = 'view-' .$option. '-icon';
                 if($list_view  === $option) $cls[] = 'active';

@@ -42,3 +42,13 @@ input[type="search"]::-webkit-search-cancel-button {
 .search-responsive-section > .partial-loading-icon {
     margin: 10px auto;
 }
+.essay-list-section[data-slug="search"].no-result .list-entry {
+    display: none;
+}
+.essay-list-section[data-slug="search"].no-result .list-content:before {
+    content: "找不到符合的搜尋結果";
+    color: var(--dark-grey);
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
