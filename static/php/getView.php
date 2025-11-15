@@ -17,5 +17,8 @@ function getView($uri){
     if($uri[1] === 'add') {
         return 'add';
     }
+    if($uri[1] === 'refresh') {
+        return 'refresh';
+    }
     return '';
 }

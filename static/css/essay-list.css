@@ -34,7 +34,7 @@
     transform: translate(0, var(--day-gap));
 }
 .essay-inner {
-    padding: 10px 16px;
+    padding: 10px;
     position: relative;
     z-index: 10;
     flex-wrap: wrap;
@@ -45,10 +45,10 @@
     justify-content: space-between;
 }
 .essay-title {
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
 }
-.list-text.essay-text {
-    -webkit-line-clamp: 3;
+.essay-body.list-text {
+    -webkit-line-clamp: 4;
 }
 .date-separator {
     /* display: inline-block;
@@ -232,7 +232,7 @@
 #app[data-item-style="4"] .essay-entry{
     --shadow-size: 5px;
     --background: #fff;
-    --thumbnail-size: 75px;
+    --thumbnail-size: 60px;
     box-shadow: 0 0 var( --shadow-size) var( --shadow-size) var(--background);
     border-radius: var(--rounded)
 }
@@ -293,6 +293,7 @@
 .essay-body {
     /* margin-top: 10px; */
     flex: 1;
+    margin-right: var(--entry-part-gap);
 }
 
 #app[data-color="3"] #essay-list {
@@ -438,6 +439,7 @@
 }
 #essay-list .entry-header {
     margin-bottom: calc( var(--entry-part-gap) * 2);
+    margin-bottom: var(--entry-part-gap);
     justify-content: flex-start;
 }
 #essay-list .entry-time {

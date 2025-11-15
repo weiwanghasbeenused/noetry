@@ -47,7 +47,7 @@
 }
 .diary-body {
     display: flex;
-    gap: var(--entry-part-gap);
+    gap: calc( var(--entry-part-gap) * 2 );
 }
 .svg-background {
     position: absolute;

@@ -23,10 +23,15 @@ function renderPoemEntry($entry, $list_type, $idx=-1){
         $thumbnail = '<div class="thumbnail-wrapper essay-thumbnail-wrapper"><img class="thumbnail" src="'.$entry['thumbnail']['src'].'"></div>';
     }
     if($entry['name2'] && $entry['deck']) {
-        $body = "<div class='entry-body essay-body'><div class='essay-title bold'>$entry[name2]</div><div class='list-text essay-text body'>$entry[deck]</div></div>";
+        $body = "<div class='entry-body essay-body body list-text essay-text body'>
+            <div class='essay-title bold'>$entry[name2]</div>
+            $entry[deck]
+        </div>";
     } else {
         $cls[] = 'no-essay';
-        $body = "<div class='entry-body essay-body'><div class='essay-body body'><div class='list-text essay-text body'>$entry[body]</div></div></div>";
+        $body = "<div class='entry-body essay-body list-text essay-text body'>
+                $entry[body]
+        </div>";
     }
     $time = '';
     $header = '<div class="entry-header">';

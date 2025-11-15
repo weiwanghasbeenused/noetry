@@ -57,5 +57,8 @@ $config_pages = array(
                 'edit-text'
             )
         )
+    ),
+    'refresh' => array(
+        'stylesheets' => array( 'refresh')
     )
 );
