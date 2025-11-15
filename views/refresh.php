@@ -8,9 +8,12 @@
         
         <div id="stat" class="content-row">
             <div class="stat-row">refresh - <span id="refresh-counter-tracker">0</span></div>
+            
             <!-- <div class="stat-row">觸控移動距離: <span id="touch-distance-tracker">0</span>px</div>
             <div class="stat-row">Content 移動距離 (觸控 / 2.5): <span id="content-distance-tracker">0</span>px</div> -->
         </div>
+        陰影、icon 動畫都跟 default 稍有不同<br>
+        如果太麻煩就用default, 換個 icon 就好 (refresh.svg)
         <!-- <br> -->
         <!-- <div>- Content 移動距離 > 72px (觸控移動距離 180px) 才會觸發更新</div>
         <div>- Refreshing 時, content 彈回 72px 處等 refresh 結束</div> -->
