@@ -5,6 +5,9 @@
 }
 .poem-title {
     margin-bottom: 20px;
+    /* font-size: 52px; */
+    font-family: Times, serif;
+    /* font-weight: 400; */
 }
 .essay-detail-section {
     overflow: visible;

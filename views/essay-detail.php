@@ -58,7 +58,7 @@ function renderThumbnail($src){
 function renderPoem($title, $content){
     return '<div class="essay-detail-section essay-detail-poem">
         <div class="essay-section-style-wrapper">
-            <div class="essay-detail-section-title poem-title bold large">' . $title . '</div>
+            <div class="essay-detail-section-title poem-title x-large">' . $title . '</div>
             <div class="essay-detail-section-content poem-content body medium">'.$content.'</div>
         </div></div>';
 }
@@ -88,8 +88,11 @@ if($thumbnail_src)
 else {
     $body .= 'cant find thumbnail';
 }
-if($item['deck'])
-    $body .= renderPoem($item['name2'], $item['deck']);
+if($item['deck']) {
+    $title = str_replace("/ ", '.', $item['name2']);
+    $body .= renderPoem($title, $item['deck']);
+}
+    
 
 $body .= renderSummary($item['body']);
 

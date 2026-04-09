@@ -45,7 +45,7 @@ function getPoemList($db, $parent_id=0){
             ON w.toid = o.id 
             AND w.fromid = $parent_id
             AND w.active = 1 
-        WHERE o.active = 1 
+        WHERE o.active = 1 AND o.name1 NOT LIKE '\.%'
         ORDER BY o.begin DESC";
     $result = $db->query($sql);
     $output = array();

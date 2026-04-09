@@ -44,6 +44,18 @@ $config_pages = array(
             )
         )
     ),
+    'essay-detail-v2' => array(
+        'stylesheets' => array( 'essay-detail-v2', 'diary', 'list', 'KuMincho-R' ),
+        'header' => array(
+            'left' => array(
+                'esc'
+            ),
+            'title' => '篇章',
+            'right' => array(
+                'more',
+            )
+        )
+    ),
     'add' => array(
         'stylesheets' => array( 'add', 'location-selector' ),
         'scripts' => array('https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js'),

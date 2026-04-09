@@ -1,10 +1,12 @@
 <?php
+    
     require_once __DIR__ . '/../open-records-generator/config/config.php';
     require_once __DIR__ . '/../static/php/functions.php';
     require_once __DIR__ . '/../config/config-pages.php';
     require_once __DIR__ . '/../static/php/getView.php';
     $db = db_connect('guest');
-    $view = getView($uri);
+    $v = isset($_GET['v']) ? $_GET['v'] : 1;
+    $view = getView($uri, $v);
     $page_config = $config_pages[$view] ?? array();
     
     if(!$uri[1]) {
@@ -26,6 +28,8 @@
     $attrs['data-view'] = $view;
     $attrs_str = arrayToAttr($attrs);
     $display_mode = $attrs['data-display-mode'] ?? 'dev';
+
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,10 +38,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="manifest" href="manifest.json" />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="stylesheet" href="/static/css/main.css">
         <?php foreach($stylesheets as $s) {
-            ?><link rel="stylesheet" href="/static/css/<?php echo $s; ?>.css" /><?php 
+            $hash = '';
+            if($website_mode === 'dev') {
+                $stylesheet_path = __DIR__ . '/../static/css/'.$s.'.css';
+                $hash = '?v=' . filemtime($stylesheet_path);
+            }
+            
+            ?><link rel="stylesheet" href="/static/css/<?php echo $s; ?>.css<?php echo $hash; ?>" /><?php 
         } ?>
         <?php foreach($scripts as $s) {
             if(strpos($s, 'http') === false) {

@@ -5,3 +5,5 @@ media/*.*
 *.sql
 node_modules/
 static/logs/*log
+
+.env

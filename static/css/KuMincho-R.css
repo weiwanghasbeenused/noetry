@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'KuMincho-R';
+    src: url('./../fonts/kumincho/KuMincho-R.woff2');
+    src: url('./../fonts/kumincho/KuMincho-R.woff2') format('woff2'),
+         url('./../fonts/kumincho/KuMincho-R.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+

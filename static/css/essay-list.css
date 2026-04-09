@@ -445,3 +445,8 @@
 #essay-list .entry-time {
     flex: 0 0 50px;
 }
+.essay-day {
+    /* font-family: georgia, Times, serif; */
+    font-weight: 400;
+}
+

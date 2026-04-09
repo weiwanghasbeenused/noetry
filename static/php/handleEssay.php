@@ -5,16 +5,17 @@ function handlePoem($raw){
     $diaries = json_decode($output['diaries'], true);
     $points = [];
     foreach($diaries as $d) {
-        $temp = explode(' ', $d['points']);
         $p = [];
-        foreach($temp as $key => $t) {
-            $p[] = $t;
-            if($key % 2 === 1) {
-                $points[] = $p;
-                $p = [];
+        if($d['points']) {
+            $temp = explode(' ', $d['points']);
+            foreach($temp as $key => $t) {
+                $p[] = $t;
+                if($key % 2 === 1) {
+                    $points[] = $p;
+                    $p = [];
+                }
             }
         }
-        
     }
     $output['thumbnail'] = null;
     if(isset($output['media'])) {
@@ -30,7 +31,8 @@ function handlePoem($raw){
         }
     }
     $output['points'] = sortPoints($points);
-
+    if($raw['begin'] === null)
+        var_dump($raw['id']);
     $datetime = processDate($raw['begin']);
     $output['date'] = $datetime['year'] . '/' . $datetime['month']. '/' . $datetime['day'];
     $output['time'] = $datetime['hour'] . ':' . $datetime['minute'];

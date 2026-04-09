@@ -177,6 +177,7 @@ $essay_items = array();
 <script>
     const page = document.querySelector('.page');
     const points = <?php echo json_encode($points); ?>;
+    const v = <?php echo $v; ?>;
     for(const point of points) {
         if(point['points'].length === 0) continue;
         const entry = document.getElementById(point['id']);
@@ -208,7 +209,7 @@ $essay_items = array();
         // const queryParams = 
         if(!slug) continue;
         entry.addEventListener('click', ()=>{
-            window.location.href = '/essays/' + slug;
+            window.location.href = '/essays/' + slug + '?v=' + v;
         })
     }
     let list_view = '<?php echo $list_view; ?>';

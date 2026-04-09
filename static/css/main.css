@@ -45,7 +45,8 @@ html {
 
 body {
 	margin: 0;
-	font-family: sans-serif;
+	font-family: "PingFang TC", "Microsoft YaHei", sans-serif;
+    /* font-family: sans-serif; */
     /* font-size: 1rem; */
 	line-height: 1;
 	-webkit-font-smoothing: subpixel-antialiased;

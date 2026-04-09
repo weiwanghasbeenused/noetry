@@ -13,7 +13,6 @@
             loading = {}
         } = {}) {
             this.id = id;
-            console.log(content);
             this.content = content;
             this.headerConfig = header;
             this.headerId = headerId;
