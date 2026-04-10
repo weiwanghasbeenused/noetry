@@ -15,28 +15,43 @@ html {
     /* --background: #ffffff; */
     margin-top: 0;
     --entry-part-gap: 12px;
+    --medium-size: 18px;
+    --large-size: 17vw;
 }
-.poem-title {
+.essay-title {
+    
     margin-bottom: 20px;
-    /* font-size: 52px; */
     font-family: 'KuMincho-R', monospace;
-    /* font-weight: 400; */
     display: flex;
+    flex-wrap: wrap;
 }
-#app[data-title-font="sans"] .poem-title  {
+.essay-title-year,
+.essay-title-month,
+.essay-title-day,
+.date-separator {
+    font-size: var(--large-size);
+}
+.essay-title-day-of-week {
+    font-size: var(--medium-size);
+}
+#app[data-title-font="sans"] .essay-title  {
     font-family: "PingFang TC", Arial, sans-serif;
     font-weight: 200;
 }
 #app[data-punchline-font="sans"] .essay-detail-punchline  {
     font-family: "PingFang TC", Arial, sans-serif;
 }
-.poem-title .date-separator {
+.date-separator:before {
+    content: '.';
+    display: inline;
+}
+#app[data-separator-style="1"] .date-separator {
     position: relative;
     display: inline-block;
     width: 0.4em;
     /* height: 100%; */
 }
-.poem-title .date-separator:before {
+#app[data-separator-style="1"] .essay-title .date-separator:before {
     content: '';
     position:absolute;
     height: 1.1em;
@@ -46,11 +61,11 @@ html {
     top: 50%;
     transform: translate(-50%, -50%) rotate(15deg);
 }
-#app[data-separator-style="2"] .poem-title .date-separator {
+#app[data-separator-style="2"] .essay-title .date-separator {
     width: 0.4em;
     text-align: right;
 }
-#app[data-separator-style="2"] .poem-title .date-separator:before {
+#app[data-separator-style="2"] .essay-title .date-separator:before {
     content: '.';
     height: auto;
     width: 100%;
@@ -91,12 +106,14 @@ html {
 .essay-detail-punchline {
     font-family: 'KuMincho-R', monospace;
     padding-right: 40px;
+    line-height: 1.4;
+    font-size: var(--medium-size);
 }
 
 .essay-detail-punchline,
 .essay-detail-punchline.medium {
     
-    font-size: 20px;
+    /* font-size: 20px; */
 }
 .essay-detail-thumbnail {
     --thumbnail-height: 50dvh;
@@ -143,7 +160,7 @@ html {
 #essay-detail-diaries {
     --gap: 50px;
     /* padding: 40px 0; */
-    padding: 20px 0;
+    padding: 0px 0 60px 0;
     /* border-top: 2px solid var(--light-grey); */
     border-bottom: 2px solid var(--light-grey);
 }
@@ -220,9 +237,9 @@ html {
 #app[data-view="essay-detail-v2"] .list-text {
     display: block;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    text-overflow: visible;
-    line-height: 1.5;
+    /* -webkit-line-clamp: 2; */
+    /* text-overflow: visible; */
+    line-height: 1.6;
 }
 .entry-header {
     display: flex;
@@ -245,7 +262,7 @@ html {
     transform: translate(-50%, -50%);
     border-radius: 50%;   
 }
-#app[data-title-size="2"] .poem-title.x-large {
+#app[data-title-size="2"] .essay-title {
     font-size: 32px;
     margin-bottom: 5px;
 }
@@ -255,7 +272,7 @@ html {
     font-size: 26px;
 }
 
-#app[data-title-size="3"] .poem-title.x-large {
+#app[data-title-size="3"] .essay-title {
     font-size: 17vw;
     margin-bottom: 30px;
     justify-content: center;
@@ -265,10 +282,11 @@ html {
     padding: 0;
     text-align: center;
 }
-#app[data-title-size="3"] #essay-detail-poem {
+
+#app[data-title-size="3"] #essay-detail-header {
     padding-top: 5px;
 }
-#app[data-title-size="4"] .poem-title.x-large {
+#app[data-title-size="4"] .essay-title {
     font-weight: 500;
     font-size: 28px;
     margin-bottom: 30px;
@@ -277,37 +295,32 @@ html {
 #app[data-title-size="4"] .essay-detail-punchline.medium {
     font-size: 18px;
 }
-
-#app[data-title-size="4"] .essay-detail-section-content {
-    /* padding-left: 0px; */
-    /* padding-right: 0px; */
-}
 #app[data-title-size="4"] .essay-detail-punchline {
     /* padding-left: var(--padding); */
-    padding-right: 40px;
+    padding-right: 60px;
 }
-#app[data-date-format="2"] .poem-title-year + .date-separator{
+#app[data-date-format="2"] .essay-title-year + .date-separator{
     display: block;
     
     flex: 0 0 100%;
     height: 0;
 }
-#app[data-date-format="2"] .poem-title-year + .date-separator:before {
+#app[data-date-format="2"] .essay-title-year + .date-separator:before {
     content: none;
 }
-#app[data-date-format="2"] .poem-title {
+#app[data-date-format="2"] .essay-title {
     flex-wrap: wrap;
 }
-#app[data-date-format="2"] #essay-detail-poem {
+#app[data-date-format="2"] #essay-detail-header {
     padding-top: 20px;
     padding-bottom: 60px;
 }
 
-#app[data-separator-style="3"] .poem-title .date-separator {
+#app[data-separator-style="3"] .essay-title .date-separator {
     width: auto;
     /* text-align: right; */
 }
-#app[data-separator-style="3"] .poem-title .date-separator:before {
+#app[data-separator-style="3"] .essay-title .date-separator:before {
     content: '\00a0/';
     height: auto;
     width: 100%;
@@ -316,32 +329,32 @@ html {
     transform:none;
 }
 
-#app[data-date-format="3"] .poem-title-year {
-    font-size: 11px;
+#app[data-date-format="3"] .essay-title-year {
+    font-size: 15px;
     font-weight: 600;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
 }
-#app[data-date-format="3"] .poem-title{
+#app[data-date-format="3"] .essay-title{
     flex-wrap: wrap;
 }
-#app[data-date-format="3"] .poem-title-year + .date-separator{
+#app[data-date-format="3"] .essay-title-year + .date-separator{
     display: block;
     
     flex: 0 0 100%;
     height: 0;
 }
-#app[data-date-format="3"] .poem-title-year + .date-separator:before {
+#app[data-date-format="3"] .essay-title-year + .date-separator:before {
     content: none;
 }
-#app[data-date-format="3"] .poem-title-month,
-#app[data-date-format="3"] .poem-title-day,
-#app[data-date-format="3"] .poem-title-day-of-week,
+#app[data-date-format="3"] .essay-title-month,
+#app[data-date-format="3"] .essay-title-day,
+#app[data-date-format="3"] .essay-title-day-of-week,
 #app[data-date-format="3"] .date-separator {
     /* font-weight: 400; */
     font-size: 36px;
 }
 
-#app[data-date-format="3"] .poem-title-day + .date-separator {
+#app[data-date-format="3"] .essay-title-day + .date-separator {
     flex: 0 0 100%;
     height: 0;
     opacity: 0;
@@ -351,4 +364,97 @@ html {
     /* font-size: 11px; */
     font-size: 15px;
     font-weight: 600;
+}
+#app[data-title-style="1"] #essay-detail-v2 {
+    --large-size: 14vw;
+    --medium-size: 18px;
+}
+#app[data-title-style="1"] #essay-detail-diaries {
+    --gap: 40px;
+}
+#app[data-title-style="1"] .essay-title {
+    margin-bottom: 16px;
+}
+#app[data-title-style="1"] #essay-detail-header {
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+#app[data-title-style="1"] .essay-title-day-of-week {
+    margin-left: 2px;
+}
+
+#app[data-title-style="2"] #essay-detail-v2 {
+    --large-size: 17vw;
+}
+#app[data-title-style="2"] .essay-title {
+    margin-bottom: 30px;
+    justify-content: center;
+}
+#app[data-title-style="2"] .date-separator {
+    display: inline;
+}
+#app[data-title-style="2"] .essay-title-day-of-week {
+    font-size: 20px;
+    margin-top: 3px;
+}
+#app[data-title-style="2"] #essay-detail-header {
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
+#app[data-title-style="2"] .essay-detail-punchline {
+    text-align: center;
+    padding-right: var(--inner-padding);
+}
+
+#app[data-title-style="3"] #essay-detail-v2 {
+    --large-size: 36px;
+}
+
+#app[data-title-style="3"] .essay-title,
+#app[data-title-style="3"] .essay-detail-punchline {
+    font-family: 'PingFang TC', monospace;
+    font-weight: 500;
+}
+#app[data-title-style="3"] .essay-title-year {
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+#app[data-title-style="3"] .essay-title-year  + .date-separator {
+    flex: 0 0 100%;
+    height: 0;
+    opacity: 0;
+}
+#app[data-title-style="3"] .essay-title-day-of-week {
+    font-size: var(--large-size);
+    flex: 0 0 100%;
+}
+#app[data-title-style="3"] .essay-detail-punchline {
+    font-size: 15px;
+}
+#app[data-title-style="3"] #essay-detail-header {
+    /* padding-top: 20px; */
+    padding-bottom: 50px;
+}
+#app[data-title-style="4"] .essay-title,
+#app[data-title-style="4"] .essay-detail-punchline {
+    font-family: 'PingFang TC', monospace;
+    font-weight: 500;
+}
+#app[data-title-style="4"] #essay-detail-v2 {
+    --large-size: 36px;
+    --medium-size: 15px;
+}
+#app[data-title-style="4"] .essay-title-year  + .date-separator {
+    flex: 0 0 100%;
+    height: 0;
+    opacity: 0;
+}
+#app[data-title-style="4"] .essay-title-day-of-week {
+    font-size: 11px;
+    margin-top: 4px;
+    margin-left: 2px;
+}
+#app[data-title-style="4"] #essay-detail-header {
+    /* padding-top: 20px; */
+    padding-bottom: 60px;
 }

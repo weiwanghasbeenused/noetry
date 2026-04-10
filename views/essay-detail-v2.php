@@ -65,9 +65,9 @@ function renderThumbnail($src, $caption=''){
         </figure>';
 }
 function renderPoemHeader($title, $content){
-    return '<div id="essay-detail-poem" class="essay-detail-section">
-            <div class="essay-detail-section-content poem-title x-large">' . $title . '</div>
-            <div class="essay-detail-section-content poem-content body medium essay-detail-punchline">'.$content.'</div>
+    return '<div id="essay-detail-header" class="essay-detail-section">
+            <div class="essay-detail-section-content essay-title">' . $title . '</div>
+            <div class="essay-detail-section-content medium essay-detail-punchline">'.$content.'</div>
         </div>';
 }
 function renderSummary($content){
@@ -94,41 +94,30 @@ if($thumbnail_src)
 else {
     $body .= '<div class="dummy-thumbnail"></div>';
 }
-if($item['deck']) {
-    // var_dump(strtotime($item['name2']));
-    // $temp = preg_split('/\s*?\/\s*?/', $item['name2']);
-    $name2 = str_replace(' ', '', $item['name2']);
-    if(strtotime($name2)){
-        $time = strtotime($name2);
-        $time_formatted = [
-            'year' => date('Y', $time),
-            'month' => date('m', $time),
-            'day' => date('d', $time),
-            'day-of-week' => date('D', $time) . '.'
-        ];
-        $title = [];
-        foreach($time_formatted as $key => $t) {
-            // $name = 'year';
-            // switch ($key) {
-            //     case 0:
-            //         $name = 'year';
-            //         break;
-            //     case 1:
-            //         $name = 'month';
-            //         break;
-            //     case 2:
-            //         $name = 'day';
-            //         break;
-            // }
-            $title[] = '<span class="poem-title-' . $key . '">' . $t . '</span>';
-        }
-        $title = implode('<span class="date-separator"></span>', $title);
-    } else {
-        $title = $item['name2'];
-    }
-    
-    $body .= renderPoemHeader($title, $item['deck']);
+$deck = $item['deck'] ?? '';
+$name2 = $item['name2'] ? str_replace(' ', '', $item['name2']) : '';
+
+if(strtotime($name2)){
+    $time = strtotime($name2);
+    $time_formatted = [
+        'year' => date('Y', $time),
+        'month' => date('m', $time),
+        'day' => date('d', $time),
+        'day-of-week' => date('D', $time) . '.'
+    ];
+    // $title = [];
+    // foreach($time_formatted as $key => $t) {
+    //     $title[] = '<span class="essay-title-' . $key . '">' . $t . '</span>';
+    // }
+    $title = '<span class="essay-title-year">' . $time_formatted['year'] . '</span><span class="date-separator"></span>' .
+            '<span class="essay-title-month">' . $time_formatted['month'] . '</span><span class="date-separator"></span>' .
+            '<span class="essay-title-day">' . $time_formatted['day'] . '</span>' . 
+            '<span class="essay-title-day-of-week">' . $time_formatted['day-of-week'] . '</span>';
+} else {
+    $title = $item['name2'];
 }
+
+$body .= renderPoemHeader($title, $deck);
     
 if(count($diaries))
     $body .= renderDiaries($diaries);
