@@ -2,6 +2,10 @@
 require_once(__DIR__. '/../static/php/handleDiary.php');
 require_once(__DIR__. '/../static/php/renderDiaryEntryV2.php');
 require_once(__DIR__ . '/include/mask.php');
+
+$title_styles = [1, 2, 3 ,4];
+$current_title_style = $_GET['title-style'] ?? 0;
+
 function processConversation($raw){
     if(!$raw) return '';
     $output = '';
@@ -145,6 +149,34 @@ $body .= renderSummary($item['body']);
         mount: app,
         buttons: [
             {
+                display: 'style 1',
+                slug: 'title-style-1',
+                callback: () => {
+                    window.location.href="?v=2&title-style=1"
+                }
+            },
+            {
+                display: 'style 2',
+                slug: 'title-style-2',
+                callback: (instance) => {
+                    window.location.href="?v=2&title-style=2"
+                }
+            },
+            {
+                display: 'style 3',
+                slug: 'title-style-3',
+                callback: (instance) => {
+                    window.location.href="?v=2&title-style=3"
+                }
+            },
+            {
+                display: 'style 4',
+                slug: 'title-style-4',
+                callback: (instance) => {
+                    window.location.href="?v=2&title-style=4"
+                }
+            },
+            {
                 display: '從相簿選擇照片',
                 slug: 'change-image',
                 callback: (instance) => {
@@ -207,3 +239,9 @@ $body .= renderSummary($item['body']);
          thumbnail.style.setProperty('--thumbnail-height', (vh * 0.5) + 'px');
     }
 </script>
+<style>
+    .popup-button[data-action="title-style-<?php echo $current_title_style; ?>"] {
+        background-color: var(--green);
+        color: #fff;
+    }
+</style>

@@ -435,6 +435,9 @@ html {
     /* padding-top: 20px; */
     padding-bottom: 50px;
 }
+#app[data-title-style="3"] .dummy-thumbnail {
+    margin-bottom: 10px;
+}
 #app[data-title-style="4"] .essay-title,
 #app[data-title-style="4"] .essay-detail-punchline {
     font-family: 'PingFang TC', monospace;
@@ -457,4 +460,10 @@ html {
 #app[data-title-style="4"] #essay-detail-header {
     /* padding-top: 20px; */
     padding-bottom: 60px;
+}
+#app[data-title-style="4"] .dummy-thumbnail {
+    margin-bottom: 10px;
+}
+.diary-body img {
+    width: 100%;
 }

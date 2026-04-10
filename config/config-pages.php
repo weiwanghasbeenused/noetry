@@ -32,6 +32,18 @@ $config_pages = array(
             )
         )
     ),
+    'essay-list-v2' => array(
+        'stylesheets' => array( 'essay-list-v2', 'list', 'calendar' ),
+        'header' => array(
+            'left' => array(
+                'menu'
+            ),
+            'title' => '心雜音',
+            'right' => array(
+                // 'search',
+            )
+        )
+    ),
     'essay-detail' => array(
         'stylesheets' => array( 'essay-detail', 'diary', 'list' ),
         'header' => array(

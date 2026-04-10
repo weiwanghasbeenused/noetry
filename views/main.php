@@ -8,7 +8,6 @@
     $v = isset($_GET['v']) ? $_GET['v'] : 1;
     $view = getView($uri, $v);
     $page_config = $config_pages[$view] ?? array();
-    
     if(!$uri[1]) {
         $branch = array('home');        
     } else {
