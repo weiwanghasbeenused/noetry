@@ -73,12 +73,20 @@ html {
     background-color: transparent;
     transform:none;
 }
+#essay-detail-header {
+    border-bottom: none;
+}
 .essay-detail-section {
     overflow: visible;
     padding: 40px 0;
+    border-bottom: 2px solid var(--light-grey);
 }
 .essay-detail-section + .essay-detail-section {
-    border-top: 2px solid var(--light-grey);
+    /* border-top: 2px solid var(--light-grey); */
+}
+.essay-detail-section:last-child {
+    /* padding-bottom: 0px; */
+    border-bottom: 2px solid var(--light-grey);
 }
 .essay-section-style-wrapper {
     padding: 40px 20px;
@@ -151,18 +159,27 @@ html {
 .essay-detail-section + .essay-detail-section {
     border-top: none;
 }
-.poem-content.body {
+.poem-content.body,
+.body {
     line-height: 1.6;
 }
 .summary-content {
     color: var(--theme-color);
+    /* border-radius: 18px;
+    border: 1px solid var(--theme-color);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: var(--inner-padding);
+    margin-right: var(--inner-padding); */
+    padding-left: 30px;
+    padding-right: 30px;
 }
 #essay-detail-diaries {
     --gap: 50px;
     /* padding: 40px 0; */
-    padding: 0px 0 60px 0;
+    padding: 0px 0 40px 0;
     /* border-top: 2px solid var(--light-grey); */
-    border-bottom: 2px solid var(--light-grey);
+    /* border-bottom: 2px solid var(--light-grey); */
 }
 #essay-detail-diaries .list-entry + .list-entry {
     margin-top: var(--gap);
@@ -368,6 +385,7 @@ html {
 #app[data-title-style="1"] #essay-detail-v2 {
     --large-size: 14vw;
     --medium-size: 18px;
+    padding-bottom: 20px;
 }
 #app[data-title-style="1"] #essay-detail-diaries {
     --gap: 40px;
@@ -466,4 +484,17 @@ html {
 }
 .diary-body img {
     width: 100%;
+}
+.essay-detail-summary {
+    position: relative;
+}
+.essay-detail-summary:before {
+    content: '';
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url()
 }
