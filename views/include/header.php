@@ -4,7 +4,7 @@ function renderHeader($config, $id, $cls=array()){
     $parts = array();
     foreach($config as $key => $side) {
         if($key === 'title') {
-            $parts[$key] = '<h1 class="title page-title medium bold">'.$side.'</h1>';
+            $parts[$key] = '<h1 class="title page-title medium bold" onclick="window.location.reload();">'.$side.'</a></h1>';
             continue;
         } 
         $parts[$key] = '';

@@ -5,7 +5,7 @@ require_once(__DIR__ . '/sortPoints.php');
 
 
 
-function getPoemList($db, $parent_id=0){
+function getEssayList($db, $parent_id=0){
     $sql = "SET SESSION group_concat_max_len = 1000000";
     $db->query($sql);
     $sql = "SELECT 

@@ -47,7 +47,8 @@ function renderPoemEntry($entry, $list_type, $idx=-1){
     $output = '<div id="'.$id.'" class="' . implode(' ', $cls) . '" style="'.$style.'" data-slug="'.$entry['url'].'" data-date="'.str_replace('/', '-', $entry['date']).'">'.$background.'<div class="entry-inner essay-inner">'.$body.$thumbnail.'</div></div>';
     return $output;
 }
-$essay_list = getPoemList($db, $item['id']);
+$essay_list = getEssayList($db, $item['id']);
+
 $points = array();
 $view_options = array(
     'rows', 'grid', 'calendar'
@@ -209,7 +210,7 @@ $essay_items = array();
         // const queryParams = 
         if(!slug) continue;
         entry.addEventListener('click', ()=>{
-            window.location.href = '/essays/' + slug + '?v=' + v;
+            window.location.href = '/essays-v1/' + slug + '?v=' + v;
         })
     }
     let list_view = '<?php echo $list_view; ?>';

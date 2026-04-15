@@ -159,8 +159,21 @@ figure video{
     scrollbar-width: none; /* Firefox */
     position: relative;
     height: 100dvh;
+    
 }
-#app::-webkit-scrollbar {
+html,
+body,
+#app, 
+.page {
+    /* Firefox (standard) */
+    scrollbar-width: none;
+    /* IE and older Edge versions */
+    -ms-overflow-style: none;
+}
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar, 
+#app::-webkit-scrollbar, 
+.page::-webkit-scrollbar {
     display: none;
 }
 .text-button {

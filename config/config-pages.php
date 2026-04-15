@@ -20,7 +20,7 @@ $config_pages = array(
             )
         )
     ),
-    'essay-list' => array(
+    'essay-list-v1' => array(
         'stylesheets' => array( 'essay-list', 'list', 'calendar' ),
         'header' => array(
             'left' => array(
@@ -44,7 +44,7 @@ $config_pages = array(
             )
         )
     ),
-    'essay-detail' => array(
+    'essay-detail-v1' => array(
         'stylesheets' => array( 'essay-detail', 'diary', 'list' ),
         'header' => array(
             'left' => array(

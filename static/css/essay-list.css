@@ -2,7 +2,7 @@
 #app[data-view="essay-list"] {
     height: auto;
 }
-#essay-list {
+#essay-list-v1 {
     --day-gap: 8px;
     --shadow-size: 8px;
     --shadow-color: var(--dark-grey);
@@ -79,14 +79,14 @@
     height: 100%;
     object-fit: cover;
 }
-/* #essay-list .list-year-section-title:after,
-#essay-list .list-year-section-title:before {
+/* #essay-list-v1 .list-year-section-title:after,
+#essay-list-v1 .list-year-section-title:before {
     background: linear-gradient(to bottom, var(--light-grey) 30%, var(--gradient-end) 100%);
 } */
-#essay-list .list-year-section-title:after {
+#essay-list-v1 .list-year-section-title:after {
     content: none;
 }
-#essay-list .sub-header .header-left{
+#essay-list-v1 .sub-header .header-left{
     align-items: start;
 }
 .view-option.active {
@@ -109,7 +109,7 @@
     transition: width .3s;
 }
 /* data-item-style="2" */
-#app[data-item-style="2"] #essay-list {
+#app[data-item-style="2"] #essay-list-v1 {
     --thumbnail-size: 75px;
     --gradient-end: rgba(255, 255, 255, 0);
 }
@@ -126,13 +126,13 @@
     margin-top: 0px;
     padding-bottom: var(--thumbnail-size);
 }
-/* #app[data-item-style="2"] #essay-list .list-year-section-title:after,
-#app[data-item-style="2"] #essay-list .list-year-section-title:before {
+/* #app[data-item-style="2"] #essay-list-v1 .list-year-section-title:after,
+#app[data-item-style="2"] #essay-list-v1 .list-year-section-title:before {
     background: linear-gradient(to bottom, #fff 30%, var(--gradient-end) 100%);
 } */
 
 /* data-item-style="3" */
-#app[data-item-style="3"] #essay-list {
+#app[data-item-style="3"] #essay-list-v1 {
     --thumbnail-size: 75px;
     --background: var(--light-grey);
     --shadow-size: 15px;
@@ -160,7 +160,7 @@
     background: linear-gradient( to bottom, var(--gradient-end) 0%, #fff var(--shadow-size), #fff calc(100% - var(--shadow-size)), var(--gradient-end) 100% );
     z-index: 3;
 }
-#essay-list .list-entry + .list-entry {
+#essay-list-v1 .list-entry + .list-entry {
     margin-top: calc(var(--shadow-size) + var(--entry-gap));
 }
 #app[data-item-style="3"] .list-entry + .list-entry {
@@ -176,14 +176,14 @@
 #app[data-item-style="3"] .list[data-list-type="calendar"]:before {
     background-color: var(--light-grey);
 }
-#app[data-color="2"] #essay-list {
+#app[data-color="2"] #essay-list-v1 {
     --shadow-color: var(--theme-color);
     --gradient-end: rgba(10, 119, 75, 0);
 }
 #app[data-color="2"] .essay-body {
     color: var(--theme-color);
 }
-#app[data-color="2"][data-item-style="3"] #essay-list {
+#app[data-color="2"][data-item-style="3"] #essay-list-v1 {
     --shadow-size: 20px;
 }
 #app[data-color="2"][data-item-style="3"] .essay-entry {
@@ -210,20 +210,20 @@
 }
 
 /* data-item-style="4" */
-#app[data-item-style="4"] #essay-list {
+#app[data-item-style="4"] #essay-list-v1 {
     --background: var(--light-grey);
 }
-#app[data-item-style="4"] #essay-list .list {
+#app[data-item-style="4"] #essay-list-v1 .list {
     /* --entry-gap: 8px; */
     /* padding-top: calc(var(--shadow-size) + 10px); */
 }
-#app[data-item-style="4"] #essay-list .list[data-list-type="rows"] {
+#app[data-item-style="4"] #essay-list-v1 .list[data-list-type="rows"] {
     padding-top: 0;
 }
 #app[data-item-style="4"] .essay-inner {
     display: flex;
 }
-#app[data-item-style="4"][data-color="2"] #essay-list {
+#app[data-item-style="4"][data-color="2"] #essay-list-v1 {
     --background: var(--theme-color);
 }
 #app[data-item-style="4"] .essay-entry:after {
@@ -242,14 +242,14 @@
 #app[data-item-style="4"] .list-day-section {
     /* --day-gap: 20px; */
 }
-#essay-list .list-day-section + .list-day-section {
+#essay-list-v1 .list-day-section + .list-day-section {
     margin-top: calc(var(--shadow-size) + var(--day-gap));
 }
 #app[data-item-style="4"] .essay-entry .thumbnail-wrapper {
     margin-top: 0px;
     padding-bottom: var(--thumbnail-size);
 }
-#essay-list .list[data-list-type="grid"] {
+#essay-list-v1 .list[data-list-type="grid"] {
     --entry-gap: calc( 8px + var(--shadow-size) * 2);
     /* margin-left: calc( var(--entry-gap) + var(--shadow-size) * 2); */
 }
@@ -257,7 +257,7 @@
 #app[data-item-style="4"] .list[data-list-type="grid"] .essay-entry.list-entry {
     margin-bottom: var(--entry-gap);
 }
-/* #app[data-item-style="keep"] #essay-list,
+/* #app[data-item-style="keep"] #essay-list-v1,
 #app[data-item-style="keep"] .essay-entry {
     --background: var(--light-grey);
 } */
@@ -296,7 +296,7 @@
     margin-right: var(--entry-part-gap);
 }
 
-#app[data-color="3"] #essay-list {
+#app[data-color="3"] #essay-list-v1 {
     --background: #000;
     --gradient-end: rgba(0, 0, 0, 0);
 }
@@ -315,17 +315,17 @@
     opacity: 0;
     pointer-events: none;
 }
-#essay-list .list-section-title {
+#essay-list-v1 .list-section-title {
     top: calc( var(--main-header-height) + var(--sub-header-height) - var(--header-overlap));
 }
-#essay-list .list-day-section-title {
+#essay-list-v1 .list-day-section-title {
     padding-top: 0;
     top: calc( var(--main-header-height) + var(--sub-header-height) + 18px - var(--header-overlap));
 }
-#essay-list[data-list-view="rows"] .essay-list-section[data-slug="rows"],
-#essay-list[data-list-view="grid"] .essay-list-section[data-slug="grid"],
-#essay-list[data-list-view="calendar"] .essay-list-section[data-slug="calendar"],
-#essay-list[data-list-view="search"] .essay-list-section[data-slug="search"] {
+#essay-list-v1[data-list-view="rows"] .essay-list-section[data-slug="rows"],
+#essay-list-v1[data-list-view="grid"] .essay-list-section[data-slug="grid"],
+#essay-list-v1[data-list-view="calendar"] .essay-list-section[data-slug="calendar"],
+#essay-list-v1[data-list-view="search"] .essay-list-section[data-slug="search"] {
     /* display: block; */
     position: relative;
     left: 0;
@@ -337,7 +337,7 @@
 #essay-calendar {
     width: 100vw;
 }
-#essay-list[data-list-view="calendar"] {
+#essay-list-v1[data-list-view="calendar"] {
     --background: var(--light-grey);
     display: flex;
     flex-direction: column;
@@ -437,12 +437,12 @@
 [data-list-type="grid"] .entry-header .entry-time {
     margin-bottom: calc(var(--entry-part-gap) / 2);
 }
-#essay-list .entry-header {
+#essay-list-v1 .entry-header {
     margin-bottom: calc( var(--entry-part-gap) * 2);
     margin-bottom: var(--entry-part-gap);
     justify-content: flex-start;
 }
-#essay-list .entry-time {
+#essay-list-v1 .entry-time {
     flex: 0 0 50px;
 }
 .essay-day {

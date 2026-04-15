@@ -25,6 +25,7 @@ while($m = $result->fetch_assoc()) {
         break;
     }
 }
+var_dump($item['state']);
 $sql = "SELECT 
     o.*
     , (

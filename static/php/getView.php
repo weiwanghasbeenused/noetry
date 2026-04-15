@@ -1,11 +1,11 @@
 <?php 
 function getView($uri, $v=1){
     if(!$uri[1]) return 'home';
-    if($uri[1] === 'essays') {
+    if(strpos($uri[1], 'essays') !== false) {
         if(count($uri) === 2)
-            return $v == 1 ? 'essay-list' : 'essay-list-v' . $v;
+            return 'essay-list-v' . $v;
         else if(count($uri) === 3) {
-            return $v == 1 ? 'essay-detail' : 'essay-detail-v' . $v;
+            return 'essay-detail-v' . $v;
         }
             
     }
