@@ -2,8 +2,8 @@
     --background: #ffffff;
 }
 html {
-    font-size: 15px;
-    line-height: 1.5;
+    /* font-size: 15px; */
+    /* line-height: 1.5; */
 }
 #app[data-view="essay-detail-v2"] {
     --background: #ffffff;

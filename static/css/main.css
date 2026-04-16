@@ -131,7 +131,7 @@ figure video{
     padding-bottom: calc(var(--padding) * 2 + var(--nav-height));
 }
 .body {
-    line-height: 1.4;
+    line-height: 1.5;
 }
 .body a {
     text-decoration: underline;
