@@ -79,7 +79,7 @@ html {
 .essay-detail-section {
     overflow: visible;
     padding: 40px 0;
-    border-bottom: 2px solid var(--light-grey);
+    /* border-bottom: 2px solid var(--light-grey); */
 }
 .essay-detail-section + .essay-detail-section {
     /* border-top: 2px solid var(--light-grey); */
@@ -497,4 +497,19 @@ html {
     left: 50%;
     transform: translate(-50%, -50%);
     background-image: url()
+}
+.essay-detail-section.essay-detail-summary {
+    padding-top: 0px;
+}
+.feedback-container {
+    box-shadow: 0px 0px 12px var(--dark-grey);
+    color: var(--theme-color);
+    background-color: #fff;
+    /* border: 2px solid; */
+    border-radius: var(--rounded);
+    padding: calc( 2.5* var(--padding));
+    margin: var(--padding);
+    margin-bottom: var(--padding);
+    /* display: none; */
+    scroll-margin-top: calc( var(--main-header-height) + var(--padding) );
 }

@@ -76,7 +76,7 @@ function renderPoemHeader($title, $content){
 }
 function renderSummary($content){
     return '<div class="essay-detail-section essay-detail-summary">
-        <div class="essay-detail-section-content summary-content body">'.$content.'</div>
+        <div class="essay-detail-section-content summary-content body feedback-container">'.$content.'</div>
         </div>';
 }
 function renderDiaries($diaries){
