@@ -4,11 +4,15 @@
         if($type == 0) return $output;
         else if($type == 1) {
             if($version == 1)
-                $filename = 'helper-1.svg';
+                $filename = 'helper-3.svg';
             else if($version == 2)
-                $filename = 'helper-1-rounded.svg';
+                $filename = 'helper-3-rounded.svg';
             else return '';
-            $output .= '<div id="helper-line-wrapper"><img src="/media/svg/'.$filename.'" /></div>
+            $output .= '
+                <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+            <script src="https://unpkg.com/p5.js-svg@1.6.0"></script>
+            <script src="/static/js/tangled-line/utils/lib.js"></script>
+            <div id="helper-line-wrapper"><img src="/media/svg/'.$filename.'" /></div>
                 <div id="helper-left-eye" class="helper-eye"></div>
                 <div id="helper-right-eye" class="helper-eye"></div>
                 <div id="helper-body"></div>';
@@ -21,63 +25,516 @@
             $output .= '<div id="helper-lightbulb-wrapper"><img src="/media/svg/'.$filename.'" /></div>
             <div id="helper-body"></div>';
         }
+        else if($type == 3) {
+            if($version == 1)
+                $filename = 'helper-3.svg';
+            else if($version == 2)
+                $filename = 'helper-3-rounded.svg';
+            else return '';
+            $output .= '<div id="helper-line-wrapper"><img src="/media/svg/'.$filename.'" /></div>
+                <div id="helper-left-eye" class="helper-eye"></div>
+                <div id="helper-right-eye" class="helper-eye"></div>
+                <div id="helper-body"></div>';
+        }
+        else if($type == 4) {
+            $output .= '<img src="/media/svg/helper-4.svg" />
+            <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+            <script src="https://unpkg.com/p5.js-svg@1.6.0"></script>
+            <script src="/static/js/tangled-line/utils/lib.js"></script>
+            <div id="helper-left-eye" class="helper-eye"></div>
+            <div id="helper-right-eye" class="helper-eye"></div>';
+        }
         if(!$output) return $output;
-        return '<div id="helper-wrapper" data-type="'.$type.'">' . $output . '</div>';
+        return '<div id="helper-wrapper" class="initializing" data-type="'.$type.'" data-on="-1">' . $output . '</div>';
+    }
+    function renderHelperMessage($messages, $index=1, $style=1){
+        $output = '';
+        foreach($messages as $m) {
+            $output .= '<div class="helper-message body">' . $m . '</div>';
+        }
+        if($style == 2) {
+            $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 168 125" preserveAspectRatio="none" overflow="visible"><polygon id="message-poly" fill="#fff" points="" /></svg>';
+        }
+        $output = '<div id="helper-message-wrapper" class="feedback-container" data-message-index="'.$index.'" data-message-style="'.$style.'">' . $output . '</div>';
+        return $output;
     }
     $helper_type = $_GET['helper-type'] ?? 0;
     $helper_version = $_GET['helper-version'] ?? 1;
+    $helper_message = $_GET['helper-message'] ?? 1;
+    $helper_message_style = $_GET['helper-message-style'] ?? 1;
     $demo_helper_animation = $_GET['demo-helper-animation'] ?? 0;
 
     $helper_html = renderHelper($helper_type, $helper_version);
     echo $helper_html;
-?>
-<script>
-    const demo_helper_animation = <?php echo $demo_helper_animation == 1 ? 'true' : 'false'; ?>;
-    <?php if($helper_type == 1) :?>
-        function getIdle(min, max) {
-            return Math.random() * (max - min) + min;
-        }
-        function getDoubleBlink(isConsecutive){
-            const rate = isConsecutive ? 0.2 : 0.5;
-            return Math.random() < rate;
-        }
-        function blink(isConsecutive=false, isStatic=false){
-            wrapper.classList.add('blinking');
-            const isDouble = getDoubleBlink(isConsecutive);
-            
-            setTimeout(()=>{
-                wrapper.classList.remove('blinking');
-                if(isStatic) return;
-                let idle = isDouble ? 0 : getIdle(idle_min, idle_max);
-                isConsecutive = isDouble;
-                setTimeout(()=>{
-                    blink(isConsecutive);
-                }, idle);
-                
-                
-            }, blink_duration);
-        }
-        const blink_duration = 100;
-        const wrapper = document.getElementById('helper-wrapper');
-        let idle_max = 8000;
-        let idle_min = 2000;
-        let idle = demo_helper_animation ? 0 : getIdle(idle_min, idle_max);
-        console.log(idle);
-        setTimeout(()=>{
-            blink();
-        }, idle);
-        
-    <?php endif; ?>
-</script>
 
+    
+    if($helper_html) {
+        $messages = array(
+            '已將 13 日所有雜音整理為一篇完整篇章，並收錄至篇章區域。<br>原雜音列表已清空，請放心，內容皆已妥善保存。',
+            '今天的 Twice 台北演唱會的搶票日，你準備好了嗎？<div class="float-container"><div class="more-button small bold">了解更多<div class="icon arrow-head-right-icon" data-color="green" data-size="small"></div></div></div>'
+        );
+        echo renderHelperMessage($messages, $helper_message, $helper_message_style);
+    }
+    
+?>
+<script src="/static/js/helper-blinker.js"></script>
+<script>
+    const message_container = document.querySelector('#helper-message-wrapper');
+    const message_index = message_container.dataset.messageIndex;
+    const message_style = <?php echo $helper_message_style; ?>;
+    const message_in_duration = 500;
+    const message_out_duration = 300;
+    message_container.style.setProperty('--message-in-duration', message_in_duration + 'ms');
+    message_container.style.setProperty('--message-out-duration', message_out_duration + 'ms');
+    const active_message = document.querySelector('.helper-message:nth-child('+message_index+')');
+    active_message.classList.add('active');
+
+    const demo_helper_animation = <?php echo $demo_helper_animation == 1 ? 'true' : 'false'; ?>;
+    const wrapper = document.getElementById('helper-wrapper');
+    const helper_type = <?php echo $helper_type; ?>;
+    
+    window.addEventListener('load', ()=>{
+        message_container.style.setProperty('--active-message-height', parseFloat(active_message.offsetHeight) + 'px');
+        message_container.style.setProperty('--off-w', parseFloat(message_container.offsetWidth) * 0.5 + 'px');
+        message_container.style.setProperty('--off-h', parseFloat(message_container.offsetHeight) * 0.5 + 'px');
+        active_message.style.setProperty('--off-w', parseFloat(message_container.offsetWidth) / 3 + 'px');
+        if(message_style === 2) {
+            // message_container.style.setProperty('--on-h', parseFloat(message_container.offsetHeight) + 'px');
+        }
+        wrapper.dataset.on = '0';
+        void wrapper.offsetWidth;
+        
+        setTimeout(()=>{
+            if(helper_type != 4 && helper_type != 1) {
+                wrapper.dataset.on = '1';
+                wrapper.classList.remove('initializing'); 
+            }
+                
+        }, 0);
+        
+    })
+    <?php if($helper_type == 1 || $helper_type == 3) :?>
+        // const helper_blinker = new HelperBlinker(wrapper, demo_helper_animation);
+        // helper_blinker.start();
+        
+    <?php elseif($helper_type == 4): ?>
+        const helper_line = document.getElementById('helper-line');
+        if(helper_line) {
+            const pathData = helper_line.getAttribute('d');
+            let animationFrameId = null;
+
+            // Parse SVG path data into array of control points
+            function parseSVGPath(d) {
+                const points = [];
+                const commands = d.match(/[MmLlHhVvCcSsQqTtAaZz][^MmLlHhVvCcSsQqTtAaZz]*/g) || [];
+                let currentPos = { x: 0, y: 0 };
+
+                // Define how many coordinate pairs each command expects
+                const coordCounts = {
+                    'M': 1, 'm': 1,
+                    'L': 1, 'l': 1,
+                    'H': 0, 'h': 0, // Only x value
+                    'V': 0, 'v': 0, // Only y value
+                    'C': 3, 'c': 3,
+                    'S': 2, 's': 2,
+                    'Q': 2, 'q': 2,
+                    'T': 1, 't': 1,
+                    'A': 0, 'a': 0, // Special handling
+                    'Z': 0, 'z': 0
+                };
+
+                commands.forEach(cmd => {
+                    const type = cmd[0];
+                    const values = cmd.slice(1).trim().match(/-?\d*\.?\d+/g) || [];
+                    const coords = [];
+
+                    // Parse coordinates based on command type
+                    const expectedPairs = coordCounts[type] || 0;
+
+                    if (expectedPairs > 0) {
+                        for (let i = 0; i < values.length; i += expectedPairs * 2) {
+                            for (let j = 0; j < expectedPairs; j++) {
+                                if (i + j*2 + 1 < values.length) {
+                                    let x = parseFloat(values[i + j*2]);
+                                    let y = parseFloat(values[i + j*2 + 1]);
+
+                                    // Convert relative to absolute
+                                    if (type === type.toLowerCase() && type !== 'z' && type !== 'Z') {
+                                        x += currentPos.x;
+                                        y += currentPos.y;
+                                    }
+
+                                    coords.push({ x, y, index: coords.length });
+                                }
+                            }
+                            // Update currentPos after each set of coordinate pairs (for chained commands)
+                            if (coords.length > 0) {
+                                currentPos = { x: coords[coords.length - 1].x, y: coords[coords.length - 1].y };
+                            }
+                        }
+                    }
+
+                    // Update current position
+                    if (coords.length > 0) {
+                        currentPos = coords[coords.length - 1];
+                    }
+
+                    points.push({ command: type, coords });
+                });
+
+                return points;
+            }
+
+            // Add shake/vibration to points
+            function shakePathPoints(pathPoints, intensity = 2) {
+                return pathPoints.map(({ command, coords }) => ({
+                    command,
+                    coords: coords.map(coord => ({
+                        x: coord.x + (Math.random() - 0.5) * intensity,
+                        y: coord.y + (Math.random() - 0.5) * intensity,
+                        index: coord.index
+                    }))
+                }));
+            }
+
+            // Convert points back to SVG path d string
+            function serializeSVGPath(pathPoints) {
+                let d = '';
+                let currentPos = { x: 0, y: 0 };
+
+                // Define how many coordinate pairs each command expects (for grouping chained commands)
+                const coordCounts = {
+                    'M': 1, 'm': 1,
+                    'L': 1, 'l': 1,
+                    'C': 3, 'c': 3,
+                    'S': 2, 's': 2,
+                    'Q': 2, 'q': 2,
+                    'T': 1, 't': 1
+                };
+
+                pathPoints.forEach(({ command, coords }) => {
+                    d += command;
+
+                    const expectedPairs = coordCounts[command] || 0;
+                    let subCommandStartPos = { ...currentPos };
+
+                    coords.forEach((coord, idx) => {
+                        // Every expectedPairs coordinates represent a new sub-command with a new starting point
+                        if (expectedPairs > 0 && idx > 0 && idx % expectedPairs === 0) {
+                            // Update the starting point for the next sub-command
+                            subCommandStartPos = { x: coords[idx - 1].x, y: coords[idx - 1].y };
+                        }
+
+                        let x = coord.x;
+                        let y = coord.y;
+
+                        // For relative commands, convert back to relative coordinates
+                        if (command === command.toLowerCase() && command !== 'z' && command !== 'Z') {
+                            x = x - subCommandStartPos.x;
+                            y = y - subCommandStartPos.y;
+                        }
+
+                        d += x.toFixed(3) + ',' + y.toFixed(3) + ' ';
+                    });
+
+                    // Update currentPos to the last coordinate of this command
+                    if (coords.length > 0) {
+                        currentPos = { x: coords[coords.length - 1].x, y: coords[coords.length - 1].y };
+                    }
+                });
+
+                return d.trim();
+            }
+            
+            const pathPoints = parseSVGPath(pathData);
+            const originalPoints = JSON.parse(JSON.stringify(pathPoints)); // Deep copy
+            console.log('Parsed path points:', pathPoints);
+
+            // Animate with shake effect
+            function animate(intensity = 1.5, interval = 80) {
+                animationFrameId = setTimeout(() => {
+                    const shakenPoints = shakePathPoints(originalPoints, intensity);
+                    const newD = serializeSVGPath(shakenPoints);
+                    helper_line.setAttribute('d', newD);
+                    animate(intensity)
+                }, interval);
+            }
+
+            // Test round-trip: parse and serialize without shaking
+            function testRoundTrip() {
+                
+                console.log('=== ROUND TRIP TEST ===');
+                console.log('Original d:', pathData);
+                console.log('Reconstructed d:', reconstructedD);
+                console.log('Match:', pathData === reconstructedD);
+                helper_line.setAttribute('d', reconstructedD);
+
+                // Print parsed points line by line
+                console.log('\n=== PARSED POINTS ===');
+                // originalPoints.forEach((point, idx) => {
+                //     console.log(`Command ${idx}: ${point.command}`);
+                //     console.log(`  Coords (${point.coords.length} pairs):`);
+                //     point.coords.forEach((coord, cidx) => {
+                //         console.log(`    [${cidx}] x: ${coord.x.toFixed(3)}, y: ${coord.y.toFixed(3)}`);
+                //     });
+                // });
+
+                return reconstructedD;
+            }
+            const reconstructedD = serializeSVGPath(originalPoints);
+            let status = 0;
+            const paths = [
+                pathData,
+                reconstructedD
+            ]
+            helper_line.addEventListener('click', ()=>{
+                console.log('click');
+                status = (status + 1) % 2
+                console.log(paths[status]);
+                helper_line.setAttribute('d', paths[status]);
+            });
+            
+            // Uncomment to test:
+            // testRoundTrip();
+            // animate(5);
+        }
+
+    <?endif; ?>
+    if(<?php echo $helper_message_style; ?> == 1) {
+        window.openHelperMessage = function() {
+            if(window.helperMessageIsOpen == true) return;
+            wrapper.dataset.on = '1';
+            window.helperMessageIsOpen = true;
+        }
+        window.closeHelperMessage = function() {
+            if(window.helperMessageIsOpen == false) return;
+            wrapper.dataset.on = '0';
+            window.helperMessageIsOpen = false;
+        }
+        
+    }
+    else if(<?php echo $helper_message_style; ?> == 2) {
+        const messagePoly = document.getElementById('message-poly');
+        if(messagePoly) {
+            const n = 12;
+            const w_begin = 40;
+            const h_begin = 40;
+            let animatePointsForward, animatePoints, animatePointsBackward, timer = null;
+            setTimeout(() => {
+                const messageContainer = document.querySelector('#helper-message-wrapper');
+                const w_end = messageContainer.offsetWidth;
+                const h_end = messageContainer.offsetHeight;
+
+                // const svg = messagePoly.parentElement;
+                // svg.setAttribute('viewBox', `0 0 ${w_end} ${h_end}`);
+
+                const centerX = w_end / 2;
+                const centerY = h_end / 2;
+                const offsetX = w_begin / 2;
+                const offsetY = h_begin / 2;
+
+                function generateRandomPoints(count, x_min, x_max, y_min, y_max) {
+                    const points = [];
+                    for(let i = 0; i < count; i++) {
+                        points.push([
+                            x_min + Math.random() * (x_max - x_min),
+                            y_min + Math.random() * (y_max - y_min)
+                        ]);
+                    }
+                    return points;
+                }
+
+                function generateRoundedRectPoints(count, width, height, radius = 18) {
+                    radius = Math.min(radius, width / 2, height / 2);
+                    const perimeter = [];
+
+                    // Top edge
+                    for(let x = radius; x <= width - radius; x += 1) {
+                        perimeter.push([x, radius]);
+                    }
+
+                    // Top-right corner
+                    for(let angle = 0; angle <= Math.PI / 2; angle += 0.05) {
+                        perimeter.push([
+                            width - radius + radius * Math.cos(angle),
+                            radius - radius * Math.sin(angle)
+                        ]);
+                    }
+
+                    // Right edge
+                    for(let y = radius; y <= height - radius; y += 1) {
+                        perimeter.push([width - radius, y]);
+                    }
+
+                    // Bottom-right corner
+                    for(let angle = Math.PI / 2; angle <= Math.PI; angle += 0.05) {
+                        perimeter.push([
+                            width - radius + radius * Math.cos(angle),
+                            height - radius - radius * Math.sin(angle)
+                        ]);
+                    }
+
+                    // Bottom edge
+                    for(let x = width - radius; x >= radius; x -= 1) {
+                        perimeter.push([x, height - radius]);
+                    }
+
+                    // Bottom-left corner
+                    for(let angle = Math.PI; angle <= 3 * Math.PI / 2; angle += 0.05) {
+                        perimeter.push([
+                            radius + radius * Math.cos(angle),
+                            height - radius - radius * Math.sin(angle)
+                        ]);
+                    }
+
+                    // Left edge
+                    for(let y = height - radius; y >= radius; y -= 1) {
+                        perimeter.push([radius, y]);
+                    }
+
+                    // Top-left corner
+                    for(let angle = 3 * Math.PI / 2; angle <= 2 * Math.PI; angle += 0.05) {
+                        perimeter.push([
+                            radius + radius * Math.cos(angle),
+                            radius - radius * Math.sin(angle)
+                        ]);
+                    }
+
+                    // Sample count points evenly from the perimeter
+                    const points = [];
+                    for(let i = 0; i < count; i++) {
+                        const index = Math.floor(i / count * perimeter.length) % perimeter.length;
+                        points.push(perimeter[index]);
+                    }
+
+                    return points;
+                }
+
+                const startConfigs = [
+                    [[82.5, 60.5], [82.5, 56.5], [87.5, 57.5], [89.5, 60.5], [89.5, 63.5], [87.556, 64.472], [86.5, 66.5], [83.5, 66.5], [83.5, 68.5], [80.5, 67.5], [80.5, 64.5], [78.5, 62.5], [82.5, 60.5]],
+                    [[82, 63], [82.5, 56.5], [86, 60], [91, 60], [91, 62], [90, 64], [88, 64], [88, 67], [86, 69], [83, 66], [79, 67], [79, 65], [82, 63]],
+                    [[83, 60], [85, 58], [88, 59], [87, 62], [90, 66], [87, 66], [85, 65], [84, 68], [80, 67], [81, 64], [79, 62], [80, 58], [83, 60]]
+                ];
+
+                const endConfigs = [
+                    [[0, 0], [38, 0], [128, 0], [168, 0], [168, 40], [168, 100], [168, 125], [140, 125], [102, 125], [39, 125], [0, 125], [0, 62.5], [0, 0]],
+                    [[44, 0], [78, 0], [128, 0], [168, 0], [168, 76], [168, 125], [92, 125], [47, 125], [0, 125], [0, 82], [0, 35], [0, 0], [44, 0]],
+                    [[0, 55], [0, 0], [22, 0], [63, 0], [125, 0], [168, 0], [168, 76], [168, 125], [127, 125], [75, 125], [0, 125], [0, 90], [0, 55]]
+                ];
+                
+
+                function parsePoints(pointsString) {
+                    return pointsString.split(' ').map(Number).reduce((pairs, num, i) => {
+                        if(i % 2 === 0) pairs.push([num]);
+                        else pairs[pairs.length - 1].push(num);
+                        return pairs;
+                    }, []);
+                }
+
+                function pointsToString(points) {
+                    return points.map(p => p[0].toFixed(3) + ',' + p[1].toFixed(3)).join(' ');
+                }
+                let currentPoints, targetPoints
+                const duration = 300;
+                const frameInterval = 60;
+                const frameCount = Math.ceil(duration / frameInterval);
+                let currentFrame = 0;
+
+                animatePoints = (backward=false) => {
+                    console.log('backward', backward);
+                    if(currentFrame > frameCount) {
+                        timer = null;
+                        currentFrame = 0;
+                        return;
+                    }
+
+                    const progress = currentFrame / frameCount;
+                    const randomIntensity = 30;
+                    const animatedPoints = currentPoints.map((currentPoint, i) => {
+                        const targetPoint = targetPoints[i];
+                        if(!targetPoint) return currentPoint;
+
+                        const randomX = (Math.random() - 0.5) * randomIntensity * (1 - progress);
+                        const randomY = (Math.random() - 0.5) * randomIntensity * (1 - progress);
+
+                        return [
+                            currentPoint[0] + (targetPoint[0] - currentPoint[0]) * progress + randomX,
+                            currentPoint[1] + (targetPoint[1] - currentPoint[1]) * progress + randomY
+                        ];
+                    });
+
+                    const pointsStr = pointsToString(animatedPoints);
+                    messagePoly.setAttribute('points', pointsStr);
+                    currentFrame++;
+                    timer = setTimeout(()=>{ animatePoints(); }, frameInterval);
+                }
+
+                animatePointsBackward = () => {
+                    
+                    const temp = currentPoints;
+                    currentPoints = targetPoints;
+                    targetPoints = temp;
+                    // console.log('backward', targetPoints[0]);
+                    currentFrame = 0;
+                    if(timer !== null) {
+                        // console.log('backward clear', targetPoints[0]);
+                        clearTimeout(timer);
+                        timer = null;
+                    }
+                    animatePoints(true);
+                }
+                animatePointsForward = () => {
+                    // console.log('forward');
+                    currentPoints = startConfigs[Math.floor(Math.random() * startConfigs.length)];
+                    targetPoints = endConfigs[Math.floor(Math.random() * endConfigs.length)];
+                    // console.log('forward', targetPoints[0]);
+                    if(timer !== null) {
+                        // console.log('forward clear', targetPoints[0]);
+                        clearTimeout(timer);
+                        timer = null;
+                    }
+                    animatePoints();
+                }
+                
+            }, 0);
+            window.openHelperMessage = function() {
+                if(window.helperMessageIsOpen == true) return;
+                wrapper.dataset.on = '1';
+                window.helperMessageIsOpen = true;
+                animatePointsForward();
+            }
+            window.closeHelperMessage = function() {
+                if(window.helperMessageIsOpen == false) return;
+                wrapper.dataset.on = '0';
+                window.helperMessageIsOpen = false;
+                animatePointsBackward();
+            }
+        }
+    }
+    window.toggleHelperMessage = function() {
+        if(window.helperMessageIsOpen) {
+            window.closeHelperMessage();
+        } else {
+            window.openHelperMessage();
+        }
+    }
+    wrapper.addEventListener('click', ()=>{
+        toggleHelperMessage();
+    });
+</script>
+<?php if($helper_type == 1): ?>
+    <script src="/static/js/helper-1.js"></script>
+<?php elseif($helper_type == 4): ?>
+    <script src="/static/js/helper-4.js"></script>
+<?php endif; ?>
 
 <style>
     #helper-wrapper {
-        --size: 60px;
+        --size: 40px;
         width: var(--size);
         height: var(--size);
         position: fixed;
-        z-index: 1000;
+        z-index: 1002;
         right: 20px;
         bottom: calc(var(--nav-height) + 10px);
     }
@@ -98,14 +555,13 @@
         box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
     }
     .helper-eye {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background-color: var(--green);
         position: absolute;
         transform-origin: bottom center;
         transition: transform 100ms;
-        /* transition-timing-function: steps(4, end); */
     }
     #helper-left-eye {
         top: 30%;
@@ -115,11 +571,13 @@
         top: 30%;
         right: 20%;
     }
-    #helper-wrapper.blinking .helper-eye {
+    #helper-wrapper.blinking .helper-eye,
+    #helper-wrapper.initializing .helper-eye,
+    #helper-wrapper[data-on="0"] .helper-eye {
         /* animation: blink 200ms linear forwards; */
-        transform: scale(1, 0);
+        transform: scale(1, .2);
     }
-
+   
     @keyframes blink {
         0% {
             transform: scale(1, 1);
@@ -131,17 +589,230 @@
             transform: scale(1, 1);
         }
     }
-
+    #helper-message-wrapper {
+        --off-w: auto;
+        --off-h: auto;
+        --on-w: calc(100vw - var(--padding) - 75px);
+        --on-h: auto;
+        --padding: 18px;
+        --message-in-duration: 300ms;
+        --message-out-duration: 300ms;
+        position: fixed;
+        bottom: calc(var(--nav-height) + 20px);
+        width: var(--on-w);
+        height: calc(var(--active-message-height) + var(--padding) * 2);
+        max-height: calc(var(--active-message-height) + var(--padding) * 2);
+        z-index: 1000;
+        right: 75px;
+        padding: var(--padding);
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
+        color: var(--green);
+        transform-origin: bottom right;
+        transition: width var(--message-in-duration), max-height var(--message-in-duration);
+    }
+    #helper-wrapper[data-on="-1"] ~ #helper-message-wrapper {
+        /* unintizlied */
+        transition: none;
+        right: -10000px;
+    }
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper {
+        width: var(--off-w);
+        max-height: var(--off-h);
+        opacity: 0;
+        pointer-events:none;
+        transition: width var(--message-out-duration), max-height var(--message-out-duration), opacity 200ms 50ms;
+    }
+    #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper,
+    #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper .helper-message {
+        transition: none;
+    }
+    .helper-message {
+        display: none;
+        transition: all var(--message-in-duration);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(var(--on-w) - var(--padding) * 2);
+        
+    }
+    .helper-message.active {
+        display: block;
+    }
+    #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper .helper-message.active {
+        /* display: none; */
+        opacity: 0;
+        transition: none;
+    }
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper .helper-message{
+        width: calc(var(--off-w) - var(--padding) * 2);
+        letter-spacing: -0.7em;
+        line-height: 0.1;
+    }
+    .more-button {
+        display: inline-flex;
+        margin-top: 1em;
+        float: right;
+        align-items: center;
+        opacity: 0;
+    }
+    .more-button .arrow-head-right-icon{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    #helper-wrapper[data-on="1"] ~ #helper-message-wrapper .more-button{
+        opacity: 1;
+        transition: opacity 200ms var(--message-in-duration);
+    }
+    #helper-wrapper[data-type="2"] {
+        right: 15px;
+    } 
+    #helper-wrapper[data-type="2"] #helper-lightbulb-wrapper img{
+        display: none;
+    }
+    #helper-wrapper[data-type="2"] #helper-lightbulb-wrapper {
+        background-image: url(/media/svg/helper-2.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        /* height: 27.9px; */
+        padding-bottom: calc( 0.75 * 77.5%);
+        background-size: 100%;
+        opacity: 1;
+    }
+    #helper-wrapper[data-type="2"][data-on="0"] #helper-lightbulb-wrapper {
+        background-image: url(/media/svg/helper-2-off.svg);
+        opacity: 0.5;
+    }
+    #helper-wrapper[data-type="2"] #helper-body{
+        
+        background-color: var(--theme-color);
+    }
+    #helper-wrapper[data-type="2"][data-on="1"] #helper-body{
+        background-color: #fff;
+        transition: background var(--message-in-duration);
+    } 
     #helper-lightbulb-wrapper {
         width: 75%;
         position: absolute;
-        /* top: 0; */
         left: 50%;
-        bottom: 12px;
+        bottom: 9px;
         transform: translate(-50%, 0);
     }
     #helper-lightbulb-wrapper img {
         display: block;
         width: 100%;
+    }
+
+    #helper-wrapper[data-type="1"] {
+        --size: 40px;
+        right: 15px;
+    }
+    #helper-wrapper[data-type="1"] #helper-line-wrapper {
+        display: none;
+        width: 145%;
+        left: -15%;
+    }
+    #helper-wrapper[data-type="1"] .helper-eye {
+        width: 6px;
+        height: 6px;
+    }
+    #helper-wrapper[data-type="4"] {
+        right: 10px;
+    }
+    #helper-wrapper[data-type="4"]:before,
+    #helper-wrapper[data-type="4"]:after {
+        /* content: ''; */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    #helper-wrapper[data-type="4"]:before {
+        width: 72px; 
+        height: 1px;
+        background-color: #000;
+    }
+    #helper-wrapper[data-type="4"]:after {
+        width: 1px; 
+        height: 72px;
+        background-color: #000;
+    }
+    .p5Canvas {
+        --x: 0px;
+        --y: 0px;
+        position: absolute;
+        left: calc(50% + var(--x));
+        top: calc(50% + var(--y));
+        transform: translate(-50%, -50%);
+        /* border: 1px solid #000; */
+    }
+    #helper-wrapper[data-type="1"] .p5Canvas {
+        --x: 3px;
+    }
+    #helper-wrapper[data-type="4"] img {
+        display: none;
+        width: 72px;
+        height: 72px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        /* border: 1px solid #000; */
+    }
+    #helper-wrapper[data-type="4"].initializing .helper-eye,
+    #helper-wrapper[data-type="1"].initializing .helper-eye {
+        /* display: none; */
+    }
+    #helper-wrapper[data-type="4"][data-on="1"] .helper-eye {
+        /* animation: blink 1s infinite; */
+    }
+    #helper-wrapper[data-type="4"] #helper-left-eye {
+        top: 23%;
+        left: 26%;
+    }
+    #helper-wrapper[data-type="4"] #helper-right-eye {
+        top: 23%;
+        left: 60%;
+    }
+    #helper-wrapper[data-type="4"] .helper-eye {
+        width: 5px;
+        height: 7px;
+        transform-origin: center;
+        transform: translate(-50%, -50%) scale(1,1);
+        /* transform: scale(0.8, 1.2); */
+    }
+    #helper-wrapper[data-type="4"].blinking .helper-eye,
+    #helper-wrapper.initializing[data-type="4"] .helper-eye,
+    #helper-wrapper[data-on="0"][data-type="4"] .helper-eye {
+        /* animation: blink 200ms linear forwards; */
+        transform: translate(-50%, -50%) scale(1,0.4);
+    }
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"],
+    #helper-message-wrapper[data-message-style="2"] {
+        width: var(--on-w);
+        height: calc( var(--active-message-height) + var(--padding) * 2);
+        background: transparent;
+        color: var(--green);
+        box-shadow: none;
+    }
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper {
+        /* max-height: none; */
+    }
+    #helper-message-wrapper[data-message-style="2"] svg{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    #helper-message-wrapper[data-message-style="2"] #message-poly {                                           
+      filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+    }  
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"] {
+        transition: width var(--message-out-duration), max-height var(--message-out-duration), opacity 0ms var(--message-out-duration);
+        max-height: none;
     }
 </style>

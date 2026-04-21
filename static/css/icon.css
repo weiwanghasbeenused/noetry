@@ -32,6 +32,13 @@
 .arrow-head-right-icon[data-color="dark-grey"] {
     background-image: url(/media/svg/arrow-head-right-dg.svg);
 }
+.arrow-head-right-icon[data-color="green"] {
+    background-image: url(/media/svg/arrow-head-right-green.svg);
+}
+.arrow-head-right-icon[data-size="small"] {
+    --w: 24px;
+    --h: 24px;
+}
 .arrow-head-left-icon {
     background-image: url(/media/svg/arrow-head-left.svg);
 }

@@ -5,7 +5,8 @@ $config_pages = array(
         'stylesheets' => array( 'home' ),
         'header' => array(
             
-        )
+        ),
+        'helper' => false
     ),
     'diary' => array(
         'stylesheets' => array( 'diary', 'list' ),
@@ -18,7 +19,8 @@ $config_pages = array(
                 'generate',
                 'add'
             )
-        )
+        ),
+        'helper' => true
     ),
     'essay-list-v1' => array(
         'stylesheets' => array( 'essay-list', 'list', 'calendar' ),
@@ -30,7 +32,8 @@ $config_pages = array(
             'right' => array(
                 // 'search',
             )
-        )
+        ),
+        'helper' => true
     ),
     'essay-list-v2' => array(
         'stylesheets' => array( 'essay-list-v2', 'list', 'calendar' ),
@@ -42,7 +45,8 @@ $config_pages = array(
             'right' => array(
                 // 'search',
             )
-        )
+        ),
+        'helper' => true
     ),
     'essay-detail-v1' => array(
         'stylesheets' => array( 'essay-detail', 'diary', 'list' ),
@@ -54,7 +58,8 @@ $config_pages = array(
             'right' => array(
                 'more',
             )
-        )
+        ),
+        'helper' => false
     ),
     'essay-detail-v2' => array(
         'stylesheets' => array( 'essay-detail-v2', 'diary', 'list', 'KuMincho-R' ),
@@ -66,7 +71,8 @@ $config_pages = array(
             'right' => array(
                 'more',
             )
-        )
+        ),
+        'helper' => false
     ),
     'add' => array(
         'stylesheets' => array( 'add', 'location-selector' ),
@@ -80,9 +86,11 @@ $config_pages = array(
                 'next-step-text',
                 'edit-text'
             )
-        )
+        ),
+        'helper' => false
     ),
     'refresh' => array(
-        'stylesheets' => array( 'refresh')
+        'stylesheets' => array( 'refresh'),
+        'helper' => false
     )
 );

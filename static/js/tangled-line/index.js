@@ -2,7 +2,7 @@
 // import Txtara from './Txtara.js'
 const parent_id = 'tangled-wrapper';
 const parent = document.getElementById(parent_id);
-console.log(parent);
+// console.log(parent);
 const size = {w: parent ? parent.offsetWidth : 70, h: 70};
 const line_params = {
     start: {x: size.w / 2, y: size.h * 5 / 6},

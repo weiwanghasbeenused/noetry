@@ -383,7 +383,7 @@ html {
     font-weight: 600;
 }
 #app[data-title-style="1"] #essay-detail-v2 {
-    --large-size: 14vw;
+    --large-size: 13vw;
     --medium-size: 18px;
     padding-bottom: 20px;
 }
@@ -482,8 +482,15 @@ html {
 #app[data-title-style="4"] .dummy-thumbnail {
     margin-bottom: 10px;
 }
+#app[data-view="essay-detail-v2"] .diary-body {
+    display: block;
+}
 .diary-body img {
-    width: 100%;
+    /* width: 100%; */
+    max-height: 50vh;
+    max-width: 80%;
+    margin: 0 auto;
+    display: block;
 }
 .essay-detail-summary {
     position: relative;

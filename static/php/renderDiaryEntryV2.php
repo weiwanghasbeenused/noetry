@@ -23,7 +23,7 @@ function renderDiaryEntryV2($diary, $idx=-1){
     }
     $header = implode('<span class="entry-header-separator"></span>', $header);
     $output = '<div class="' . implode(' ', $cls) . '" style="'.$style.'">' .$background . '<div class="diary-content ">
-    <div class="entry-header small bold">'.$header.'</div>
+    <div class="entry-header small">'.$header.'</div>
         <div class="diary-body">
             <div class="list-text diary-text body">' . $diary['body']. '</div>
             '.$thumbnail.'

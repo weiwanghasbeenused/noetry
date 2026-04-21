@@ -69,7 +69,8 @@
                 if($view) require_once(__DIR__ . '/'.$view.'.php');
                 else echo '<br><br><br><br><br><br><div style="text-align:center">no view assigned</div>';
                 require_once(__DIR__ . '/nav.php');
-                require_once(__DIR__ . '/helper.php');
+                if($page_config['helper'])
+                    require_once(__DIR__ . '/helper.php');
             }
             
         ?>
