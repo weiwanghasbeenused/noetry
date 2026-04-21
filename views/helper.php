@@ -91,6 +91,8 @@
 
     const demo_helper_animation = <?php echo $demo_helper_animation == 1 ? 'true' : 'false'; ?>;
     const wrapper = document.getElementById('helper-wrapper');
+    wrapper.style.setProperty('--message-in-duration', message_in_duration + 'ms');
+    wrapper.style.setProperty('--message-out-duration', message_out_duration + 'ms');
     const helper_type = <?php echo $helper_type; ?>;
     
     window.addEventListener('load', ()=>{
@@ -684,6 +686,9 @@
     #helper-wrapper[data-type="2"][data-on="0"] #helper-lightbulb-wrapper {
         background-image: url(/media/svg/helper-2-off.svg);
         opacity: 0.5;
+    }
+    #helper-wrapper[data-type="2"][data-on="0"] #helper-body {
+        box-shadow: none;
     }
     #helper-wrapper[data-type="2"] #helper-body{
         
