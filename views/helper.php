@@ -623,7 +623,8 @@
         left: 0;
         z-index: -1;
     }
-    #helper-message-wrapper[data-message-style="2"] #message-poly {                                           
+    #helper-message-wrapper[data-message-style="2"] #message-poly {     
+        -webkit-filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.5));                               
         filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.5));
         fill: #fff;
         transition: fill 200ms calc(var(--message-in-duration) / 2);
