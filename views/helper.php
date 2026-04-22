@@ -8,12 +8,7 @@
             else if($version == 2)
                 $filename = 'helper-3-rounded.svg';
             else return '';
-            $output .= '
-                <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-            <script src="https://unpkg.com/p5.js-svg@1.6.0"></script>
-            <script src="/static/js/tangled-line/utils/lib.js"></script>
-            <div id="helper-line-wrapper"><img src="/media/svg/'.$filename.'" /></div>
-                <div id="helper-left-eye" class="helper-eye"></div>
+            $output .= '<div id="helper-left-eye" class="helper-eye"></div>
                 <div id="helper-right-eye" class="helper-eye"></div>
                 <div id="helper-body"></div>';
         } else if($type == 2) {
@@ -22,26 +17,11 @@
             else if($version == 2)
                 $filename = 'helper-2-rounded.svg';
             else return '';
-            $output .= '<div id="helper-lightbulb-wrapper"><img src="/media/svg/'.$filename.'" /></div>
+            $output .= '
             <div id="helper-body"></div>';
         }
         else if($type == 3) {
-            if($version == 1)
-                $filename = 'helper-3.svg';
-            else if($version == 2)
-                $filename = 'helper-3-rounded.svg';
-            else return '';
-            $output .= '<div id="helper-line-wrapper"><img src="/media/svg/'.$filename.'" /></div>
-                <div id="helper-left-eye" class="helper-eye"></div>
-                <div id="helper-right-eye" class="helper-eye"></div>
-                <div id="helper-body"></div>';
-        }
-        else if($type == 4) {
-            $output .= '<img src="/media/svg/helper-4.svg" />
-            <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-            <script src="https://unpkg.com/p5.js-svg@1.6.0"></script>
-            <script src="/static/js/tangled-line/utils/lib.js"></script>
-            <div id="helper-left-eye" class="helper-eye"></div>
+            $output .= '<div id="helper-left-eye" class="helper-eye"></div>
             <div id="helper-right-eye" class="helper-eye"></div>';
         }
         if(!$output) return $output;
@@ -53,7 +33,7 @@
             $output .= '<div class="helper-message body">' . $m . '</div>';
         }
         if($style == 2) {
-            $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 168 125" preserveAspectRatio="none" overflow="visible"><polygon id="message-poly" fill="#fff" points="" /></svg>';
+            $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 168 125" preserveAspectRatio="none" overflow="visible"><polygon id="message-poly" points="" /></svg>';
         }
         $output = '<div id="helper-message-wrapper" class="feedback-container" data-message-index="'.$index.'" data-message-style="'.$style.'">' . $output . '</div>';
         return $output;
@@ -71,12 +51,15 @@
     if($helper_html) {
         $messages = array(
             '已將 13 日所有雜音整理為一篇完整篇章，並收錄至篇章區域。<br>原雜音列表已清空，請放心，內容皆已妥善保存。',
-            '今天的 Twice 台北演唱會的搶票日，你準備好了嗎？<div class="float-container"><div class="more-button small bold">了解更多<div class="icon arrow-head-right-icon" data-color="green" data-size="small"></div></div></div>'
+            '今天的 Twice 台北演唱會的搶票日，你準備好了嗎？<div class=float-container"><div class="more-button small bold">了解更多<div class="icon arrow-head-right-icon" data-color="green" data-size="small"></div></div></div>'
         );
         echo renderHelperMessage($messages, $helper_message, $helper_message_style);
     }
     
 ?>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+<script src="https://unpkg.com/p5.js-svg@1.6.0"></script>
+<script src="/static/js/tangled-line/utils/lib.js"></script>
 <script src="/static/js/helper-blinker.js"></script>
 <script>
     const message_container = document.querySelector('#helper-message-wrapper');
@@ -106,195 +89,26 @@
         wrapper.dataset.on = '0';
         void wrapper.offsetWidth;
         
-        setTimeout(()=>{
-            if(helper_type != 4 && helper_type != 1) {
-                wrapper.dataset.on = '1';
-                wrapper.classList.remove('initializing'); 
-            }
-                
-        }, 0);
+        // setTimeout(()=>{
+        //     if(helper_type != 3 && helper_type != 1) {
+        //         wrapper.dataset.on = '1';
+        //         wrapper.classList.remove('initializing'); 
+        //     }
+        // }, 0);
         
     })
-    <?php if($helper_type == 1 || $helper_type == 3) :?>
+    <?php if($helper_type == 1) :?>
         // const helper_blinker = new HelperBlinker(wrapper, demo_helper_animation);
         // helper_blinker.start();
         
-    <?php elseif($helper_type == 4): ?>
+    <?php elseif($helper_type == 3): ?>
         const helper_line = document.getElementById('helper-line');
         if(helper_line) {
             const pathData = helper_line.getAttribute('d');
             let animationFrameId = null;
 
             // Parse SVG path data into array of control points
-            function parseSVGPath(d) {
-                const points = [];
-                const commands = d.match(/[MmLlHhVvCcSsQqTtAaZz][^MmLlHhVvCcSsQqTtAaZz]*/g) || [];
-                let currentPos = { x: 0, y: 0 };
-
-                // Define how many coordinate pairs each command expects
-                const coordCounts = {
-                    'M': 1, 'm': 1,
-                    'L': 1, 'l': 1,
-                    'H': 0, 'h': 0, // Only x value
-                    'V': 0, 'v': 0, // Only y value
-                    'C': 3, 'c': 3,
-                    'S': 2, 's': 2,
-                    'Q': 2, 'q': 2,
-                    'T': 1, 't': 1,
-                    'A': 0, 'a': 0, // Special handling
-                    'Z': 0, 'z': 0
-                };
-
-                commands.forEach(cmd => {
-                    const type = cmd[0];
-                    const values = cmd.slice(1).trim().match(/-?\d*\.?\d+/g) || [];
-                    const coords = [];
-
-                    // Parse coordinates based on command type
-                    const expectedPairs = coordCounts[type] || 0;
-
-                    if (expectedPairs > 0) {
-                        for (let i = 0; i < values.length; i += expectedPairs * 2) {
-                            for (let j = 0; j < expectedPairs; j++) {
-                                if (i + j*2 + 1 < values.length) {
-                                    let x = parseFloat(values[i + j*2]);
-                                    let y = parseFloat(values[i + j*2 + 1]);
-
-                                    // Convert relative to absolute
-                                    if (type === type.toLowerCase() && type !== 'z' && type !== 'Z') {
-                                        x += currentPos.x;
-                                        y += currentPos.y;
-                                    }
-
-                                    coords.push({ x, y, index: coords.length });
-                                }
-                            }
-                            // Update currentPos after each set of coordinate pairs (for chained commands)
-                            if (coords.length > 0) {
-                                currentPos = { x: coords[coords.length - 1].x, y: coords[coords.length - 1].y };
-                            }
-                        }
-                    }
-
-                    // Update current position
-                    if (coords.length > 0) {
-                        currentPos = coords[coords.length - 1];
-                    }
-
-                    points.push({ command: type, coords });
-                });
-
-                return points;
-            }
-
-            // Add shake/vibration to points
-            function shakePathPoints(pathPoints, intensity = 2) {
-                return pathPoints.map(({ command, coords }) => ({
-                    command,
-                    coords: coords.map(coord => ({
-                        x: coord.x + (Math.random() - 0.5) * intensity,
-                        y: coord.y + (Math.random() - 0.5) * intensity,
-                        index: coord.index
-                    }))
-                }));
-            }
-
-            // Convert points back to SVG path d string
-            function serializeSVGPath(pathPoints) {
-                let d = '';
-                let currentPos = { x: 0, y: 0 };
-
-                // Define how many coordinate pairs each command expects (for grouping chained commands)
-                const coordCounts = {
-                    'M': 1, 'm': 1,
-                    'L': 1, 'l': 1,
-                    'C': 3, 'c': 3,
-                    'S': 2, 's': 2,
-                    'Q': 2, 'q': 2,
-                    'T': 1, 't': 1
-                };
-
-                pathPoints.forEach(({ command, coords }) => {
-                    d += command;
-
-                    const expectedPairs = coordCounts[command] || 0;
-                    let subCommandStartPos = { ...currentPos };
-
-                    coords.forEach((coord, idx) => {
-                        // Every expectedPairs coordinates represent a new sub-command with a new starting point
-                        if (expectedPairs > 0 && idx > 0 && idx % expectedPairs === 0) {
-                            // Update the starting point for the next sub-command
-                            subCommandStartPos = { x: coords[idx - 1].x, y: coords[idx - 1].y };
-                        }
-
-                        let x = coord.x;
-                        let y = coord.y;
-
-                        // For relative commands, convert back to relative coordinates
-                        if (command === command.toLowerCase() && command !== 'z' && command !== 'Z') {
-                            x = x - subCommandStartPos.x;
-                            y = y - subCommandStartPos.y;
-                        }
-
-                        d += x.toFixed(3) + ',' + y.toFixed(3) + ' ';
-                    });
-
-                    // Update currentPos to the last coordinate of this command
-                    if (coords.length > 0) {
-                        currentPos = { x: coords[coords.length - 1].x, y: coords[coords.length - 1].y };
-                    }
-                });
-
-                return d.trim();
-            }
             
-            const pathPoints = parseSVGPath(pathData);
-            const originalPoints = JSON.parse(JSON.stringify(pathPoints)); // Deep copy
-            console.log('Parsed path points:', pathPoints);
-
-            // Animate with shake effect
-            function animate(intensity = 1.5, interval = 80) {
-                animationFrameId = setTimeout(() => {
-                    const shakenPoints = shakePathPoints(originalPoints, intensity);
-                    const newD = serializeSVGPath(shakenPoints);
-                    helper_line.setAttribute('d', newD);
-                    animate(intensity)
-                }, interval);
-            }
-
-            // Test round-trip: parse and serialize without shaking
-            function testRoundTrip() {
-                
-                console.log('=== ROUND TRIP TEST ===');
-                console.log('Original d:', pathData);
-                console.log('Reconstructed d:', reconstructedD);
-                console.log('Match:', pathData === reconstructedD);
-                helper_line.setAttribute('d', reconstructedD);
-
-                // Print parsed points line by line
-                console.log('\n=== PARSED POINTS ===');
-                // originalPoints.forEach((point, idx) => {
-                //     console.log(`Command ${idx}: ${point.command}`);
-                //     console.log(`  Coords (${point.coords.length} pairs):`);
-                //     point.coords.forEach((coord, cidx) => {
-                //         console.log(`    [${cidx}] x: ${coord.x.toFixed(3)}, y: ${coord.y.toFixed(3)}`);
-                //     });
-                // });
-
-                return reconstructedD;
-            }
-            const reconstructedD = serializeSVGPath(originalPoints);
-            let status = 0;
-            const paths = [
-                pathData,
-                reconstructedD
-            ]
-            helper_line.addEventListener('click', ()=>{
-                console.log('click');
-                status = (status + 1) % 2
-                console.log(paths[status]);
-                helper_line.setAttribute('d', paths[status]);
-            });
             
             // Uncomment to test:
             // testRoundTrip();
@@ -520,14 +334,11 @@
             window.openHelperMessage();
         }
     }
-    wrapper.addEventListener('click', ()=>{
-        toggleHelperMessage();
-    });
+    
 </script>
-<?php if($helper_type == 1): ?>
-    <script src="/static/js/helper-1.js"></script>
-<?php elseif($helper_type == 4): ?>
-    <script src="/static/js/helper-4.js"></script>
+<script src="/static/js/helper.js"></script>
+<?php if($helper_type == 1 || $helper_type == 2 || $helper_type == 3): ?>
+    <script src="/static/js/helper-<?php echo $helper_type?>.js"></script>
 <?php endif; ?>
 
 <style>
@@ -643,7 +454,8 @@
     .helper-message.active {
         display: block;
     }
-    #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper .helper-message.active {
+    #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper .helper-message.active,
+    #helper-wrapper.initializing ~ #helper-message-wrapper .helper-message.active {
         /* display: none; */
         opacity: 0;
         transition: none;
@@ -723,23 +535,23 @@
         width: 6px;
         height: 6px;
     }
-    #helper-wrapper[data-type="4"] {
+    #helper-wrapper[data-type="3"] {
         right: 10px;
     }
-    #helper-wrapper[data-type="4"]:before,
-    #helper-wrapper[data-type="4"]:after {
+    #helper-wrapper[data-type="3"]:before,
+    #helper-wrapper[data-type="3"]:after {
         /* content: ''; */
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
     }
-    #helper-wrapper[data-type="4"]:before {
+    #helper-wrapper[data-type="3"]:before {
         width: 72px; 
         height: 1px;
         background-color: #000;
     }
-    #helper-wrapper[data-type="4"]:after {
+    #helper-wrapper[data-type="3"]:after {
         width: 1px; 
         height: 72px;
         background-color: #000;
@@ -756,7 +568,7 @@
     #helper-wrapper[data-type="1"] .p5Canvas {
         --x: 3px;
     }
-    #helper-wrapper[data-type="4"] img {
+    #helper-wrapper[data-type="3"] img {
         display: none;
         width: 72px;
         height: 72px;
@@ -766,32 +578,30 @@
         transform: translate(-50%, -50%);
         /* border: 1px solid #000; */
     }
-    #helper-wrapper[data-type="4"].initializing .helper-eye,
+    #helper-wrapper[data-type="3"].initializing .helper-eye,
     #helper-wrapper[data-type="1"].initializing .helper-eye {
         /* display: none; */
     }
-    #helper-wrapper[data-type="4"][data-on="1"] .helper-eye {
+    #helper-wrapper[data-type="3"][data-on="1"] .helper-eye {
         /* animation: blink 1s infinite; */
     }
-    #helper-wrapper[data-type="4"] #helper-left-eye {
+    #helper-wrapper[data-type="3"] #helper-left-eye {
         top: 23%;
         left: 26%;
     }
-    #helper-wrapper[data-type="4"] #helper-right-eye {
+    #helper-wrapper[data-type="3"] #helper-right-eye {
         top: 23%;
         left: 60%;
     }
-    #helper-wrapper[data-type="4"] .helper-eye {
+    #helper-wrapper[data-type="3"] .helper-eye {
         width: 5px;
         height: 7px;
         transform-origin: center;
         transform: translate(-50%, -50%) scale(1,1);
-        /* transform: scale(0.8, 1.2); */
     }
-    #helper-wrapper[data-type="4"].blinking .helper-eye,
-    #helper-wrapper.initializing[data-type="4"] .helper-eye,
-    #helper-wrapper[data-on="0"][data-type="4"] .helper-eye {
-        /* animation: blink 200ms linear forwards; */
+    #helper-wrapper[data-type="3"].blinking .helper-eye,
+    #helper-wrapper.initializing[data-type="3"] .helper-eye,
+    #helper-wrapper[data-on="0"][data-type="3"] .helper-eye {
         transform: translate(-50%, -50%) scale(1,0.4);
     }
     #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"],
@@ -814,10 +624,21 @@
         z-index: -1;
     }
     #helper-message-wrapper[data-message-style="2"] #message-poly {                                           
-      filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.5));
+        fill: #fff;
+        transition: fill 200ms calc(var(--message-in-duration) / 2);
     }  
     #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"] {
         transition: width var(--message-out-duration), max-height var(--message-out-duration), opacity 0ms var(--message-out-duration);
         max-height: none;
+    }
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"] #message-poly{
+        fill: var(--green);
+        filter: none;
+        transition: fill var(--message-out-duration);
+    }
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"] .helper-message.active {
+        transition: none;
+        opacity: 0;
     }
 </style>

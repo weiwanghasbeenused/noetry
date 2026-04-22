@@ -15,3 +15,24 @@
     border-radius: 12px;
     text-align: center;
 }
+.two-cols {
+    display: flex;
+    /* gap: 16px; */
+}
+.two-cols a,
+#home-body .two-cols a {
+    position: relative;
+    /* display: inline-block; */
+    /* width: calc( 60% + 18px); */
+    z-index: 10;
+}
+#home-body .two-cols a.sub-button {
+    width: 40%;
+    z-index: 5;
+    margin-left: -24px;
+    padding-right: 6px;
+    /* font-size: 0.7em; */
+}
+.sub-button {
+    flex: 0 0 40%;
+}
