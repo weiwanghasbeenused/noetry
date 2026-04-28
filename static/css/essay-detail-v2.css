@@ -260,9 +260,10 @@ html {
 }
 .entry-header {
     display: flex;
-    /* color: var(--green); */
     color: var(--dark-grey);
-    margin-left: 16px;
+    align-items: center;
+    margin-bottom: calc(var(--entry-part-gap) - 4px);
+    /* margin-left: 16px; */
 }
 .entry-header-separator {
     width: 1.5em;
@@ -485,6 +486,28 @@ html {
 #app[data-view="essay-detail-v2"] .diary-body {
     display: block;
 }
+#app[data-title-style="5"] #essay-detail-v2 {
+    --large-size: 13vw;
+    --medium-size: 18px;
+    padding-bottom: 20px;
+}
+#app[data-title-style="5"] #essay-detail-diaries {
+    --gap: 40px;
+}
+#app[data-title-style="5"] .essay-title {
+    margin-bottom: 16px;
+}
+#app[data-title-style="5"] #essay-detail-header {
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+#app[data-title-style="5"] .essay-title-day-of-week {
+    margin-left: 1em;
+    font-size: 1rem;
+    font-weight: 600;
+    align-self: center;
+    /* font-family: 'Ping Fang TC', monospace; */
+}
 .diary-body img {
     /* width: 100%; */
     max-height: 50vh;
@@ -519,4 +542,21 @@ html {
     margin-bottom: var(--padding);
     /* display: none; */
     scroll-margin-top: calc( var(--main-header-height) + var(--padding) );
+}
+.diary-header-more {
+    margin-left: auto;
+    transition: background 500ms;
+    padding: 4px;
+    /* transform: rotate(90deg); */
+    /* background-color: blue; */
+    /* width: 30px; */
+    /* background-color: red; */
+    /* height: 100%; */
+}
+.diary-header-more:active {
+    background: red;
+    transition: none;
+}
+.diary-header-more img {
+    display: block;
 }

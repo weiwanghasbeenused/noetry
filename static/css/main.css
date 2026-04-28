@@ -75,6 +75,9 @@ ul {
 ul:first-child {
 	padding-left: 0px;
 }
+.sans {
+    font-family: "PingFang TC", "Microsoft YaHei", sans-serif;
+}
 .full-vw {
     width: 100vw;
     max-width: 100%;
@@ -141,6 +144,9 @@ figure video{
 .bold {
     font-weight: 600;
 }
+.small.bold {
+    font-weight: 500;
+}
 .fixed {
     --top: 0;
     --left: 0;
@@ -201,6 +207,13 @@ button {
 }
 .shadow-small {
     box-shadow: 0 0 5px 0px rgba(0,0,0,0.5);
+}
+.no-button-style {
+    appearance: none;
+    background-color: transparent;
+    border-radius: 0px;
+    border: none;
+    font-size: inherit;
 }
 @media screen and (min-width: 500px) {
     body {

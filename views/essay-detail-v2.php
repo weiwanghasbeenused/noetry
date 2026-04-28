@@ -62,7 +62,7 @@ if($item['state']) {
 
 $db->close();
 function renderThumbnail($src, $caption=''){
-    $caption = $caption ? '<figcaption class="essay-detail-thumbnail-caption small">'.$caption.'</figcaption>' : '';
+    $caption = $caption ? '<figcaption class="essay-detail-thumbnail-caption small bold">'.$caption.'</figcaption>' : '';
     return '<figure class="essay-detail-section essay-detail-thumbnail">
         <img class="" src="'.$src.'">
             '.$caption.'
@@ -109,14 +109,10 @@ if(strtotime($name2)){
         'day' => date('d', $time),
         'day-of-week' => date('D', $time) . '.'
     ];
-    // $title = [];
-    // foreach($time_formatted as $key => $t) {
-    //     $title[] = '<span class="essay-title-' . $key . '">' . $t . '</span>';
-    // }
     $title = '<span class="essay-title-year">' . $time_formatted['year'] . '</span><span class="date-separator"></span>' .
             '<span class="essay-title-month">' . $time_formatted['month'] . '</span><span class="date-separator"></span>' .
             '<span class="essay-title-day">' . $time_formatted['day'] . '</span>' . 
-            '<span class="essay-title-day-of-week">' . $time_formatted['day-of-week'] . '</span>';
+            '<span class="essay-title-day-of-week sans">' . $time_formatted['day-of-week'] . '</span>';
 } else {
     $title = $item['name2'];
 }

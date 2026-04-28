@@ -17,10 +17,23 @@
     border: none;
     background-color: transparent;
 }
+
 .bottom-buttons-container {
     position: absolute;
     bottom: 0;
 }
 .nav-button {
     text-align: center;
+}
+.bar-button.small {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.bar-button.small.with-icon {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.bar-button.small.with-icon {
+    padding-top: 4px;
+    padding-bottom: 4px;
 }

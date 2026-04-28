@@ -1,22 +1,14 @@
 <?php
-    function renderHelper($type, $version=1){
+    function renderHelper($type){
         $output = '';
         if($type == 0) return $output;
         else if($type == 1) {
-            if($version == 1)
-                $filename = 'helper-3.svg';
-            else if($version == 2)
-                $filename = 'helper-3-rounded.svg';
-            else return '';
+            $filename = 'helper-3.svg';
             $output .= '<div id="helper-left-eye" class="helper-eye"></div>
                 <div id="helper-right-eye" class="helper-eye"></div>
                 <div id="helper-body"></div>';
         } else if($type == 2) {
-            if($version == 1)
-                $filename = 'helper-2.svg';
-            else if($version == 2)
-                $filename = 'helper-2-rounded.svg';
-            else return '';
+            $filename = 'helper-2.svg';
             $output .= '
             <div id="helper-body"></div>';
         }
@@ -27,33 +19,92 @@
         if(!$output) return $output;
         return '<div id="helper-wrapper" class="initializing" data-type="'.$type.'" data-on="-1">' . $output . '</div>';
     }
-    function renderHelperMessage($messages, $index=1, $style=1){
+    function renderHelperMessage($messages, $index=1, $attr=[]){
+        // var_dump($index);
         $output = '';
-        foreach($messages as $m) {
-            $output .= '<div class="helper-message body">' . $m . '</div>';
+        foreach($messages as $key => $m) {
+            if($key != $index) continue;
+            $links = $m['links'] ? '<div class="message-link-container">' . implode('', $m['links']) . '</div>' : '';
+            $cls = 'helper-message active';
+            $output .= '<div class="'.$cls.'"><div class="message-body body">' . $m['body'] . '</div>' . $links . '<div class="bar-button small bold message-close-button">關閉</div></div>';
         }
-        if($style == 2) {
+        if(isset($attr['data-message-style']) && $attr['data-message-style'] == 2) {
             $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 168 125" preserveAspectRatio="none" overflow="visible"><polygon id="message-poly" points="" /></svg>';
         }
-        $output = '<div id="helper-message-wrapper" class="feedback-container" data-message-index="'.$index.'" data-message-style="'.$style.'">' . $output . '</div>';
+        $attr_str = arrayToAttr($attr);
+        $output = '<div id="helper-message-wrapper" class="feedback-container" '.$attr_str.' >' . $output . '</div>';
         return $output;
     }
-    $helper_type = $_GET['helper-type'] ?? 0;
-    $helper_version = $_GET['helper-version'] ?? 1;
-    $helper_message = $_GET['helper-message'] ?? 1;
+    function handleMessageNotes($notes){
+        if($notes) {
+            $output = preg_split('/\r?\n|<br\s*\/?>/i', strip_tags($notes, '<br>'));
+            foreach($output as $key => $line) {
+                if(!trim($line)) {
+                    unset($output[$key]);
+                    continue;
+                }
+                $output[$key] = '<div class="message-link-wrapper small bold with-icon"><a class="message-link" href="#">' . trim($line) . '<div class="icon arrow-head-right-icon" data-color="green" data-size="small"></div></a></div>';
+            }
+        } else
+            $output = [];
+        
+        $output = array_values($output);
+        
+        return $output;
+    }
+    function getHelperMessages(){
+        global $db;
+        $sql = "SELECT o.body, o.notes 
+            FROM objects o
+            JOIN wires w 
+                ON w.toid = o.id 
+                AND w.active = 1 
+            JOIN objects o_1 
+                ON o_1.id = w.fromid 
+                AND o_1.active = 1 
+                AND o_1.name1 NOT LIKE '\.%'
+                AND o_1.url = 'messages'
+            JOIN wires w_1 
+                ON w_1.toid = o_1.id 
+                AND w_1.active = 1 
+            JOIN objects o_2 
+                ON o_2.id = w_1.fromid 
+                AND o_2.active = 1 
+                AND o_2.name1 NOT LIKE '\.%'
+                AND o_2.url = 'helper'
+            JOIN wires w_2 
+                ON w_2.toid = o_2.id 
+                AND w_2.active = 1 
+                AND w_2.fromid = 0
+            WHERE o.name1 NOT LIKE '\.%'";
+        $result = $db->query($sql);
+        $output = array();
+        while($row = $result->fetch_assoc()) {
+            $m = array(
+                'body' => $row['body'],
+                'links' => handleMessageNotes($row['notes'])
+            );
+            $output[] = $m;
+        }
+        return $output;
+    }
+    $helper_type = $_GET['helper-type'] ?? 1;
+    $helper_message = $_GET['helper-message'] ?? 0;
     $helper_message_style = $_GET['helper-message-style'] ?? 1;
+    $helper_link_style = $_GET['helper-link-style'] ?? 1;
     $demo_helper_animation = $_GET['demo-helper-animation'] ?? 0;
 
-    $helper_html = renderHelper($helper_type, $helper_version);
+    $helper_html = renderHelper($helper_type);
     echo $helper_html;
 
     
     if($helper_html) {
-        $messages = array(
-            '已將 13 日所有雜音整理為一篇完整篇章，並收錄至篇章區域。<br>原雜音列表已清空，請放心，內容皆已妥善保存。',
-            '今天的 Twice 台北演唱會的搶票日，你準備好了嗎？<div class=float-container"><div class="more-button small bold">了解更多<div class="icon arrow-head-right-icon" data-color="green" data-size="small"></div></div></div>'
-        );
-        echo renderHelperMessage($messages, $helper_message, $helper_message_style);
+        $helper_attr = [
+            'data-message-style' => $helper_message_style,
+            'data-link-style'    => $helper_link_style
+        ];
+        $messages = getHelperMessages();
+        echo renderHelperMessage($messages, $helper_message, $helper_attr);
     }
     
 ?>
@@ -69,8 +120,8 @@
     const message_out_duration = 300;
     message_container.style.setProperty('--message-in-duration', message_in_duration + 'ms');
     message_container.style.setProperty('--message-out-duration', message_out_duration + 'ms');
-    const active_message = document.querySelector('.helper-message:nth-child('+message_index+')');
-    active_message.classList.add('active');
+    const active_message = document.querySelector('.helper-message.active');
+    // active_message.classList.add('active');
 
     const demo_helper_animation = <?php echo $demo_helper_animation == 1 ? 'true' : 'false'; ?>;
     const wrapper = document.getElementById('helper-wrapper');
@@ -413,17 +464,18 @@
         position: fixed;
         bottom: calc(var(--nav-height) + 20px);
         width: var(--on-w);
-        height: calc(var(--active-message-height) + var(--padding) * 2);
-        max-height: calc(var(--active-message-height) + var(--padding) * 2);
+        height: var(--active-message-height);
+        max-height: var(--active-message-height);
         z-index: 1000;
         right: 75px;
-        padding: var(--padding);
+        /* padding: var(--padding); */
         background: #fff;
         border-radius: 18px;
         box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
         color: var(--green);
         transform-origin: bottom right;
         transition: width var(--message-in-duration), max-height var(--message-in-duration);
+        overflow: hidden;
     }
     #helper-wrapper[data-on="-1"] ~ #helper-message-wrapper {
         /* unintizlied */
@@ -438,7 +490,8 @@
         transition: width var(--message-out-duration), max-height var(--message-out-duration), opacity 200ms 50ms;
     }
     #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper,
-    #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper .helper-message {
+    #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper .helper-message,
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper .helper-message {
         transition: none;
     }
     .helper-message {
@@ -448,12 +501,49 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: calc(var(--on-w) - var(--padding) * 2);
+        width: var(--on-w);
         
     }
     .helper-message.active {
         display: block;
     }
+    .message-body {
+        padding: var(--padding);
+    }
+    .message-link-wrapper {
+        padding-left: var(--padding);
+        padding-right: var(--padding);
+    }
+    .message-link {
+        display: inline-flex;
+        align-items: center;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        justify-content: left;
+        transition: color 300ms;
+    }
+    .message-link:active {
+        color: red;
+    }
+    .message-link-container {
+        padding-bottom: 12px;
+        /* border-top: 1px solid var(--dark-grey); */
+    }
+    .message-link-container .message-link:last-child {
+        
+        
+    }
+    .message-close-button {
+        border: none;
+        border-radius: 0px;
+        border-top: 1px solid var(--dark-grey);
+        text-align: center;
+        justify-content: center;
+        
+    }
+    /* .message-link + .message-close-button {
+        margin-top: 12px;
+    } */
     #helper-wrapper[data-on="0"].initializing ~ #helper-message-wrapper .helper-message.active,
     #helper-wrapper.initializing ~ #helper-message-wrapper .helper-message.active {
         /* display: none; */
@@ -461,9 +551,11 @@
         transition: none;
     }
     #helper-wrapper[data-on="0"] ~ #helper-message-wrapper .helper-message{
-        width: calc(var(--off-w) - var(--padding) * 2);
+        /* width: calc(var(--off-w) - var(--padding) * 2);
         letter-spacing: -0.7em;
-        line-height: 0.1;
+        line-height: 0.1; */
+        opacity: 0;
+        transition: none;
     }
     .more-button {
         display: inline-flex;
@@ -610,11 +702,18 @@
         height: calc( var(--active-message-height) + var(--padding) * 2);
         background: transparent;
         color: var(--green);
+        
+    }
+    #helper-message-wrapper[data-message-style="2"] {
+        box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+        transition: box-shadow var(--message-in-duration) var(--message-in-duration), width var(--message-in-duration), max-height var(--message-in-duration);;
+    }
+    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"] {
         box-shadow: none;
+        max-height: none;
+        transition: width var(--message-out-duration), max-height var(--message-out-duration), opacity 0ms var(--message-out-duration);
     }
-    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper {
-        /* max-height: none; */
-    }
+    
     #helper-message-wrapper[data-message-style="2"] svg{
         position: absolute;
         width: 100%;
@@ -622,16 +721,16 @@
         top: 0;
         left: 0;
         z-index: -1;
+        /* box-shadow: 0px 0px 6px rgba(0,0,0,0.5); */
     }
     #helper-message-wrapper[data-message-style="2"] #message-poly {     
-        -webkit-filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.5));                               
+        -webkit-filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.5));
         filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.5));
         fill: #fff;
         transition: fill 200ms calc(var(--message-in-duration) / 2);
     }  
-    #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"] {
-        transition: width var(--message-out-duration), max-height var(--message-out-duration), opacity 0ms var(--message-out-duration);
-        max-height: none;
+    #helper-message-wrapper[data-message-style="2"] .helper-message {
+        transition: opacity 200ms calc(var(--message-in-duration) / 2);
     }
     #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"] #message-poly{
         fill: var(--green);
@@ -641,5 +740,18 @@
     #helper-wrapper[data-on="0"] ~ #helper-message-wrapper[data-message-style="2"] .helper-message.active {
         transition: none;
         opacity: 0;
+    }
+    #helper-message-wrapper[data-link-style="2"] .message-link-wrapper{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    #helper-message-wrapper[data-link-style="2"] .message-link {
+        display: flex;
+        justify-content: space-between;
+        padding-left: var(--padding);
+        padding-right: var(--padding);
+    }
+    #helper-message-wrapper[data-link-style="2"] .message-link {
+        /* border-top: 1px solid var(--dark-grey); */
     }
 </style>

@@ -21,9 +21,10 @@ function renderDiaryEntryV2($diary, $idx=-1){
     if($diary['state']) {
         $header[] = '<span class="entry-header-section diary-header-section diary-header-weather">' . $diary['state'] . '</span>';
     }
+    $header[] = '<a class="no-button-style entry-header-section diary-header-section diary-header-more"><img src="/media/svg/more-small_dark-grey.svg" /></a>';
     $header = implode('<span class="entry-header-separator"></span>', $header);
     $output = '<div class="' . implode(' ', $cls) . '" style="'.$style.'">' .$background . '<div class="diary-content ">
-    <div class="entry-header small">'.$header.'</div>
+    <div class="entry-header small bold">'.$header.'</div>
         <div class="diary-body">
             <div class="list-text diary-text body">' . $diary['body']. '</div>
             '.$thumbnail.'
