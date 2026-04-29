@@ -18,6 +18,7 @@ class Helper {
         this.color = '#0a774b';
         this.initialized = false;
         this.status = -1;
+        this.closeButtons = document.querySelectorAll('.message-close-button');
         this.addListeners();
     }
     addListeners(){
@@ -29,6 +30,11 @@ class Helper {
                 this.off();
             }
         });
+        for(const btn of this.closeButtons) {
+            btn.addEventListener('click', ()=>{
+                closeHelperMessage();
+            });
+        }
     }
     draw(points) {
         stroke(this.color);

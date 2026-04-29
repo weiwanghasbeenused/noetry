@@ -43,7 +43,7 @@
                     unset($output[$key]);
                     continue;
                 }
-                $output[$key] = '<div class="message-link-wrapper small bold with-icon"><a class="message-link" href="#">' . trim($line) . '<div class="icon arrow-head-right-icon" data-color="green" data-size="small"></div></a></div>';
+                $output[$key] = '<div class="message-link-wrapper small bold with-icon"><a class="message-link">' . trim($line) . '<div class="icon arrow-head-right-icon" data-color="green" data-size="small"></div></a></div>';
             }
         } else
             $output = [];
