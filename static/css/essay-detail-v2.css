@@ -261,12 +261,12 @@ html {
 .entry-header {
     display: flex;
     color: var(--dark-grey);
-    align-items: center;
-    margin-bottom: calc(var(--entry-part-gap) - 4px);
-    /* margin-left: 16px; */
+    margin-bottom: var(--entry-part-gap);
+    padding-right: calc(24px + 16px);
+    position: relative;
 }
 .entry-header-separator {
-    width: 1.5em;
+    width: 16px;
     height: .8em;
     position: relative;
 }
@@ -547,7 +547,11 @@ html {
 .diary-header-more {
     margin-left: auto;
     transition: background 500ms;
-    padding: 4px;
+    padding: 0px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transform: translate(4px, -7px);
     /* transform: rotate(90deg); */
     /* background-color: blue; */
     /* width: 30px; */

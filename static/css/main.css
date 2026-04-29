@@ -41,8 +41,11 @@ html {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     margin: 0;
+    /* touch-action: manipulation; */
 }
-
+html, body {
+    touch-action: manipulation;
+}
 body {
 	margin: 0;
 	font-family: "PingFang TC", "Microsoft YaHei", sans-serif;
@@ -54,6 +57,7 @@ body {
     transition: background-color .5s;
     color: var(--text-color);
     background-color: var(--background);
+    
     
 }
 h1, h2, h3 {

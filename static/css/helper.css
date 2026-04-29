@@ -121,15 +121,17 @@
 }
 .message-link {
     /* display: inline-flex; */
+    position: relative;
     display: flex;
     align-items: center;
     padding-left: var(--padding);
-    padding-right: var(--padding);
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-right: calc( var(--padding) + 24px + var(--padding));
+    padding-top: 9px;
+    padding-bottom: 9px;
     justify-content: space-between;
     transition: background 300ms;
     gap: var(--padding);
+    touch-action: manipulation;
 }
 .message-link:active {
     transition: none;
@@ -137,6 +139,10 @@
 }
 .message-link .icon {
     flex: 0 0 var(--w);
+    position: absolute;
+    top: 50%;
+    right: var(--padding);
+    transform: translate(0, -50%);
 }
 .message-link-container {
     padding-bottom: 12px;
