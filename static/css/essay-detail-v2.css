@@ -32,7 +32,7 @@ html {
     font-size: var(--large-size);
 }
 .essay-title-day-of-week {
-    font-size: var(--medium-size);
+    /* font-size: var(--medium-size); */
 }
 #app[data-title-font="sans"] .essay-title  {
     font-family: "PingFang TC", Arial, sans-serif;
@@ -399,7 +399,8 @@ html {
     padding-bottom: 60px;
 }
 #app[data-title-style="1"] .essay-title-day-of-week {
-    margin-left: 2px;
+    margin-left: 3px;
+    padding-top: 5px;
 }
 
 #app[data-title-style="2"] #essay-detail-v2 {

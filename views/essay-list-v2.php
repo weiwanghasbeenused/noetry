@@ -87,7 +87,7 @@ $essay_items = array();
                             echo '<div class="list-section list-day-section essay-section essay-day-section" data-day-count="'.$day_count.'">
                                 <div class="list-section-title list-day-section-title essay-section-title essay-day-section-title">
                                     <h2 class="list-day essay-day x-large">' . $day_of_month . '<span class="day-note list-date-note essay-date-note small">日</span></h2>
-                                    <div class="list-day-of-week essay-day-of-week bold small">'.$day_of_week.'.</div></div>';
+                                    <div class="list-day-of-week essay-day-of-week bold small sans">'.$day_of_week.'.</div></div>';
                             foreach($essays as $essay) {
                                 echo renderPoemEntry($essay, 'rows', $essay_count);
                                 $essay_items[] = $essay; 

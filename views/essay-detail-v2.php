@@ -112,7 +112,7 @@ if(strtotime($name2)){
     $title = '<span class="essay-title-year">' . $time_formatted['year'] . '</span><span class="date-separator"></span>' .
             '<span class="essay-title-month">' . $time_formatted['month'] . '</span><span class="date-separator"></span>' .
             '<span class="essay-title-day">' . $time_formatted['day'] . '</span>' . 
-            '<span class="essay-title-day-of-week sans">' . $time_formatted['day-of-week'] . '</span>';
+            '<span class="essay-title-day-of-week sans small bold">' . $time_formatted['day-of-week'] . '</span>';
 } else {
     $title = $item['name2'];
 }

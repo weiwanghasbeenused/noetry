@@ -145,7 +145,7 @@ figure video{
     font-weight: 600;
 }
 .small.bold {
-    font-weight: 500;
+    /* font-weight: 500; */
 }
 .fixed {
     --top: 0;
