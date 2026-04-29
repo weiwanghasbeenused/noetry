@@ -94,3 +94,10 @@ $config_pages = array(
         'helper' => false
     )
 );
+
+foreach($config_pages as &$config) {
+    if($config['helper'] === true)
+        $config['stylesheets'][] = 'helper';
+}
+unset($config);
+// var_dump($config_pages);
