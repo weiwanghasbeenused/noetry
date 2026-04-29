@@ -116,14 +116,17 @@
     padding: var(--padding);
 }
 .message-link-wrapper {
-    padding-left: var(--padding);
-    padding-right: var(--padding);
+    /* padding-left: var(--padding); */
+    /* padding-right: var(--padding); */
 }
 .message-link {
     /* display: inline-flex; */
+    display: flex;
     align-items: center;
-    padding-top: var(--padding);
-    padding-bottom: var(--padding);
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+    padding-top: 4px;
+    padding-bottom: 4px;
     justify-content: space-between;
     transition: background 300ms;
     gap: var(--padding);
