@@ -1,9 +1,24 @@
 <?php
-    function renderHelper($type){
+    function renderHelper($type, $attr=[]){
         $output = '';
         if($type == 0) return $output;
         else if($type == 1) {
-            $output .= '<div id="helper-left-eye" class="helper-eye"></div>
+            $output .= '
+                <svg id="helper-line" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="60" height="24.85" viewBox="0 0 60 24.85">
+                <defs>
+                    <style>
+                    .cls-1 {
+                        fill: none;
+                        stroke: #0a774b;
+                        stroke-linecap: round;
+                        stroke-miterlimit: 10;
+                        stroke-width: 3px;
+                    }
+                    </style>
+                </defs>
+                <path class="cls-1" d="M1.5,16.243C5.504,9.498,9.509,5.915,14.432,4.369c9.734-3.058,14.924,3.912,13.394,12.688-1.389,7.962-8.458,8.279-7.148,1.402,1.653-8.678,9.963-15.541,17.94-16.305,5.586-.535,11.734,4.225,10.839,10.932-1.167,8.742-5.444,7.482-5.382,3.367.105-7.061,5.426-12.954,14.426-14.954"/>
+                </svg>
+                <div id="helper-left-eye" class="helper-eye"></div>
                 <div id="helper-right-eye" class="helper-eye"></div>
                 <div id="helper-body"></div>';
         } else if($type == 2) {
@@ -14,13 +29,10 @@
         else if($type == 3) {
             $output .= '<div id="helper-left-eye" class="helper-eye"></div>
             <div id="helper-right-eye" class="helper-eye"></div>';
-        } else if($type == 4) {
-            $output .= '<img id="helper-line" src="/media/svg/helper-1.svg" /><div id="helper-left-eye" class="helper-eye"></div>
-                <div id="helper-right-eye" class="helper-eye"></div>
-                <div id="helper-body"></div>';
         }
         if(!$output) return $output;
-        return '<div id="helper-wrapper" class="initializing" data-type="'.$type.'" data-on="-1">' . $output . '</div>';
+        $attr_str = arrayToAttr($attr);
+        return '<div id="helper-wrapper" class="initializing" '.$attr_str.'>' . $output . '</div>';
     }
     function renderHelperMessage($messages, $index=1, $attr=[]){
         // var_dump($index);
@@ -92,22 +104,28 @@
         return $output;
     }
     $helper_type = $_GET['helper-type'] ?? 1;
-    $helper_message = $_GET['helper-message'] ?? 0;
-    $helper_message_style = $_GET['helper-message-style'] ?? 1;
-    $helper_link_style = $_GET['helper-link-style'] ?? 1;
-    $demo_helper_animation = $_GET['demo-helper-animation'] ?? 0;
+    
+    $helper_animation = $_GET['helper-animation'] ?? 0;
+    $helper_attr = [
+        'data-type'       => $helper_type,
+        'data-on'         => '-1',
+        'data-animation'  => $helper_animation
+    ];
 
-    $helper_html = renderHelper($helper_type);
+    $helper_html = renderHelper($helper_type, $helper_attr);
     echo $helper_html;
 
-    
     if($helper_html) {
-        $helper_attr = [
+        $helper_message = $_GET['helper-message'] ?? 0;
+        $helper_message_style = $_GET['helper-message-style'] ?? 1;
+        $helper_link_style = $_GET['helper-link-style'] ?? 1;
+        $helper_message_attr = [
             'data-message-style' => $helper_message_style,
-            'data-link-style'    => $helper_link_style
+            'data-link-style'    => $helper_link_style,
+            'data-animation'      => $helper_animation
         ];
         $messages = getHelperMessages();
-        echo renderHelperMessage($messages, $helper_message, $helper_attr);
+        echo renderHelperMessage($messages, $helper_message, $helper_message_attr);
     }
     
 ?>
@@ -124,9 +142,8 @@
     message_container.style.setProperty('--message-in-duration', message_in_duration + 'ms');
     message_container.style.setProperty('--message-out-duration', message_out_duration + 'ms');
     const active_message = document.querySelector('.helper-message.active');
-    // active_message.classList.add('active');
 
-    const demo_helper_animation = <?php echo $demo_helper_animation == 1 ? 'true' : 'false'; ?>;
+    const helper_animation = <?php echo $helper_animation; ?>;
     const wrapper = document.getElementById('helper-wrapper');
     wrapper.style.setProperty('--message-in-duration', message_in_duration + 'ms');
     wrapper.style.setProperty('--message-out-duration', message_out_duration + 'ms');
@@ -137,39 +154,9 @@
         message_container.style.setProperty('--off-w', parseFloat(message_container.offsetWidth) * 0.5 + 'px');
         message_container.style.setProperty('--off-h', parseFloat(message_container.offsetHeight) * 0.5 + 'px');
         active_message.style.setProperty('--off-w', parseFloat(message_container.offsetWidth) / 3 + 'px');
-        if(message_style === 2) {
-            // message_container.style.setProperty('--on-h', parseFloat(message_container.offsetHeight) + 'px');
-        }
         wrapper.dataset.on = '0';
         void wrapper.offsetWidth;
-        
-        // setTimeout(()=>{
-        //     if(helper_type != 3 && helper_type != 1) {
-        //         wrapper.dataset.on = '1';
-        //         wrapper.classList.remove('initializing'); 
-        //     }
-        // }, 0);
-        
     })
-    <?php if($helper_type == 1) :?>
-        // const helper_blinker = new HelperBlinker(wrapper, demo_helper_animation);
-        // helper_blinker.start();
-        
-    <?php elseif($helper_type == 3): ?>
-        const helper_line = document.getElementById('helper-line');
-        if(helper_line) {
-            const pathData = helper_line.getAttribute('d');
-            let animationFrameId = null;
-
-            // Parse SVG path data into array of control points
-            
-            
-            // Uncomment to test:
-            // testRoundTrip();
-            // animate(5);
-        }
-
-    <?endif; ?>
     if(<?php echo $helper_message_style; ?> == 1) {
         window.openHelperMessage = function() {
             if(window.helperMessageIsOpen == true) return;
@@ -393,8 +380,6 @@
 <script src="/static/js/helper.js"></script>
 <?php if($helper_type == 1 || $helper_type == 2 || $helper_type == 3): ?>
     <script src="/static/js/helper-<?php echo $helper_type?>.js"></script>
-<?php elseif($helper_type == 4): ?>
-    <script src="/static/js/helper-1.js"></script>
 <?php endif; ?>
 
 <style>

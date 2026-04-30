@@ -1,9 +1,10 @@
 class Helper2 extends Helper {
-    constructor(parent_id, action="rest-1") {
-        super(parent_id, action="rest-1");
+    constructor(parent_id, animation=0, action="rest-1") {
+        super(parent_id, animation, action);
         this.config = {
             'rest-1': {
                 'size': { w: 40, h: 40 },
+                'position': {x: 'auto', y: 'auto'},
                 'points': [
                     { x: 14.3, y: 30.5 }
                     , { x: 13, y: 23 }
@@ -101,6 +102,7 @@ function setup() {
   randomSeed(2);
   const canvas = createCanvas(tangley.currentSize.w, tangley.currentSize.h, P2D, true);
   canvas.parent(tangley.parent_id);
+  tangley.setCanvas(canvas.elt);
   draw();
 }
 

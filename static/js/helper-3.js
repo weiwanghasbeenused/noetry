@@ -1,10 +1,11 @@
 class Helper3 extends Helper {
-    constructor(parent_id, action="rest-1") {
-        super(parent_id, action);
+    constructor(parent_id, animation=0, action="rest-1") {
+        super(parent_id, animation, action);
         this.blinker = typeof HelperBlinker === 'function' ? new HelperBlinker(this.parent, true) : null;
         this.config = {
             'rest-1': {
                 'size': { w: 72, h: 72 },
+                'position': {x: 'auto', y: 'auto'},
                 'points': [
                     {
                         x: 47, y: 65
@@ -456,6 +457,7 @@ function setup() {
   randomSeed(2);
   const canvas = createCanvas(tangley.currentSize.w, tangley.currentSize.h, P2D, true);
   canvas.parent(tangley.parent_id);
+  tangley.setCanvas(canvas.elt);
   draw();
 }
 

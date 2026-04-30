@@ -1,12 +1,15 @@
 class Helper {
-    constructor(parent_id, action) {
+    constructor(parent_id, animation, action) {
+        this.canvas = null;
         this.parent_id = parent_id;
         this.currentAction = action;
+        this.animation = parseInt(animation);
         this.parent = document.getElementById(parent_id);
         this.padding = 0;
         this.config = {
             'rest-1': {
                 'size': { w: 60, h: 60 },
+                'position': {x: 'auto', y: 'auto'},
                 'points': [],
             }
         }
@@ -53,22 +56,29 @@ class Helper {
         }
         const last = points[points.length - 1];
         vertex(last.x, last.y);
-        // console.log(last.x, last.y);
         endShape();
     }
     updateAction(a){
+        console.log('updateAction')
         if(typeof this.config[a] == 'undefined') return;
         const config = this.config[a];
         this.currentAction = a;
         this.currentSize = this.applyScaleToSize(config['size']);
         this.currentPoints = this.applyScaleToPoints(config['points']);
-        console.log(this.currentSize)
-        console.log(this.currentPoints[0]);
+        this.currentPosition = this.applyScaleToPosition(config['position']);
         this.pointCount = this.currentPoints.length;
         this.center = {
             x: this.currentSize.w / 2,
             y: this.currentSize.h / 2
         };
+    }
+    updateCanvasPosition(){
+        console.log('updateCanvasPosition', this.canvas);
+        if(!this.canvas) return;
+        if(this.currentPosition.x !== 'auto')
+            this.canvas.style.left = this.currentPosition.x + 'px';
+        if(this.currentPosition.y !== 'auto')
+            this.canvas.style.top = this.currentPosition.y + 'px';
     }
     pickRandomPointOnCurve(center, bias = 0.5) {
         if (this.currentPoints.length < 3) return { x: (this.start.x + this.end.x) / 2, y: (this.start.y + this.end.y) / 2 };
@@ -129,7 +139,16 @@ class Helper {
             };
         });
     }
-
+    applyScaleToPosition(original) {
+        return {
+            x: original.x * this.scale,
+            y: original.y * this.scale
+        };
+    }
+    setCanvas(c) {
+        this.canvas = c;
+        this.updateCanvasPosition();
+    }
     rest() {
         let points = this.shakeWhenRest ? this.generatePoints(this.currentPoints) : this.currentPoints;
         this.draw(points);
