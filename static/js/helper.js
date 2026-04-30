@@ -44,36 +44,101 @@ class Helper {
         strokeWeight(this.weight);
         noFill();
         beginShape();
-        vertex(points[0].x, points[0].y);
-        for (let i = 1; i < points.length - 1; i++) {
-            const p1 = points[i];
-            const p2 = points[i + 1];
-            const mid = {
-                x: (p1.x + p2.x) / 2,
-                y: (p1.y + p2.y) / 2,
-            };
-            quadraticVertex(p1.x, p1.y, mid.x, mid.y);
+
+        // Check if points are interpolated (no Bezier handles)
+        const isInterpolated = points.every(p => typeof p['h1x'] === 'undefined');
+        if (isInterpolated) {
+            // growing
+            // Simple polyline for interpolated points
+            for (let i = 0; i < points.length; i++) {
+                vertex(points[i].x, points[i].y);
+            }
+        } else if(points[1] && typeof points[1]['h1x'] !== 'undefined') {
+            // All points have Bezier handles
+            vertex(points[0].x, points[0].y);
+            
+            for (let i = 1; i < points.length; i++) {
+                const p1 = points[i];
+                bezierVertex(p1['h1x'],p1['h1y'],p1['h2x'],p1['h2y'],p1['x'],p1['y']);
+            }
+        } else {
+            // Mixed points
+            vertex(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                const p1 = points[i];
+                if(typeof p1['h1x'] === 'undefined') {
+                    const p2 = points[i + 1];
+                    const mid = {
+                        x: (p1.x + p2.x) / 2,
+                        y: (p1.y + p2.y) / 2,
+                    };
+                    quadraticVertex(p1.x, p1.y, mid.x, mid.y);
+                } else {
+                    bezierVertex(p1['h1x'],p1['h1y'],p1['h2x'],p1['h2y'],p1['x'],p1['y']);
+                }
+            }
         }
-        const last = points[points.length - 1];
-        vertex(last.x, last.y);
+
         endShape();
     }
     updateAction(a){
-        console.log('updateAction')
+        // console.log('updateAction')
         if(typeof this.config[a] == 'undefined') return;
         const config = this.config[a];
         this.currentAction = a;
         this.currentSize = this.applyScaleToSize(config['size']);
-        this.currentPoints = this.applyScaleToPoints(config['points']);
         this.currentPosition = this.applyScaleToPosition(config['position']);
-        this.pointCount = this.currentPoints.length;
+        const scaledPoints = this.applyScaleToPoints(config['points']);
+        this.originalPoints = scaledPoints;
+        this.updateCurrentPoints(this.interpolatePointsAlongCurve(scaledPoints, 5));
         this.center = {
             x: this.currentSize.w / 2,
             y: this.currentSize.h / 2
         };
     }
+    updateCurrentPoints(points){
+        this.currentPoints = points;
+        this.pointCount = this.currentPoints.length;
+    }
+    interpolatePointsAlongCurve(points, samplesPerSegment = 10) {
+        const result = [];
+        result.push(points[0]);
+
+        for (let i = 1; i < points.length; i++) {
+            const p0 = points[i - 1];
+            const p1 = points[i];
+
+            if (typeof p1['h1x'] !== 'undefined') {
+                const cp1 = { x: p1['h1x'], y: p1['h1y'] };
+                const cp2 = { x: p1['h2x'], y: p1['h2y'] };
+
+                for (let t = 0; t < 1; t += 1 / samplesPerSegment) {
+                    const point = this.sampleCubicBezier(p0, cp1, cp2, p1, t);
+                    result.push(point);
+                }
+            } else {
+                result.push(p1);
+            }
+        }
+        let lastPoint = points[points.length - 1];
+        result.push({x: lastPoint.x, y: lastPoint.y});
+        return result;
+    }
+
+    sampleCubicBezier(p0, cp1, cp2, p1, t) {
+        const mt = 1 - t;
+        const mt2 = mt * mt;
+        const mt3 = mt2 * mt;
+        const t2 = t * t;
+        const t3 = t2 * t;
+
+        return {
+            x: mt3 * p0.x + 3 * mt2 * t * cp1.x + 3 * mt * t2 * cp2.x + t3 * p1.x,
+            y: mt3 * p0.y + 3 * mt2 * t * cp1.y + 3 * mt * t2 * cp2.y + t3 * p1.y
+        };
+    }
+
     updateCanvasPosition(){
-        console.log('updateCanvasPosition', this.canvas);
         if(!this.canvas) return;
         if(this.currentPosition.x !== 'auto')
             this.canvas.style.left = this.currentPosition.x + 'px';
@@ -101,7 +166,7 @@ class Helper {
         let y = prev.y + (Math.random() - y_bias) * this.shift_w;
         if (y > height - this.padding) y = height - this.padding;
         else if (y < 0) y = this.padding;
-        return { x, y };
+        return { ...prev, x, y };
     }
 
     generatePoints(points) {
@@ -134,6 +199,7 @@ class Helper {
     applyScaleToPoints(original) {
         return original.map((item) => {
             return {
+                ...item,
                 x: item.x * this.scale,
                 y: item.y * this.scale
             };
@@ -150,7 +216,8 @@ class Helper {
         this.updateCanvasPosition();
     }
     rest() {
-        let points = this.shakeWhenRest ? this.generatePoints(this.currentPoints) : this.currentPoints;
+        let points = this.shakeWhenRest ? this.generatePoints(this.originalPoints) : this.originalPoints;
+        // console.log(points);
         this.draw(points);
     }
 
@@ -184,5 +251,6 @@ class Helper {
         this.on();
         this.initialized = true;
         this.parent.classList.remove('initializing');
+        this.updateCurrentPoints(this.originalPoints);
     }
 }
