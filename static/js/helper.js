@@ -5,7 +5,11 @@ class Helper {
         this.currentAction = action;
         this.animation = parseInt(animation);
         this.parent = document.getElementById(parent_id);
-        this.padding = 0;
+        this.currentPoints = [];
+        this.originalPoints = [];
+        this.currentSize = null;
+        this.currentPosition = null;
+        
         this.config = {
             'rest-1': {
                 'size': { w: 60, h: 60 },
@@ -13,6 +17,8 @@ class Helper {
                 'points': [],
             }
         }
+
+        this.padding = 0;
         this.scale = 1;
         this.weight = 3 * this.scale;
         this.shift_w = 0.8;
@@ -89,6 +95,7 @@ class Helper {
         this.currentSize = this.applyScaleToSize(config['size']);
         this.currentPosition = this.applyScaleToPosition(config['position']);
         const scaledPoints = this.applyScaleToPoints(config['points']);
+        // if(this.originalPoints.length === 0)
         this.originalPoints = scaledPoints;
         this.updateCurrentPoints(this.interpolatePointsAlongCurve(scaledPoints, 5));
         this.center = {

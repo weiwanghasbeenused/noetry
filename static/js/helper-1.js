@@ -49,14 +49,12 @@ class Helper1 extends Helper {
             }
         }
         this.updateAction(action);
-
+        
         if(this.animation === 0) {
             this.staticGrow(()=>{
                 this.init();
             })
-            
         }
-            
     }
     staticGrow(cb){
         const duration = 500;
