@@ -33,12 +33,12 @@
     transition: transform 100ms;
 }
 #helper-left-eye {
-    top: 30%;
-    left: 18%;
+    top: 12px;
+    left: 7px;
 }
 #helper-right-eye {
-    top: 30%;
-    right: 20%;
+    top: 12px;
+    left: 26px;
 }
 #helper-wrapper.blinking .helper-eye,
 #helper-wrapper.initializing .helper-eye,
@@ -61,9 +61,9 @@
 #helper-message-wrapper {
     --off-w: auto;
     --off-h: auto;
-    --on-w: calc(100vw - var(--padding) - 75px);
+    --on-w: calc(100vw - var(--padding) - 70px);
     --on-h: auto;
-    --padding: 18px;
+    --padding: 20px;
     --message-in-duration: 300ms;
     --message-out-duration: 300ms;
     position: fixed;
@@ -72,7 +72,7 @@
     height: var(--active-message-height);
     max-height: var(--active-message-height);
     z-index: 1000;
-    right: 75px;
+    right: 70px;
     /* padding: var(--padding); */
     background: #fff;
     border-radius: 18px;
@@ -366,4 +366,11 @@
     justify-content: left;
     display: inline-flex;
     gap: 0px;
+}
+
+#helper-line {
+    width: 60px;
+    position: absolute;
+    top: 4px;
+    left: -7px;
 }

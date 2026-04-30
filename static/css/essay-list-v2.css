@@ -320,7 +320,7 @@
 }
 #essay-list-v2 .list-section-title {
     top: calc( var(--main-header-height) + var(--sub-header-height) - var(--header-overlap));
-    font-family: 'KuMincho-R', monospace;
+    font-family: 'ZenOldMincho', monospace;
 }
 #essay-list-v2 .list-day-section-title {
     padding-top: 0;

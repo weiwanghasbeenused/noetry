@@ -21,7 +21,7 @@ html {
 .essay-title {
     
     margin-bottom: 20px;
-    font-family: 'KuMincho-R', monospace;
+    font-family: 'ZenOldMincho', monospace;
     display: flex;
     flex-wrap: wrap;
 }
@@ -124,13 +124,13 @@ html {
     /* font-size: 20px; */
 }
 .essay-detail-thumbnail {
-    --thumbnail-height: 50dvh;
+    --thumbnail-height: 40dvh;
     width: calc(100% + 2 * var(--padding));
     position: relative;
     left: calc(-1 * var(--padding));
     margin-top: calc(-1 * var(--padding));
     height: var(--thumbnail-height);
-    max-height: 360px;
+    max-height: 400px;
 }
 .essay-detail-thumbnail img {
     position: absolute;
@@ -176,13 +176,13 @@ html {
 }
 #essay-detail-diaries {
     --gap: 50px;
-    /* padding: 40px 0; */
-    padding: 0px 0 40px 0;
-    /* border-top: 2px solid var(--light-grey); */
-    /* border-bottom: 2px solid var(--light-grey); */
+    padding: 0px var(--inner-padding) 40px var(--inner-padding);
 }
 #essay-detail-diaries .list-entry + .list-entry {
     margin-top: var(--gap);
+}
+.diary-image-wrapper {
+    margin-top: 16px;
 }
 #conversation-popup {
     background-color: #000;
@@ -226,7 +226,7 @@ html {
 }
 
 #essay-detail-v2 .diary-entry {
-    padding: 0 var(--inner-padding);
+    padding: 0;
 }
 #app[data-view="essay-detail-v2"] #main-header {
     background-color: transparent;
@@ -262,12 +262,12 @@ html {
     display: flex;
     color: var(--dark-grey);
     margin-bottom: var(--entry-part-gap);
-    padding-right: calc(24px + 16px);
+    padding-right: 30px;
     position: relative;
 }
 .entry-header-separator {
-    width: 16px;
-    height: .8em;
+    width: 20px;
+    /* height: .8em; */
     position: relative;
 }
 .entry-header-separator:before {
@@ -384,7 +384,7 @@ html {
     font-weight: 600;
 }
 #app[data-title-style="1"] #essay-detail-v2 {
-    --large-size: 13vw;
+    --large-size: 12vw;
     --medium-size: 18px;
     padding-bottom: 20px;
 }
@@ -392,7 +392,7 @@ html {
     --gap: 40px;
 }
 #app[data-title-style="1"] .essay-title {
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
 }
 #app[data-title-style="1"] #essay-detail-header {
     padding-top: 30px;
@@ -533,7 +533,7 @@ html {
     padding-top: 0px;
 }
 .feedback-container {
-    box-shadow: 0px 0px 12px var(--dark-grey);
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
     color: var(--theme-color);
     background-color: #fff;
     /* border: 2px solid; */

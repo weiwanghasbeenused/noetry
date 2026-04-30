@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'ZenOldMincho';
+    src: url('./../fonts/zenOldMincho/ZenOldMincho-SemiBold.woff2');
+    src: url('./../fonts/zenOldMincho/ZenOldMincho-SemiBold.woff2') format('woff2'),
+         url('./../fonts/zenOldMincho/ZenOldMincho-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ZenOldMincho';
+    src: url('./../fonts/zenOldMincho/ZenOldMincho-Regular.woff2');
+    src: url('./../fonts/zenOldMincho/ZenOldMincho-Regular.woff2') format('woff2'),
+         url('./../fonts/zenOldMincho/ZenOldMincho-Regular.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ZenOldMincho';
+    src: url('./../fonts/zenOldMincho/ZenOldMincho-Medium.woff2');
+    src: url('./../fonts/zenOldMincho/ZenOldMincho-Medium.woff2') format('woff2'),
+         url('./../fonts/zenOldMincho/ZenOldMincho-Medium.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+

@@ -71,6 +71,9 @@
     display: block;
     text-align: center;
 }
+.essay-day + .list-day-of-week {
+    margin-top: 5px;
+}
 .list-date-note {
     font-weight: 700;
     padding: 0 .4em;

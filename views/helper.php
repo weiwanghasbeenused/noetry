@@ -3,7 +3,6 @@
         $output = '';
         if($type == 0) return $output;
         else if($type == 1) {
-            $filename = 'helper-3.svg';
             $output .= '<div id="helper-left-eye" class="helper-eye"></div>
                 <div id="helper-right-eye" class="helper-eye"></div>
                 <div id="helper-body"></div>';
@@ -15,6 +14,10 @@
         else if($type == 3) {
             $output .= '<div id="helper-left-eye" class="helper-eye"></div>
             <div id="helper-right-eye" class="helper-eye"></div>';
+        } else if($type == 4) {
+            $output .= '<img id="helper-line" src="/media/svg/helper-1.svg" /><div id="helper-left-eye" class="helper-eye"></div>
+                <div id="helper-right-eye" class="helper-eye"></div>
+                <div id="helper-body"></div>';
         }
         if(!$output) return $output;
         return '<div id="helper-wrapper" class="initializing" data-type="'.$type.'" data-on="-1">' . $output . '</div>';
@@ -390,6 +393,8 @@
 <script src="/static/js/helper.js"></script>
 <?php if($helper_type == 1 || $helper_type == 2 || $helper_type == 3): ?>
     <script src="/static/js/helper-<?php echo $helper_type?>.js"></script>
+<?php elseif($helper_type == 4): ?>
+    <script src="/static/js/helper-1.js"></script>
 <?php endif; ?>
 
 <style>

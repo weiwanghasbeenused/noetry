@@ -23,10 +23,18 @@ function renderDiaryEntryV2($diary, $idx=-1){
     }
     $header[] = '<a class="no-button-style entry-header-section diary-header-section diary-header-more"><img src="/media/svg/more-small_dark-grey.svg" /></a>';
     $header = implode('<span class="entry-header-separator"></span>', $header);
+    $img_pattern = '/(?:<br>)*<img\s(.*?)>/';
+    preg_match($img_pattern, $diary['body'], $temp);
+    if($temp) {
+        $body = str_replace($temp[0], '', $diary['body']);
+        $thumbnail = '<div class="diary-image-wrapper"><img ' . $temp[1] . '></div>';
+    } else {
+        $body = $diary['body'];
+    }
     $output = '<div class="' . implode(' ', $cls) . '" style="'.$style.'">' .$background . '<div class="diary-content ">
     <div class="entry-header small bold">'.$header.'</div>
         <div class="diary-body">
-            <div class="list-text diary-text body">' . $diary['body']. '</div>
+            <div class="list-text diary-text body">' . $body. '</div>
             '.$thumbnail.'
         </div>
         </div></div>';
