@@ -21,7 +21,8 @@ html {
 .essay-title {
     
     margin-bottom: 20px;
-    font-family: 'ZenOldMincho', monospace;
+    /* font-family: 'ZenOldMincho', monospace; */
+    font-family: 'GenRyuMin', monospace;
     display: flex;
     flex-wrap: wrap;
 }
@@ -112,7 +113,8 @@ html {
     padding: 0 var(--inner-padding);
 }
 .essay-detail-punchline {
-    font-family: 'KuMincho-R', monospace;
+    /* font-family: 'KuMincho-R', monospace; */
+    font-family: 'GenRyuMin', monospace;
     padding-right: 40px;
     line-height: 1.4;
     font-size: var(--medium-size);

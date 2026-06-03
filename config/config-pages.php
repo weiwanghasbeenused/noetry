@@ -36,7 +36,7 @@ $config_pages = array(
         'helper' => true
     ),
     'essay-list-v2' => array(
-        'stylesheets' => array( 'essay-list-v2', 'list', 'calendar', 'KuMincho-R', 'zenOldMincho' ),
+        'stylesheets' => array( 'essay-list-v2', 'list', 'calendar', 'GenRyuMin', 'KuMincho-R', 'zenOldMincho' ),
         'header' => array(
             'left' => array(
                 'menu'
@@ -62,7 +62,7 @@ $config_pages = array(
         'helper' => false
     ),
     'essay-detail-v2' => array(
-        'stylesheets' => array( 'KuMincho-R', 'zenOldMincho', 'list', 'diary', 'essay-detail-v2'   ),
+        'stylesheets' => array( 'GenRyuMin', 'KuMincho-R', 'zenOldMincho', 'list', 'diary', 'essay-detail-v2'   ),
         'header' => array(
             'left' => array(
                 'esc'
