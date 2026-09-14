@@ -1,4 +1,11 @@
 <?php
+/* 
+    available query params
+    helper: style of the helper. values: 1 (default), 2, 3
+    helper-message: content of the message. values: 0 (default), 1, 2
+    helper-message-style: style of the message animation. values: 1 (default), 2, 3
+    helper-link-style: style of the message link at the bottom. values: 1 (default), 2, 3
+*/
     function renderHelper($type, $attr=[]){
         $output = '';
         if($type == 0) return $output;
@@ -116,7 +123,7 @@
     echo $helper_html;
 
     if($helper_html) {
-        $helper_message = $_GET['helper-message'] ?? 0;
+        $helper_message = $_GET['helper-message'] ?? rand(1,3);
         $helper_message_style = $_GET['helper-message-style'] ?? 1;
         $helper_link_style = $_GET['helper-link-style'] ?? 1;
         $helper_message_attr = [

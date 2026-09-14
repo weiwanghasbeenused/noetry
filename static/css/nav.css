@@ -17,3 +17,6 @@
 .nav-section-name {
     margin-top: 5px;
 }
+.nav-button {
+    display: block;
+}

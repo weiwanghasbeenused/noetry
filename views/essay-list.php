@@ -178,6 +178,7 @@ $essay_items = array();
     const page = document.querySelector('.page');
     const points = <?php echo json_encode($points); ?>;
     const v = <?php echo $v; ?>;
+    const current_version = <?php echo $current_version; ?>;
     for(const point of points) {
         if(point['points'].length === 0) continue;
         const entry = document.getElementById(point['id']);
@@ -209,7 +210,11 @@ $essay_items = array();
         // const queryParams = 
         if(!slug) continue;
         entry.addEventListener('click', ()=>{
-            window.location.href='/essays-v2/' + slug + '?v=' + v + '&title-style=1';
+            let redirect='/essays/' + slug;
+            if(v != current_version) {
+                redirect += '?v=' + v;
+            }
+            window.location.href = redirect;
         })
     }
     let list_view = '<?php echo $list_view; ?>';

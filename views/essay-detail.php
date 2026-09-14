@@ -148,28 +148,28 @@ $body .= renderSummary($item['body']);
                 display: 'style 1',
                 slug: 'title-style-1',
                 callback: () => {
-                    window.location.href="?v=2&title-style=1"
+                    window.location.href=window.location.pathname;
                 }
             },
             {
                 display: 'style 2',
                 slug: 'title-style-2',
                 callback: (instance) => {
-                    window.location.href="?v=2&title-style=2"
+                    window.location.href="?title-style=2"
                 }
             },
             {
                 display: 'style 3',
                 slug: 'title-style-3',
                 callback: (instance) => {
-                    window.location.href="?v=2&title-style=3"
+                    window.location.href="?title-style=3"
                 }
             },
             {
                 display: 'style 4',
                 slug: 'title-style-4',
                 callback: (instance) => {
-                    window.location.href="?v=2&title-style=4"
+                    window.location.href="?title-style=4"
                 }
             },
             {

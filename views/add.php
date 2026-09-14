@@ -52,6 +52,9 @@
 哥吉拉的鱷魚拔牙玩具，不只是個物品，它可能也象徵了一種被理解的感覺——也許是某個人送</div>
         <div class="bar-button button solid green bold" id="submit-button">送出</div>
     </div>
+    <div class="submit-button-container shadow-medium">
+        <div class="submit-button bar-button solid small"><span class="regular">送出</span></div>
+    </div>
 </div>
 <?php 
     // echo renderLocarionSelector();

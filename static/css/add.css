@@ -191,7 +191,31 @@
 #app:not([data-stage="2"]) #main-header .header-right .edit-button {
     display: none;
 }
+.submit-button.bar-button {
+    --color: var(--green);
+    --background: #fff;
+    flex: 1;
+}
+.submit-button-container {
+    box-shadow: 0px 0px 12px var(--dark-grey);
+    display: flex;
+    padding: 10px;
+    gap: 15px;
+    background: #fff;
+    align-items: center;
+}
+.submit-button-container:before,
+.submit-button-container:after {
+    content: '';
+    flex: 0 0 30px;
+}
+.submit-button-container:before {
+    height: 30px;
+    background-image: url(/media/png/fold-keyboard.png);
+    background-size: cover;
+    background-repeat: no-repeat;
 
+}
 @keyframes slide-up {
     from {
         transform: translateY(100dvh);

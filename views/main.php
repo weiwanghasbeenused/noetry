@@ -2,10 +2,11 @@
     
     require_once __DIR__ . '/../open-records-generator/config/config.php';
     require_once __DIR__ . '/../static/php/functions.php';
+    require_once __DIR__ . '/../config/config-version.php';
     require_once __DIR__ . '/../config/config-pages.php';
     require_once __DIR__ . '/../static/php/getView.php';
     $db = db_connect('guest');
-    $v = isset($_GET['v']) ? $_GET['v'] : 1;
+    $v = isset($_GET['v']) ? $_GET['v'] : 2;
     $view = getView($uri, $v);
     $page_config = $config_pages[$view] ?? array();
     if(!$uri[1]) {
