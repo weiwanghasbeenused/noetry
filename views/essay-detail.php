@@ -81,8 +81,8 @@ function renderSummary($content){
 }
 function renderDiaries($diaries){
     $body = '';
-    foreach($diaries as $d) {
-        $body .= renderDiaryEntry($d);
+    foreach($diaries as $idx => $d) {
+        $body .= renderDiaryEntry($d, -1, ['in-essay-detail']);
     }
         
     return '<div id="essay-detail-diaries" class="essay-detail-section">

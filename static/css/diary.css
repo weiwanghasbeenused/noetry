@@ -14,12 +14,8 @@
     background-size: 30px 30px;
     background-position: center;
     background-repeat: no-repeat;
-    /* width: 50px; */
     height: 50px;
     flex: 0 0 50px;
-    /* opacity: 0.5; */
-    /* left: 40px;
-    top: 50%; */
 }
 .diary-content {
     flex: 1;
@@ -54,8 +50,22 @@
     width: 100%;
     height: 100%;
 }
-/* #app[data-item-style="2"] .thumbnail-wrapper,
-#app[data-item-style="2"] .diary-content {
-    position: relative;
-    z-index: 10;
-} */
+.tangled-wrapper + .right-group {
+    flex: 0 0 calc(100% - var(--entry-part-gap) - 50px);
+}
+.diary-entry.in-essay-detail .entry-inner {
+    padding: 0;
+}
+.diary-entry.in-essay-detail .tangled-wrapper {
+    display: none;
+}
+.diary-entry.in-essay-detail .right-group {
+    flex: 0 0 100%;
+}
+.diary-entry.in-essay-detail .diary-body img {
+    max-height: 50vh;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+}

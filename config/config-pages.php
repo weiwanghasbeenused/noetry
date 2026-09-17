@@ -83,8 +83,8 @@ $config_pages = array(
             ),
             'title' => '新增碎片',
             'right' => array(
-                'next-step-text',
-                'edit-text'
+                // 'next-step-text',
+                // 'edit-text'
             )
         ),
         'helper' => false
