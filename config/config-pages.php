@@ -23,7 +23,7 @@ $config_pages = array(
         'helper' => true
     ),
     'essay-list-v1' => array(
-        'stylesheets' => array( 'essay-list', 'list', 'calendar' ),
+        'stylesheets' => array( 'essay-list-v1', 'list', 'calendar' ),
         'header' => array(
             'left' => array(
                 'menu'
@@ -35,8 +35,8 @@ $config_pages = array(
         ),
         'helper' => true
     ),
-    'essay-list-v2' => array(
-        'stylesheets' => array( 'essay-list-v2', 'list', 'calendar', 'GenRyuMin', 'KuMincho-R', 'zenOldMincho' ),
+    'essay-list' => array(
+        'stylesheets' => array( 'essay-list', 'list', 'calendar', 'GenRyuMin' ),
         'header' => array(
             'left' => array(
                 'menu'
@@ -49,7 +49,7 @@ $config_pages = array(
         'helper' => true
     ),
     'essay-detail-v1' => array(
-        'stylesheets' => array( 'essay-detail', 'diary', 'list' ),
+        'stylesheets' => array( 'essay-detail-v1', 'diary', 'list' ),
         'header' => array(
             'left' => array(
                 'esc'
@@ -61,8 +61,8 @@ $config_pages = array(
         ),
         'helper' => false
     ),
-    'essay-detail-v2' => array(
-        'stylesheets' => array( 'GenRyuMin', 'KuMincho-R', 'zenOldMincho', 'list', 'diary', 'essay-detail-v2'   ),
+    'essay-detail' => array(
+        'stylesheets' => array( 'GenRyuMin', 'list', 'diary', 'essay-detail'   ),
         'header' => array(
             'left' => array(
                 'esc'

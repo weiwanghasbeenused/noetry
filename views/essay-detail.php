@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__. '/../static/php/handleDiary.php');
-require_once(__DIR__. '/../static/php/renderDiaryEntryV2.php');
+require_once(__DIR__. '/../static/php/renderDiaryEntry.php');
 require_once(__DIR__ . '/include/mask.php');
 
 $title_styles = [1, 2, 3 ,4];
@@ -82,7 +82,7 @@ function renderSummary($content){
 function renderDiaries($diaries){
     $body = '';
     foreach($diaries as $d) {
-        $body .= renderDiaryEntryV2($d);
+        $body .= renderDiaryEntry($d);
     }
         
     return '<div id="essay-detail-diaries" class="essay-detail-section">

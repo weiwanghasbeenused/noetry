@@ -65,6 +65,7 @@
         <?php 
             
             if(!$uri[1]) require_once(__DIR__ . '/home.php');
+            elseif($uri[1] === 'h') require_once(__DIR__ . '/h.php');
             else {
                 require_once(__DIR__ . '/main-header.php');
                 if($view) require_once(__DIR__ . '/'.$view.'.php');

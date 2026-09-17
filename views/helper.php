@@ -41,15 +41,16 @@
         $attr_str = arrayToAttr($attr);
         return '<div id="helper-wrapper" class="initializing" '.$attr_str.'>' . $output . '</div>';
     }
-    function renderHelperMessage($messages, $index=1, $attr=[]){
+    function renderHelperMessage($message, $attr=[]){
         // var_dump($index);
         $output = '';
-        foreach($messages as $key => $m) {
-            if($key != $index) continue;
-            $links = $m['links'] ? '<div class="message-link-container">' . implode('', $m['links']) . '</div>' : '';
-            $cls = 'helper-message active';
-            $output .= '<div class="'.$cls.'"><div class="message-body body">' . $m['body'] . '</div>' . $links . '<div class="bar-button small bold message-close-button">關閉</div></div>';
-        }
+        $links = $message['links'] ? '<div class="message-link-container">' . implode('', $message['links']) . '</div>' : '';
+        $cls = 'helper-message active';
+        $output .= '<div class="'.$cls.'"><div class="message-body body">' . $message['body'] . '</div>' . $links . '<div class="bar-button small bold message-close-button">關閉</div></div>';
+        // foreach($messages as $key => $m) {
+        //     if($key != $index) continue;
+            
+        // }
         if(isset($attr['data-message-style']) && $attr['data-message-style'] == 2) {
             $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 168 125" preserveAspectRatio="none" overflow="visible"><polygon id="message-poly" points="" /></svg>';
         }
@@ -123,7 +124,9 @@
     echo $helper_html;
 
     if($helper_html) {
-        $helper_message = $_GET['helper-message'] ?? rand(1,3);
+        $messages = getHelperMessages();
+        $helper_message = isset($_GET['helper-message']) && isset($messages[$_GET['helper-message']]) ? $messages[$_GET['helper-message']] : $messages[array_rand($messages)];
+        // var_dump($messages);
         $helper_message_style = $_GET['helper-message-style'] ?? 1;
         $helper_link_style = $_GET['helper-link-style'] ?? 1;
         $helper_message_attr = [
@@ -131,8 +134,8 @@
             'data-link-style'    => $helper_link_style,
             'data-animation'      => $helper_animation
         ];
-        $messages = getHelperMessages();
-        echo renderHelperMessage($messages, $helper_message, $helper_message_attr);
+        
+        echo renderHelperMessage($helper_message, $helper_message_attr);
     }
     
 ?>

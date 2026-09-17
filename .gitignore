@@ -8,3 +8,5 @@ static/logs/*log
 
 .env
 .claude
+
+views/h.php

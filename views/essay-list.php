@@ -1,52 +1,8 @@
-<?php 
-require_once __DIR__ . '/../static/php/getEssayList.php';
+<?php
+require_once __DIR__ . '/../static/php/getEssayList.php'; 
+require_once __DIR__ . '/../static/php/renderEssayEntry.php';
 require_once __DIR__ . '/include/calendar.php';
 $item_style = $attrs['data-item-style'] ?? 0;
-
-function renderPoemEntry($entry, $list_type, $idx=-1){
-    global $item_style;
-    $id = 'essay-entry-' . $idx;
-    $style = 'z-index: ' . 50 - $idx . ';';
-    $body = '';
-    $background = '';
-    $thumbnail = '';
-    if($item_style == 'keep') {
-        $temp = array_map(function($p){ return implode(' ', $p); }, $entry['points']);
-        $points_str = implode(' ', $temp);
-        $background = '<div class="svg-background">
-                    <?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 360 108"><defs><style>.cls-1{fill:#fff;}</style></defs><polygon class="cls-1" points="'.$points_str.'"/></svg>
-                </div>';        
-    }
-    $cls = array('list-entry', 'essay-entry');
-    
-    if($entry['thumbnail'] && $list_type !== 'grid') {
-        $thumbnail = '<div class="thumbnail-wrapper essay-thumbnail-wrapper"><img class="thumbnail" src="'.$entry['thumbnail']['src'].'"></div>';
-    }
-    if($entry['name2'] && $entry['deck']) {
-        $body = "<div class='entry-body essay-body body list-text essay-text body'>
-            <div class='essay-title bold'>$entry[name2]</div>
-            $entry[deck]
-        </div>";
-    } else {
-        $cls[] = 'no-essay';
-        $body = "<div class='entry-body essay-body list-text essay-text body'>
-                $entry[body]
-        </div>";
-    }
-    $time = '';
-    $header = '<div class="entry-header">';
-    $location = '<div class="entry-location essay-location small bold">大安站星巴克</div>';
-    if($list_type === 'rows' || $list_type === 'calendar')
-        $time = '<div class="entry-time essay-time small bold">'.$entry['time'].'</div>';
-    else if($list_type === 'grid') {
-        $date = str_replace('/', '<span class="date-separator"> / </span>', $entry['date']);
-        $time = '<div class="entry-time essay-time small bold">'.$date.'</div>';
-    }
-    $header .= $time . $location . '</div>';
-    $body = $header  . $body;
-    $output = '<div id="'.$id.'" class="' . implode(' ', $cls) . '" style="'.$style.'" data-slug="'.$entry['url'].'" data-date="'.str_replace('/', '-', $entry['date']).'">'.$background.'<div class="entry-inner essay-inner">'.$entry['date'].$thumbnail.'</div></div>';
-    return $output;
-}
 $essay_list = getEssayList($db, $item['id']);
 $points = array();
 $view_options = array(
@@ -89,7 +45,7 @@ $essay_items = array();
                                     <h2 class="list-day essay-day x-large">' . $day_of_month . '<span class="day-note list-date-note essay-date-note small">日</span></h2>
                                     <div class="list-day-of-week essay-day-of-week bold small sans">'.$day_of_week.'.</div></div>';
                             foreach($essays as $essay) {
-                                echo renderPoemEntry($essay, 'rows', $essay_count);
+                                echo renderEssayEntry($essay, 'rows', $essay_count);
                                 $essay_items[] = $essay; 
                                 $points[] = array(
                                     'id' => 'essay-entry-' . $essay_count,
@@ -114,7 +70,7 @@ $essay_items = array();
             <div class="list-content">
             <?php 
                 foreach($essay_items as $essay){
-                    echo renderPoemEntry($essay, 'grid');
+                    echo renderEssayEntry($essay, 'grid');
                 }
             ?>
             </div>
@@ -146,7 +102,7 @@ $essay_items = array();
                 <div class="list-content">
                 <?php 
                     foreach($essay_items_by_month['m' . $month] as $essay){
-                        echo renderPoemEntry($essay, 'calendar');
+                        echo renderEssayEntry($essay, 'calendar');
                     }
                 ?>
                 </div>
@@ -163,7 +119,7 @@ $essay_items = array();
             <div class="list-content">
             <?php 
                 foreach($essay_items as $essay){
-                    echo renderPoemEntry($essay, 'calendar');
+                    echo renderEssayEntry($essay, 'calendar');
                 }
             ?>
             </div>

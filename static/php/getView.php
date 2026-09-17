@@ -1,11 +1,14 @@
 <?php 
+if(!isset($current_version))
+    require_once(__DIR__ . '/config-version.php');
 function getView($uri, $v=1){
+    global $current_version;
     if(!$uri[1]) return 'home';
     if(strpos($uri[1], 'essays') !== false) {
         if(count($uri) === 2)
-            return 'essay-list-v' . $v;
+            return $v == $current_version ? 'essay-list' : 'essay-list-v' . $v;
         else if(count($uri) === 3) {
-            return 'essay-detail-v' . $v;
+            return $v == $current_version ? 'essay-detail' : 'essay-detail-v' . $v;
         }
             
     }

@@ -3,13 +3,6 @@
     padding-top: var(--main-header-height);
     /* padding-top: 0; */
 }
-.diary-entry {
-    background-color: #fff;
-    border-radius: var(--rounded);
-    padding: 10px;
-    padding-left: 10px;
-    display: flex;
-}
 .diary-entry.add-new {
     position: relative;
     color: var(--dark-grey);
