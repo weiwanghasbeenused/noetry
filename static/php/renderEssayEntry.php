@@ -31,9 +31,9 @@ function renderEssayEntry($entry, $list_type, $idx=-1){
     if($list_type === 'grid') {
         $date = str_replace('/', '<span class="date-separator"> / </span>', $entry['date']);
         $time = '<div class="entry-time essay-time small bold">'.$date.'</div>';
-        $header = '<div class="entry-header">' . $time . '</div>' . $header;
+        $header = $time  . $header;
     }
-    $header = '<div class="entry-header small bold">' . $header . '</div>';
+    $header = '<div class="entry-header small bold dark-grey">' . $header . '</div>';
     $content = $header  . $body;
     return renderListEntry($content, $entry['url'], $idx, ['essay-entry']);
 }
