@@ -9,7 +9,7 @@ $config_pages = array(
         'helper' => false
     ),
     'diary' => array(
-        'stylesheets' => array( 'diary', 'list' ),
+        'stylesheets' => array( 'inter', 'diary', 'list' ),
         'header' => array(
             'left' => array(
                 'menu'
@@ -36,7 +36,7 @@ $config_pages = array(
         'helper' => true
     ),
     'essay-list' => array(
-        'stylesheets' => array( 'essay-list', 'list', 'calendar', 'GenRyuMin' ),
+        'stylesheets' => array( 'essay-list', 'list', 'calendar', 'inter', 'GenRyuMin' ),
         'header' => array(
             'left' => array(
                 'menu'
@@ -75,7 +75,7 @@ $config_pages = array(
         'helper' => false
     ),
     'add' => array(
-        'stylesheets' => array( 'add', 'location-selector' ),
+        'stylesheets' => array( 'inter', 'add', 'location-selector' ),
         'scripts' => array('https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js'),
         'header' => array(
             'left' => array(

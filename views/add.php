@@ -4,7 +4,12 @@
     require_once(__DIR__ . '/include/location-selector.php');
     // require_once(__DIR__ . '/include/mask.php');
     $now = processDate(date('Y-m-d h:i:s'));
-    $date = "<div id='header-datetime' class='header-item'><div id='header-date' class='x-large'>$now[year] /$now[month] /$now[day]</div><div id='header-day-of-week' class='bold'>".$now['day-of-week']."</div></div>";
+    $date = "<div id='header-datetime' class='header-item'><div id='header-date' class='x-large inter'>$now[year]<span class='date-unit-separator'>/</span>$now[month]<span class='date-unit-separator'>/</span>$now[day]</div>
+        <div id='header-middle'>
+            <div id='header-day-of-week' class='bold inter'>".$now['day-of-week']."</div>
+            <div id='header-time' class='bold inter'>".$now['hour'].":" . $now['minute'] . "</div>
+        </div>
+    </div>";
     $weather = '<div id="header-weather" class="header-item">
         <div class="header-item-icon-wrapper"><div id="header-weather-icon" class="header-item-icon weather-icon icon small"></div></div>
         <div class="weather-description small bold">晴時多雲</div>

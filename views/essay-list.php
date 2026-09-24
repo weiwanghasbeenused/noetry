@@ -36,7 +36,7 @@ $essay_items = array();
                 foreach($essay_list as $year => $months) {
                     echo '<li class="list-section list-year-section essay-section essay-year-section"><h2 class="list-section-title list-year-section-title essay-section-title essay-year-section-title regular">' . $year . '</h2>';
                     foreach($months as $month => $days) {
-                        echo '<div class="list-section list-month-section essay-section essay-month-section"><h2 class="list-section-title list-month-section-title essay-section-title essay-month-section-title regular">' . $month . '<span class="month-note list-date-note essay-date-note small">月</span></h2>';
+                        echo '<div class="list-section list-month-section essay-section essay-month-section"><h2 class="list-section-title list-month-section-title essay-section-title essay-month-section-title regular"><span class="date-unit-separator">/</span>' . $month . '<span class="month-note list-date-note essay-date-note small">月</span></h2>';
                         foreach($days as $day => $essays) {
                             [$day_of_month, $day_of_week] = explode('-', $day);
                             $day_count = count($essays);

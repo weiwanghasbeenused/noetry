@@ -1,6 +1,6 @@
 .list {
     --background: var(--light-grey);
-    --date-width: 60px;
+    --date-width: 65px;
     --day-gap: 8px;
     --month-gap: 24px;
     --entry-gap: 8px;
@@ -10,12 +10,8 @@
 }
 .list-entry {
     --background: #fff;
-    /* background-color: #fff; */
     position: relative;
-    
-    
     margin-left: calc( var(--date-width) + 10px);
-    
 }
 .list-entry + .list-entry {
     margin-top: var(--entry-gap);
@@ -33,11 +29,22 @@
 }
 .entry-inner {
     padding: 12px 15px;
+    padding-left: 10px;
     position: relative;
     z-index: 10;
     display: flex;
     gap: var(--entry-part-gap);
 }
+.list-day-of-week,
+.list-section-title {
+    font-family: 'inter', monospace;
+    font-weight: 700;
+}
+.list-day {
+    font-family: 'inter', monospace;
+    font-weight: 400;
+}
+
 .entry-time,
 .entry-location {
     color: var(--dark-grey);
